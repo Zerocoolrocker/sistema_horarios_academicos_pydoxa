@@ -25,9 +25,12 @@ class Proyecto(models.Model):
 	lapso_academico = models.CharField(max_length=10)
 	fecha = models.DateField()
 	fecha_memo = models.DateField()
-	observaciones = models.TextField()
+	observaciones = models.TextField(blank=True, null=True)
 	created = models.DateTimeField(auto_now_add=True)
 	update = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return "%s - %s" % (self.nombre, self.lapso_academico)
 
 class Direccion(models.Model):
 	nombre = models.CharField(max_length=30)
