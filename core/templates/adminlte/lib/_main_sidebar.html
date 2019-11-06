@@ -1,0 +1,16 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+
+{% block nav_links %}
+    <li>
+        <a href="/admin/core/proyecto" class='proyectos'>
+            <i class="fa fa-dashboard"></i> <span>Proyectos</span>
+            <!-- <i class="fa fa-plus-square-o fa-2x crear-proyecto-button" data-toggle="modal" data-target="#myModal"></i>           -->
+            <i class="fa fa-plus-square-o fa-2x crear-proyecto-button"></i>	        
+        </a>
+    </li>
+    <li>
+        <a href="/admin/core/aula">
+            <i class="fa fa-user"></i> <span>Aulas</span>
+        </a>
+    </li>
+{% endblock nav_links %}

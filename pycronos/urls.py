@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from core.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('proyecto/', ProyectoCreateView.as_view(), name='dashboard'),
+    path('proyecto/<int:pk>/', ProyectoEditView.as_view(), name='dashboard'),
+    path('', DashboardView.as_view(), name='project-edit'),
 ]

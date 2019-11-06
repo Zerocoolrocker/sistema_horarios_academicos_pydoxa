@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class Area(models.Model):
 	nombre = models.CharField(max_length=100)
-	created = models.DateField(auto_now_add=True)
-	updated = models.DateField(auto_now=True)
+	creado = models.DateField(auto_now_add=True)
+	actualizado = models.DateField(auto_now=True)
 	# usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -16,8 +16,8 @@ class Aula(models.Model):
 	# tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
-	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)		
+	creado = models.DateTimeField(auto_now_add=True)
+	actualizado = models.DateTimeField(auto_now=True)		
 
 class Carrera(models.Model):
 	nombre = models.CharField(max_length=60)
@@ -38,16 +38,15 @@ class Pensum(models.Model):
 
 class Proyecto(models.Model):
 	nombre = models.CharField(max_length=60)
-	pensum = models.ForeignKey('Pensum', on_delete=models.CASCADE)
-	lapso_academico = models.CharField(max_length=10)
-	fecha = models.DateField()
-	fecha_memo = models.DateField(blank=True, null=True)
+	# lapso_academico = models.CharField(max_length=10)
+	fecha = models.DateField(auto_now_add=True)
+	# fecha_memo = models.DateField(blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)
-	created = models.DateTimeField(auto_now_add=True)
+	creado = models.DateTimeField(auto_now_add=True)
 	update = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return "%s - %s" % (self.nombre, self.lapso_academico)
+		return self.nombre
 
 
 class Materia(models.Model):
@@ -86,17 +85,21 @@ class BloqueHorario(models.Model):
 	def __str__(self):
 		return "%s:%s - %s:%s" % (self.hora_inicio, self.minutos_inicio, self.hora_fin, self.minutos_fin)
 
+# class Horario(models.Model):
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
+
 class Seccion(models.Model):
 	aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 	# @TODO: verificar el cambio de este campo
-	# numero = models.IntegerField()
+	numero = models.IntegerField()
 	materia = models.ForeignKey('Materia', on_delete=models.CASCADE)
 	proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	cupo = models.IntegerField()
 	turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
 	bloque = models.ForeignKey('BloqueHorario', on_delete=models.CASCADE)
-	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
+	creado = models.DateTimeField(auto_now_add=True)
+	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return "Seccion %s - %s" % (self.numero, self.materia)	
@@ -112,8 +115,8 @@ class Docente(models.Model):
 	estado = models.ForeignKey('Estado', on_delete=models.CASCADE)
 	municipio = models.ForeignKey('Estado', on_delete=models.CASCADE, related_name='estado_docente')
 	direccion = models.TextField(blank=True, null=True)
-	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
+	creado = models.DateTimeField(auto_now_add=True)
+	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return '%s %s CI: %s' % (self.nombres, self.apellidos, self.cedula)
@@ -179,8 +182,8 @@ class Turno(models.Model):
 # 	turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
 # 	# @TODO: consultar este cambio de haber agregado este campo aqui
 # 	bloque = models.ForeignKey('Bloque', on_delete=models.CASCADE)
-# 	created = models.DateTimeField(auto_now_add=True)
-# 	updated = models.DateTimeField(auto_now=True)
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
 
 # 	def __str__(self):
 # 		return "Seccion %s - %s" % (self.numero, self.materia)
@@ -225,8 +228,8 @@ class Municipio(models.Model):
 # 	estado = models.ForeignKey('Estado', on_delete=models.CASCADE)
 # 	municipio = models.ForeignKey('Estado', on_delete=models.CASCADE, related_name='estado_docente')
 # 	direccion = models.TextField(blank=True, null=True)
-# 	created = models.DateTimeField(auto_now_add=True)
-# 	updated = models.DateTimeField(auto_now=True)
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
 
 # 	def __str__(self):
 # 		return '%s %s CI: %s' % (self.nombres, self.apellidos, self.cedula)
@@ -265,8 +268,8 @@ class UbicacionAula(models.Model):
 # 	proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 # 	esquema_dia = models.ForeignKey('EsquemaDia', on_delete=models.CASCADE)
 # 	esquema_hora = models.ForeignKey('EsquemaHora', on_delete=models.CASCADE)
-# 	created = models.DateTimeField(auto_now_add=True)
-# 	updated = models.DateTimeField(auto_now=True)
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
 
 # 	def __str__(self):
 # 		return '%s - %s - %s' % (self.nombre, self.tipo_aula, self.ubicacion)
@@ -301,8 +304,8 @@ class UbicacionAula(models.Model):
 # 	hora = models.ForeignKey('Hora', on_delete=models.CASCADE)
 # 	activo = models.BooleanField(default=True)
 # 	# encuentros_seccion = models.ForeignKey('EncuentrosSeccion', on_delete=models.CASCADE)
-# 	created = models.DateTimeField(auto_now_add=True)
-# 	updated = models.DateTimeField(auto_now=True)
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
 
 # 	def __str__(self):
 # 		return '%s - %s' % (self.hora.inicio, self.hora.fin)
@@ -315,8 +318,8 @@ class UbicacionAula(models.Model):
 # 	dedicacion = models.CharField(max_length=50)
 # 	observacion = models.TextField()
 # 	estatus = models.BooleanField(default=True)
-# 	created = models.DateTimeField(auto_now_add=True)
-# 	updated = models.DateTimeField(auto_now=True)
+# 	creado = models.DateTimeField(auto_now_add=True)
+# 	actualizado = models.DateTimeField(auto_now=True)
 
 
 
