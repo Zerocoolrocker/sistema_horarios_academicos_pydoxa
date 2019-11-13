@@ -111,7 +111,11 @@
 					<div class="form-group">
 					  <label for="aula" class="col-sm-2 control-label">aula</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" name="aula" value="{% if form_data.aula %}{{form_data.aula.0}}{% endif %}" id="aula" placeholder="Seccion aula...">
+					    <select class="form-control" name="aula" value="{% if form_data.aula %}{{form_data.aula.0}}{% endif %}" id="aula" placeholder="Seccion aula...">
+					    	{% for aula in aulas %}
+					    		<option value='{{ aula.pk }}'>{{ aula.nombre }}</option>
+					    	{% endfor %}
+					   	</select>
 					  	{% if form_errors.aula %}
 						  	<span class='text-danger'>{{ form_errors.aula.0 }}</span>
 					  	{% endif %}					    
