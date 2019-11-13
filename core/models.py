@@ -97,6 +97,7 @@ class Minutos(models.Model):
 
 class Seccion(models.Model):
 	aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
+	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
 	# @TODO: verificar el cambio de este campo
 	numero = models.IntegerField()
 	materia = models.ForeignKey('Materia', on_delete=models.CASCADE)
@@ -116,7 +117,10 @@ class Seccion(models.Model):
 	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return "Seccion %s - %s" % (self.numero, self.materia)	
+		return "Seccion %s - %s" % (self.numero, self.materia)
+
+	def get_bloque_horario_display(self):
+		return '%02d:%02d - %02d:%02d' % (self.hora_inicio, self.minutos_inicio, self.hora_fin, self.minutos_fin)
 
 class Docente(models.Model):
 	cedula = models.IntegerField()
@@ -146,9 +150,9 @@ class TelefonoDocente(models.Model):
 	def __str__(self):
 		return self.telefono
 
-class DocentesSecciones(models.Model):
-	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
-	seccion = models.ForeignKey('Seccion', on_delete=models.CASCADE)
+# class DocentesSecciones(models.Model):
+# 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
+# 	seccion = models.ForeignKey('Seccion', on_delete=models.CASCADE)
 
 
 

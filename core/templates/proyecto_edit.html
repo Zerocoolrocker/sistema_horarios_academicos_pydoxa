@@ -16,15 +16,20 @@
 			<table class="table table-bordered">
 				<th>Sección</th>
 				<th>Materia</th>
+				<th>Bloque</th>
+				<th>Docente</th>
+				<th>Aula</th>
 
 				{% for sec in secciones %}
 				<tr>
 			    	<td align='center'>{{ sec.numero }}</td>
+			    	<td> <a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a> </td>
+			    	<td align='center'>{{ sec.get_bloque_horario_display }}</td>
+			    	<td align='center'>{{ sec.docente.nombres }}</td>
+			    	<td align='center'>{{ sec.aula }}</td>
 			    	<td>
-			    		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
 			    		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick="$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
 			    		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1%'>Editar</button></a>
-
 			    	</td>
 				</tr>
 				{% endfor %}
@@ -75,6 +80,16 @@
 					   	</select>
 					  </div>
 					</div>
+					<div class="form-group">
+					  <label for="docente" class="col-sm-2 control-label">docente</label>
+					  <div class="col-sm-10">
+					    <select class="form-control" name="docente" value="{% if form_data.docente %}{{form_data.docente.0}}{% endif %}" id="docente">
+					    	{% for docente in todos_docentes_pertinentes %}
+					    		<option value='{{ docente.pk }}'>{{ docente.nombres }}</option>
+					    	{% endfor %}
+					   	</select>
+					  </div>
+					</div>					
 					<div class="form-group">
 					  <label for="cupo" class="col-sm-2 control-label">cupos</label>
 					  <div class="col-sm-10">

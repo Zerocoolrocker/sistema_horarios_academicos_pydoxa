@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .models import Proyecto, Seccion, Materia, Turno, Aula
+from .models import Proyecto, Seccion, Materia, Turno, Aula, Docente
 # from .forms import ProyectoCreateForm
 
 
@@ -32,6 +32,8 @@ class ProyectoEditView(TemplateView):
         data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
         data['aulas'] = Aula.objects.all()
         data['todas_materias_pertinentes'] = Materia.objects.all()
+        # @TODO: filtrar docentes por area aqui
+        data['todos_docentes_pertinentes'] = Docente.objects.all()
         data['turnos'] = Turno.objects.all()
         return data
 
