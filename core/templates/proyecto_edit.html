@@ -70,7 +70,7 @@
 					<div class="form-group">
 					  <label for="numero" class="col-sm-2 control-label">número</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" name="numero" id="numero" placeholder="Seccion numero...">
+					    <input type="text" class="form-control" name="numero" value="{% if form_data.numero %}{{form_data.numero.0}}{% endif %}" id="numero" placeholder="Seccion numero...">
 					  	{% if form_errors.numero %}
 						  	<span class='text-danger'>{{ form_errors.numero.0 }}</span>
 					  	{% endif %}					    
@@ -79,7 +79,7 @@
 					<div class="form-group">
 					  <label for="materia" class="col-sm-2 control-label">materia</label>
 					  <div class="col-sm-10">
-					    <select class="form-control" name="materia" id="materia">
+					    <select class="form-control" name="materia" value="{% if form_data.materia %}{{form_data.materia.0}}{% endif %}" id="materia">
 					    	{% for materia in todas_materias_pertinentes %}
 					    		<option value='{{ materia.pk }}'>{{ materia.nombre }}</option>
 					    	{% endfor %}
@@ -89,7 +89,7 @@
 					<div class="form-group">
 					  <label for="cupo" class="col-sm-2 control-label">cupos</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" name="cupo" id="cupo" placeholder="Cupos">
+					    <input type="text" class="form-control" name="cupo" value="{% if form_data.cupo %}{{form_data.cupo.0}}{% endif %}" id="cupo" placeholder="Cupos">
 					  	{% if form_errors.cupo %}
 						  	<span class='text-danger'>{{ form_errors.cupo.0 }}</span>
 					  	{% endif %}					    
@@ -98,7 +98,7 @@
 					<div class="form-group">
 					  <label for="turno" class="col-sm-2 control-label">turno</label>
 					  <div class="col-sm-10">
-					    <select class="form-control" name="turno" id="turno">
+					    <select class="form-control" name="turno" value="{% if form_data.turno %}{{form_data.turno.0}}{% endif %}" id="turno">
 					    	{% for turno in turnos %}
 					    		<option value='{{ turno.pk }}'>{{ turno.nombre }}</option>
 					    	{% endfor %}
@@ -111,7 +111,7 @@
 					<div class="form-group">
 					  <label for="aula" class="col-sm-2 control-label">aula</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" name="aula" id="aula" placeholder="Seccion aula...">
+					    <input type="text" class="form-control" name="aula" value="{% if form_data.aula %}{{form_data.aula.0}}{% endif %}" id="aula" placeholder="Seccion aula...">
 					  	{% if form_errors.aula %}
 						  	<span class='text-danger'>{{ form_errors.aula.0 }}</span>
 					  	{% endif %}					    
@@ -120,13 +120,13 @@
 					<div class="form-group">
 					  <label for="hora_inicio" class="col-sm-2 control-label">hora de inicio</label>
 					  <div class="col-sm-4">
-					    <input type="text" class="form-control" name="hora_inicio" id="hora_inicio" placeholder="hora">
+					    <input type="text" class="form-control" name="hora_inicio" value="{% if form_data.hora_inicio %}{{form_data.hora_inicio.0}}{% endif %}" id="hora_inicio" placeholder="hora">
 					  	{% if form_errors.hora_inicio %}
 						  	<span class='text-danger'>{{ form_errors.hora_inicio.0 }}</span>
 					  	{% endif %}					    
 					  </div>
 					  <div class="col-sm-4">
-					    <input type="text" class="form-control" name="minutos_inicio" id="minutos_inicio" placeholder="minutos">
+					    <input type="text" class="form-control" name="minutos_inicio" value="{% if form_data.minutos_inicio %}{{form_data.minutos_inicio.0}}{% endif %}" id="minutos_inicio" placeholder="minutos">
 					  	{% if form_errors.minutos_inicio %}
 						  	<span class='text-danger'>{{ form_errors.minutos_inicio.0 }}</span>
 					  	{% endif %}					    
@@ -135,13 +135,13 @@
 					<div class="form-group">
 					  <label for="hora_fin" class="col-sm-2 control-label">hora de salida</label>
 					  <div class="col-sm-4">
-					    <input type="text" class="form-control" name="hora_fin" id="hora_fin" placeholder="hora">
+					    <input type="text" class="form-control" name="hora_fin" value="{% if form_data.hora_fin %}{{form_data.hora_fin.0}}{% endif %}" id="hora_fin" placeholder="hora">
 					  	{% if form_errors.hora_fin %}
 						  	<span class='text-danger'>{{ form_errors.hora_fin.0 }}</span>
 					  	{% endif %}					    
 					  </div>
 					  <div class="col-sm-4">
-					    <input type="text" class="form-control" name="minutos_fin" id="minutos_fin" placeholder="minutos">
+					    <input type="text" class="form-control" name="minutos_fin" value="{% if form_data.minutos_fin %}{{form_data.minutos_fin.0}}{% endif %}" id="minutos_fin" placeholder="minutos">
 					  	{% if form_errors.minutos_fin %}
 						  	<span class='text-danger'>{{ form_errors.minutos_fin.0 }}</span>
 					  	{% endif %}					    

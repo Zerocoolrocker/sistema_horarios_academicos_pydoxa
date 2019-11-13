@@ -23,6 +23,7 @@ class ProyectoEditView(TemplateView):
 		data = super(ProyectoEditView, self).get_context_data(*args, **kwargs)
 		data['proyecto'] = self.proyecto
 		data['form_errors'] = self.request.session.pop('form_errors', False)
+		data['form_data'] = self.request.session.pop('form_data', False)
 		data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
 		data['todas_materias_pertinentes'] = Materia.objects.all()
 		data['turnos'] = Turno.objects.all()
@@ -46,6 +47,7 @@ class SeccionCreateView(CreateView):
 
 	def form_invalid(self, form, **kwars):
 		self.request.session['form_errors'] = dict(form.errors)
+		self.request.session['form_data'] = dict(form.data)
 		return HttpResponseRedirect('/proyecto/%s/' % dict(form.data)['proyecto'][0])
 
 class ConfirmacionEliminacionSeccionView(TemplateView):
