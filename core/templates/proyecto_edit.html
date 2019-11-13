@@ -24,8 +24,7 @@
 	        	<td>
 	        		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
 	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick="$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
-	        		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1
-	        			%'>Editar</button></a>
+	        		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1%'>Editar</button></a>
 
 	        	</td>
         	</tr>
