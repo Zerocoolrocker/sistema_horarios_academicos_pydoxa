@@ -17,7 +17,10 @@ class Aula(models.Model):
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	creado = models.DateTimeField(auto_now_add=True)
-	actualizado = models.DateTimeField(auto_now=True)		
+	actualizado = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.nombre	
 
 class Carrera(models.Model):
 	nombre = models.CharField(max_length=60)
@@ -38,6 +41,9 @@ class Pensum(models.Model):
 
 class Proyecto(models.Model):
 	nombre = models.CharField(max_length=60)
+
+	# usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
 	# lapso_academico = models.CharField(max_length=10)
 	fecha = models.DateField(auto_now_add=True)
 	# fecha_memo = models.DateField(blank=True, null=True)
@@ -68,22 +74,22 @@ class Horas(models.Model):
 	hora = models.IntegerField()
 
 	def __str__(self):
-		return self.horas	
+		return str(self.hora)	
 
 class Minutos(models.Model):
 	minutos = models.IntegerField(default=0)
 
 	def __str__(self):
-		return self.mintos	
+		return str(self.minutos)	
 
-class BloqueHorario(models.Model):
-	hora_inicio = models.ForeignKey('Horas', related_name='hora_inicio_bloque', on_delete=models.CASCADE)
-	minutos_inicio = models.ForeignKey('Minutos', related_name='minutos_inicio_bloque', on_delete=models.CASCADE)
-	hora_fin = models.ForeignKey('Horas', on_delete=models.CASCADE)
-	minutos_fin = models.ForeignKey('Minutos', on_delete=models.CASCADE)
+# class BloqueHorario(models.Model):
+# 	hora_inicio = models.ForeignKey('Horas', related_name='hora_inicio_bloque', on_delete=models.CASCADE)
+# 	minutos_inicio = models.ForeignKey('Minutos', related_name='minutos_inicio_bloque', on_delete=models.CASCADE)
+# 	hora_fin = models.ForeignKey('Horas', on_delete=models.CASCADE)
+# 	minutos_fin = models.ForeignKey('Minutos', on_delete=models.CASCADE)
 
-	def __str__(self):
-		return "%s:%s - %s:%s" % (self.hora_inicio, self.minutos_inicio, self.hora_fin, self.minutos_fin)
+# 	def __str__(self):
+# 		return "%s:%s - %s:%s" % (self.hora_inicio, self.minutos_inicio, self.hora_fin, self.minutos_fin)
 
 # class Horario(models.Model):
 # 	creado = models.DateTimeField(auto_now_add=True)
@@ -97,7 +103,11 @@ class Seccion(models.Model):
 	proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	cupo = models.IntegerField()
 	turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
-	bloque = models.ForeignKey('BloqueHorario', on_delete=models.CASCADE)
+	# bloque = models.ForeignKey('BloqueHorario', on_delete=models.CASCADE)
+	hora_inicio = models.ForeignKey('Horas', related_name='hora_inicio_bloque', on_delete=models.CASCADE)
+	minutos_inicio = models.ForeignKey('Minutos', related_name='minutos_inicio_bloque', on_delete=models.CASCADE)
+	hora_fin = models.ForeignKey('Horas', on_delete=models.CASCADE)
+	minutos_fin = models.ForeignKey('Minutos', on_delete=models.CASCADE)	
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
@@ -247,7 +257,7 @@ class Municipio(models.Model):
 
 class UbicacionAula(models.Model):
 	nombre = models.CharField(max_length=60)
-	descripcion = models.TextField()
+	descripcion = models.TextField(blank=True, null=True)
 
 	def __str__(self):
 		return self.nombre	

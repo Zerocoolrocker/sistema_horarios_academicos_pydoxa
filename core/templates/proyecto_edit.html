@@ -24,12 +24,20 @@
         <table class="table table-bordered">
         	<th>Sección</th>
         	<th>Materia</th>
+
         	{% for sec in secciones %}
-        	
-        	<td>{{ sec.numero }}</td>
-        	<td>{{ sec.materia }}</td>
-        	
+        	<tr>
+	        	<td align='center'>{{ sec.numero }}</td>
+	        	<td>
+	        		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
+	        		<a href="/admin/core/seccion/{{ sec.pk }}/delete/">
+	        			<i class="fa fa-times" style='color: red !important; margin-left: 2%'></i>
+	        		</a>
+
+	        	</td>
+        	</tr>
         	{% endfor %}
+
         </table>
 
 
@@ -53,38 +61,54 @@
       </div>
 
 
-	    <form method='POST' action='/proyecto/' class='form-horizontal'>
+	    <form method='POST' action='/seccion/' class='form-horizontal'>
 			<div class="modal-body">
 	      	  	{% csrf_token %}
 				<div class="box-body">
 					<div class="form-group">
 					  <label for="numero" class="col-sm-2 control-label">número</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" id="numero" placeholder="Seccion numero...">
+					    <input type="text" class="form-control" name="numero" id="numero" placeholder="Seccion numero...">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <label for="materia" class="col-sm-2 control-label">materia</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" id="materia" placeholder="Materia">
+					    <select class="form-control" name="materia" id="materia">
+					    	{% for materia in todas_materias_pertinentes %}
+					    		<option value='{{ materia.pk }}'>{{ materia.nombre }}</option>
+					    	{% endfor %}
+					   	</select>
 					  </div>
 					</div>
 					<div class="form-group">
 					  <label for="cupo" class="col-sm-2 control-label">cupos</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" id="cupo" placeholder="Cupos">
+					    <input type="text" class="form-control" name="cupo" id="cupo" placeholder="Cupos">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <label for="turno" class="col-sm-2 control-label">turno</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" id="turno" placeholder="Turno">
+					    <input type="text" class="form-control" name="turno" id="turno" placeholder="Turno">
 					  </div>
 					</div>
 					<div class="form-group">
-					  <label for="bloque" class="col-sm-2 control-label">bloque</label>
-					  <div class="col-sm-10">
-					    <input type="text" class="form-control" id="bloque" placeholder="Bloque horario">
+					  <label for="hora_inicio" class="col-sm-2 control-label">hora de inicio</label>
+					  <div class="col-sm-4">
+					    <input type="text" class="form-control" name="hora_inicio" id="hora_inicio" placeholder="hora">
+					  </div>
+					  <div class="col-sm-4">
+					    <input type="text" class="form-control" name="minutos_inicio" id="minutos_inicio" placeholder="minutos">
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label for="hora_fin" class="col-sm-2 control-label">hora de salida</label>
+					  <div class="col-sm-4">
+					    <input type="text" class="form-control" name="hora_fin" id="hora_fin" placeholder="hora">
+					  </div>
+					  <div class="col-sm-4">
+					    <input type="text" class="form-control" name="minutos_fin" id="minutos_fin" placeholder="minutos">
 					  </div>
 					</div>
 				</div>
@@ -94,6 +118,28 @@
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
         </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
+      </div>
+      <form method='POST' action='/proyecto/'>
+      	  {% csrf_token %}
+	      <div class="modal-body">
+	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="submit" class="btn btn-primary">Guardar</button>
+	      </div>
+      </form>
     </div>
   </div>
 </div>

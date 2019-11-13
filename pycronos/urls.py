@@ -21,6 +21,7 @@ from core.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('proyecto/', ProyectoCreateView.as_view(), name='dashboard'),
-    path('proyecto/<int:pk>/', ProyectoEditView.as_view(), name='dashboard'),
+    path('proyecto/<int:pk>/', ProyectoEditView.as_view(), name='editar_proyecto'),
+    path('seccion/', SeccionCreateView.as_view(), name='crear_seccion'),
     path('', DashboardView.as_view(), name='project-edit'),
 ]
