@@ -11,7 +11,7 @@
         </div>
         <div class="box-body">
           <span class="pull-right">
-          	<button class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button>
+          	<button class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal" onclick="$('#formularioSeccion').attr('action', '/seccion/'); $('#formularioSeccion input').add('#formularioSeccion select').val('')">Agregar sección</button>
       	  </span>
         </div>
         <table class="table table-bordered">
@@ -23,8 +23,9 @@
 	        	<td align='center'>{{ sec.numero }}</td>
 	        	<td>
 	        		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
-	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick = "$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
-	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1%' data-seccion="{{ sec.pk }}" onclick = "$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Editar</button></a>
+	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick="$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
+	        		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1
+	        			%'>Editar</button></a>
 
 	        	</td>
         	</tr>
@@ -44,16 +45,14 @@
 
 
 <!-- Modal -->
-<div class="modal {% if form_errors %}show{% else %}fade{% endif %}" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal {% if form_errors or update_action %}show{% else %}fade{% endif %}" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick = "$('.modal').removeClass('show').addClass('fade');">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="$('.modal').removeClass('show').addClass('fade');">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Agregar sección</h4>
       </div>
-
-
-	    <form method='POST' action='/seccion/' class='form-horizontal'>
+	    <form id="formularioSeccion" method='POST' action='{% if update_action %}/seccion/{{ form_data.id.0 }}/update/{% else %}/seccion/{% endif %}' class='form-horizontal'>
 			<div class="modal-body">
 	      	  	{% csrf_token %}
 	      	  	<input hidden name="proyecto" value="{{ proyecto.pk }}">
@@ -145,7 +144,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" onclick = "$('.modal').removeClass('show').addClass('fade');">Cancelar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('.modal').removeClass('show').addClass('fade');">Cancelar</button>
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
         </form>
