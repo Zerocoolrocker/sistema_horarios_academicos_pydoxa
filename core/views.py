@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView, View
+from django.views.generic.edit import CreateView, DeleteView
 
-from .models import Proyecto, Seccion, Materia
+from .models import Proyecto, Seccion, Materia, Turno
 # from .forms import ProyectoCreateForm
 
 
@@ -21,9 +21,11 @@ class ProyectoEditView(TemplateView):
 
 	def get_context_data(self, *args, **kwargs):
 		data = super(ProyectoEditView, self).get_context_data(*args, **kwargs)
-		data['proyecto'] = self.proyecto.nombre
+		data['proyecto'] = self.proyecto
+		data['form_errors'] = self.request.session.pop('form_errors', False)
 		data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
 		data['todas_materias_pertinentes'] = Materia.objects.all()
+		data['turnos'] = Turno.objects.all()
 		return data
 
 class ProyectoCreateView(CreateView):
@@ -42,4 +44,21 @@ class SeccionCreateView(CreateView):
 	def get_success_url(self, *args, **kwars):
 		return '/proyecto/%s/' % self.object.proyecto.pk
 
+	def form_invalid(self, form, **kwars):
+		self.request.session['form_errors'] = dict(form.errors)
+		return HttpResponseRedirect('/proyecto/%s/' % dict(form.data)['proyecto'][0])
+
+class ConfirmacionEliminacionSeccionView(TemplateView):
+	template_name = 'seccion_confirm_delete.html'
+
+class SeccionDeleteView(View):
+	model = Seccion
+
+	def get(self, *args, **kwargs):
+		if 'pk' in kwargs and self.model.objects.filter(pk=kwargs['pk']).exists():
+			self.object = self.model.objects.get(pk=kwargs['pk'])
+			proyecto = self.object.proyecto.pk
+			self.object.delete()
+			return HttpResponseRedirect('/proyecto/%s/' % proyecto  ) 
+		return HttpResponseRedirect('/')
 

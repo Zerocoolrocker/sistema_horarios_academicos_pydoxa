@@ -23,5 +23,7 @@ urlpatterns = [
     path('proyecto/', ProyectoCreateView.as_view(), name='dashboard'),
     path('proyecto/<int:pk>/', ProyectoEditView.as_view(), name='editar_proyecto'),
     path('seccion/', SeccionCreateView.as_view(), name='crear_seccion'),
+    # path('seccion/<int:pk>/delete/', ConfirmacionEliminacionSeccionView.as_view(), name='eliminar_seccion'),
+    path('seccion/<int:pk>/delete/', SeccionDeleteView.as_view(), name='eliminar_seccion'),
     path('', DashboardView.as_view(), name='project-edit'),
 ]

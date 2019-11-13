@@ -2,12 +2,14 @@
 
 {% block title %}Editar proyecto{% endblock %}
 {% block content %}
-    <h1>{{ proyecto }}</h1>
+    <h1>{{ proyecto.nombre }}</h1>
 
 
 <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Secciones</h3>
+
+
 
           <!-- <div class="box-tools pull-right"> -->
             <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"> -->
@@ -30,9 +32,8 @@
 	        	<td align='center'>{{ sec.numero }}</td>
 	        	<td>
 	        		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
-	        		<a href="/admin/core/seccion/{{ sec.pk }}/delete/">
-	        			<i class="fa fa-times" style='color: red !important; margin-left: 2%'></i>
-	        		</a>
+	        		<!-- <a href="/seccion/{{ sec.pk }}/delete/"> <i class="fa fa-times" style='color: red !important; margin-left: 2%'></i> </a> -->
+	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><i class="fa fa-times" style='color: red !important; margin-left: 2%' data-seccion="{{ sec.pk }}" onclick = "$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')"></i></a>
 
 	        	</td>
         	</tr>
@@ -52,11 +53,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal {% if form_errors %}show{% else %}fade{% endif %}" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick = "$('.modal').removeClass('show').addClass('fade');">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Agregar sección</h4>
       </div>
 
@@ -64,11 +65,15 @@
 	    <form method='POST' action='/seccion/' class='form-horizontal'>
 			<div class="modal-body">
 	      	  	{% csrf_token %}
+	      	  	<input hidden name="proyecto" value="{{ proyecto.pk }}">
 				<div class="box-body">
 					<div class="form-group">
 					  <label for="numero" class="col-sm-2 control-label">número</label>
 					  <div class="col-sm-10">
 					    <input type="text" class="form-control" name="numero" id="numero" placeholder="Seccion numero...">
+					  	{% if form_errors.numero %}
+						  	<span class='text-danger'>{{ form_errors.numero.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					</div>
 					<div class="form-group">
@@ -85,36 +90,67 @@
 					  <label for="cupo" class="col-sm-2 control-label">cupos</label>
 					  <div class="col-sm-10">
 					    <input type="text" class="form-control" name="cupo" id="cupo" placeholder="Cupos">
+					  	{% if form_errors.cupo %}
+						  	<span class='text-danger'>{{ form_errors.cupo.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					</div>
 					<div class="form-group">
 					  <label for="turno" class="col-sm-2 control-label">turno</label>
 					  <div class="col-sm-10">
-					    <input type="text" class="form-control" name="turno" id="turno" placeholder="Turno">
+					    <select class="form-control" name="turno" id="turno">
+					    	{% for turno in turnos %}
+					    		<option value='{{ turno.pk }}'>{{ turno.nombre }}</option>
+					    	{% endfor %}
+					   	</select>
+					  	{% if form_errors.turno %}
+						  	<span class='text-danger'>{{ form_errors.turno.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					</div>
+					<div class="form-group">
+					  <label for="aula" class="col-sm-2 control-label">aula</label>
+					  <div class="col-sm-10">
+					    <input type="text" class="form-control" name="aula" id="aula" placeholder="Seccion aula...">
+					  	{% if form_errors.aula %}
+						  	<span class='text-danger'>{{ form_errors.aula.0 }}</span>
+					  	{% endif %}					    
+					  </div>
+					</div>					
 					<div class="form-group">
 					  <label for="hora_inicio" class="col-sm-2 control-label">hora de inicio</label>
 					  <div class="col-sm-4">
 					    <input type="text" class="form-control" name="hora_inicio" id="hora_inicio" placeholder="hora">
+					  	{% if form_errors.hora_inicio %}
+						  	<span class='text-danger'>{{ form_errors.hora_inicio.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					  <div class="col-sm-4">
 					    <input type="text" class="form-control" name="minutos_inicio" id="minutos_inicio" placeholder="minutos">
+					  	{% if form_errors.minutos_inicio %}
+						  	<span class='text-danger'>{{ form_errors.minutos_inicio.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					</div>
 					<div class="form-group">
 					  <label for="hora_fin" class="col-sm-2 control-label">hora de salida</label>
 					  <div class="col-sm-4">
 					    <input type="text" class="form-control" name="hora_fin" id="hora_fin" placeholder="hora">
+					  	{% if form_errors.hora_fin %}
+						  	<span class='text-danger'>{{ form_errors.hora_fin.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					  <div class="col-sm-4">
 					    <input type="text" class="form-control" name="minutos_fin" id="minutos_fin" placeholder="minutos">
+					  	{% if form_errors.minutos_fin %}
+						  	<span class='text-danger'>{{ form_errors.minutos_fin.0 }}</span>
+					  	{% endif %}					    
 					  </div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick = "$('.modal').removeClass('show').addClass('fade');">Cancelar</button>
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
         </form>
@@ -142,6 +178,32 @@
       </form>
     </div>
   </div>
+</div>
+
+
+<div id="deleteConfirmationModal" class="modal fade" style="display: none;">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<div class="icon-box">
+					<center>
+						<i class="fa fa-times-circle fa-4x" style='color: red !important'></i>
+						<h4 class="modal-title">Esta seguro?</h4>	
+					</center>
+				</div>				
+			</div>
+			<div class="modal-body">
+				<p>Realmente quiere eliminar este registro?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+				<a id="confirmarEliminarSeccion">
+					<button type="button" class="btn btn-danger">Eliminar</button>
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 
