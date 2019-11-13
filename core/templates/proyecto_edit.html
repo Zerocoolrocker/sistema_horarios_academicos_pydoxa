@@ -2,35 +2,35 @@
 
 {% block title %}Editar proyecto{% endblock %}
 {% block content %}
-    <h1>{{ proyecto.nombre }}</h1>
+    <h2>{{ proyecto.nombre }}</h2>
 
 
 <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Secciones</h3>
-        </div>
-        <div class="box-body">
           <span class="pull-right">
           	<button class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal" onclick="$('#formularioSeccion').attr('action', '/seccion/'); $('#formularioSeccion input').add('#formularioSeccion select').val('')">Agregar sección</button>
       	  </span>
         </div>
-        <table class="table table-bordered">
-        	<th>Sección</th>
-        	<th>Materia</th>
+        <div class="box-body">
+			<table class="table table-bordered">
+				<th>Sección</th>
+				<th>Materia</th>
 
-        	{% for sec in secciones %}
-        	<tr>
-	        	<td align='center'>{{ sec.numero }}</td>
-	        	<td>
-	        		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
-	        		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick="$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
-	        		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1%'>Editar</button></a>
+				{% for sec in secciones %}
+				<tr>
+			    	<td align='center'>{{ sec.numero }}</td>
+			    	<td>
+			    		<a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a>
+			    		<a href="#deleteConfirmationModal" class="trigger-btn" data-toggle="modal"><button class="btn btn-danger pull-right" style='margin-right: 2%' data-seccion="{{ sec.pk }}" onclick="$('#confirmarEliminarSeccion').attr('href', '/seccion/' + $(this).attr('data-seccion') + '/delete')">Eliminar</button></a>
+			    		<a href="/seccion/{{ sec.pk }}/update/" class="trigger-btn" data-toggle="modal"><button class="btn btn-info pull-right" style='margin-right: 1%'>Editar</button></a>
 
-	        	</td>
-        	</tr>
-        	{% endfor %}
+			    	</td>
+				</tr>
+				{% endfor %}
 
-        </table>
+			</table>
+        </div>
 
 
 
