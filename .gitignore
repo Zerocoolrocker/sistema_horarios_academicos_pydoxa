@@ -1,7 +1,4 @@
 *.pyc
 *.sqlite3
 local_settings.py
-staticfiles/admin
-staticfiles/admin-lte
-staticfiles/bootstrap
-staticfiles/font-awesome
+staticfiles/*
