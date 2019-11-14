@@ -85,22 +85,18 @@ WSGI_APPLICATION = 'pycronos.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'ec2-174-129-253-45.compute-1.amazonaws.com',
+        'PORT': '5432',
+        'USER': 'juzmalzzpxihtz',
+        'NAME': 'd6qg6el3l7g6of',
+        'PASSWORD': '8685a11cc9281f4e0227f20c844553988edbc718eded86ae4666fc8bf9b99157',
     }
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'HOST': 'ec2-50-19-127-115.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#         'USER': 'brthasdasd',
-#         'NAME': 'd648adadasd',
-#         'PASSWORD': '824656c49d53a354asdadadasdadadadfgfgfgf',
-# 
-# #        'TEST': {
-# #            'NAME': 'mytestdatabase',
-# #        },
-#     }
 
 
 
@@ -150,3 +146,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+try:
+    from .local_settings import *
+except:
+    import traceback
+    traceback.print_exc()
