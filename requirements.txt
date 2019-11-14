@@ -4,3 +4,4 @@ sqlparse==0.3.0
 whitenoise==4.1.4
 django-adminlte2==0.4.1
 psycopg2
+gunicorn
