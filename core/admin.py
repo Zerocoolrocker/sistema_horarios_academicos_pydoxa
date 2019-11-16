@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
+from django.contrib.admin.utils import quote
+from django.contrib.admin.views.main import ChangeList
 
 import core.models
 
 for modelo in dir(core.models):
-    if getattr(core.models, modelo).__class__.__name__ == 'ModelBase' and getattr(core.models, modelo).__name__ != 'User':
+    if getattr(core.models, modelo).__class__.__name__ == 'ModelBase' and getattr(core.models, modelo).__name__ not in ['User', 'Proyecto']:
         try:
             admin.site.register(getattr(core.models, modelo))
         except:
@@ -30,4 +32,19 @@ class LogEntryAdmin(admin.ModelAdmin):
     #     del actions['delete_selected']
     #     return actions
 
+
+class ProyectoChangeList(ChangeList):
+    def url_for_result(self, result):
+        return '/proyecto/%d/' % (quote(result.pk))
+
+    def get_model(self):
+        return self.model.__name__
+
+class ProyectoModelAdmin(admin.ModelAdmin):
+    def get_changelist(self, request, **kwargs):
+        return ProyectoChangeList
+
+
+
 admin.site.register(LogEntry, LogEntryAdmin)
+admin.site.register(core.models.Proyecto, ProyectoModelAdmin)
