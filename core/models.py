@@ -13,7 +13,7 @@ class Area(models.Model):
 
 class Aula(models.Model):
 	nombre = models.CharField(max_length=60, blank=True, null=True)
-	# tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
+	tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	creado = models.DateTimeField(auto_now_add=True)
@@ -96,23 +96,23 @@ class Minutos(models.Model):
 # 	actualizado = models.DateTimeField(auto_now=True)
 
 class Seccion(models.Model):
-	aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
+	# aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
 	# @TODO: verificar el cambio de este campo
 	numero = models.IntegerField()
 	materia = models.ForeignKey('Materia', on_delete=models.CASCADE)
 	proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	cupo = models.IntegerField()
-	turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
+	# turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
 	# bloque = models.ForeignKey('BloqueHorario', on_delete=models.CASCADE)
 	# hora_inicio = models.ForeignKey('Horas', related_name='hora_inicio_bloque', on_delete=models.CASCADE)
 	# minutos_inicio = models.ForeignKey('Minutos', related_name='minutos_inicio_bloque', on_delete=models.CASCADE)
-	hora_inicio = models.IntegerField()
-	minutos_inicio = models.IntegerField()
+	# hora_inicio = models.IntegerField()
+	# minutos_inicio = models.IntegerField()
 	# hora_fin = models.ForeignKey('Horas', on_delete=models.CASCADE)
 	# minutos_fin = models.ForeignKey('Minutos', on_delete=models.CASCADE)
-	hora_fin = models.IntegerField()
-	minutos_fin = models.IntegerField()		
+	# hora_fin = models.IntegerField()
+	# minutos_fin = models.IntegerField()		
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
@@ -206,18 +206,24 @@ class Turno(models.Model):
 # 	def __str__(self):
 # 		return "Seccion %s - %s" % (self.numero, self.materia)
 
-# class TipoAula(models.Model):
-# 	nombre = models.CharField(max_length=60)
-# 	descripcion = models.TextField(blank=True, null=True)
-# 	modalidad = models.IntegerField()
+class TipoAula(models.Model):
+	nombre = models.CharField(max_length=60)
+	descripcion = models.TextField(blank=True, null=True)
+	modalidad = = models.CharField(max_length=2, choices=(
+		('pr', 'Presencial'),
+		('vi', 'Virtual'),
+	), default='pr')
 
-# 	def __str__(self):
-# 		return self.nombre	
+	def __str__(self):
+		return self.nombre	
 
-# class Encuentro(models.Model):
-# 	# materia = models.ForeignKey('Materia', on_delete=models.CASCADE)
-# 	cant_horas = models.IntegerField()
-# 	tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
+class Encuentro(models.Model):
+	cant_horas = models.IntegerField()
+	hora = models.ForeignKey('Hora', on_delete=models.CASCADE)
+	tipo_aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
+	seccion = models.ForeignKey('Seccion', on_delete=models.CASCADE)
+	# turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
+
 
 # class EncuentrosSeccion(models.Model):
 # 	seccion = models.ForeignKey('Seccion', on_delete=models.CASCADE)
@@ -274,10 +280,9 @@ class UbicacionAula(models.Model):
 # class EsquemaDia(models.Model):
 # 	nombre = models.CharField(max_length=60)
 
-# # @TODO: entender el uso de esta tabla
-# class EsquemaHora(models.Model):
-# 	nombre = models.CharField(max_length=60)
-# 	sep_num = models.IntegerField(null=True)
+class EsquemaHora(models.Model):
+	nombre = models.CharField(max_length=60)
+	# sep_num = models.IntegerField(null=True)
 
 # class Aula(models.Model):
 # 	nombre = models.CharField(max_length=60)
@@ -298,35 +303,32 @@ class UbicacionAula(models.Model):
 # 	nombre = models.CharField(max_length=12)
 # 	esquema_dia = models.ForeignKey('EsquemaDia', on_delete=models.CASCADE)
 
-# class Hora(models.Model):
-# 	# @TODO: entender el uso de este campo
-# 	numero = models.IntegerField(null=True)
-# 	inicio = models.TimeField(null=True)
-# 	fin = models.TimeField(null=True)
-# 	# @TODO: entender el uso de este campo
-# 	esquema_hora = models.ForeignKey('EsquemaHora', on_delete=models.CASCADE)
+class Hora(models.Model):
+	numero = models.IntegerField(null=True)
+	inicio = models.TimeField(null=True)
+	fin = models.TimeField(null=True)
+	esquema_hora = models.ForeignKey('EsquemaHora', on_delete=models.CASCADE)
 
-# 	def __str__(self):
-# 		return '%s - %s' % (self.inicio, self.fin)
+	def __str__(self):
+		return '%s - %s' % (self.inicio, self.fin)
 
 # class HorasTurnos(models.Model):
 # 	hora = models.ForeignKey('Hora', on_delete=models.CASCADE)
 # 	turno = models.ForeignKey('Turno', on_delete=models.CASCADE)
 
 
-# # @TODO: esta tabla y la de hora quizas sean redundantes
-# class Bloque(models.Model):
-# 	# aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
-# 	# @TODO: entender el uso de este campo
-# 	dia = models.ForeignKey('Dia', on_delete=models.CASCADE)
-# 	hora = models.ForeignKey('Hora', on_delete=models.CASCADE)
-# 	activo = models.BooleanField(default=True)
-# 	# encuentros_seccion = models.ForeignKey('EncuentrosSeccion', on_delete=models.CASCADE)
-# 	creado = models.DateTimeField(auto_now_add=True)
-# 	actualizado = models.DateTimeField(auto_now=True)
+# @TODO: esta tabla y la de hora quizas sean redundantes
+class Bloque(models.Model):
+	aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
+	dia = models.ForeignKey('Dia', on_delete=models.CASCADE)
+	hora = models.ForeignKey('Hora', on_delete=models.CASCADE)
+	activo = models.BooleanField(default=True)
+	# encuentros_seccion = models.ForeignKey('EncuentrosSeccion', on_delete=models.CASCADE)
+	creado = models.DateTimeField(auto_now_add=True)
+	actualizado = models.DateTimeField(auto_now=True)
 
-# 	def __str__(self):
-# 		return '%s - %s' % (self.hora.inicio, self.hora.fin)
+	def __str__(self):
+		return '%s - %s' % (self.hora.inicio, self.hora.fin)
 
 # class Ficha(models.Model):
 # 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
