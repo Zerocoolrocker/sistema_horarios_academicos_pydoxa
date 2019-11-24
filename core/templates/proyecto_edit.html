@@ -5,11 +5,25 @@
     <h2>{{ proyecto.nombre }}</h2>
 
 
+{% block javascript %}
+	{{ block.super }}
+	<script type="text/javascript">
+
+$('#agregarSeccion').click(function(e){
+	$('#formularioSeccion').attr('action', '/seccion/'); 
+	$('#formularioSeccion input').add('#formularioSeccion select').not('[name="csrfmiddlewaretoken"]').not('[name="proyecto"]').val('')
+
+});
+
+	</script>
+
+{% endblock %}
+
 <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Secciones</h3>
           <span class="pull-right">
-          	<button class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal" onclick="$('#formularioSeccion').attr('action', '/seccion/'); $('#formularioSeccion input').add('#formularioSeccion select').val('')">Agregar sección</button>
+          	<button id="agregarSeccion" class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button>
       	  </span>
         </div>
         <div class="box-body">
