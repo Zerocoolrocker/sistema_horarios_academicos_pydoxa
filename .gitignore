@@ -2,3 +2,4 @@
 *.sqlite3
 local_settings.py
 staticfiles/*
+ER_Diagram.png
