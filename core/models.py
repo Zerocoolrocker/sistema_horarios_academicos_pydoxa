@@ -1,6 +1,10 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
+def to_timedelta(time_obj):
+	return datetime.timedelta(hours=time_obj.hour, minutes=time_obj.minute, seconds=time_obj.second)
 
 class Area(models.Model):
 	nombre = models.CharField(max_length=100)
@@ -384,10 +388,8 @@ class Bloque(models.Model):
 	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		h = self.hora_inicio.hour + self.esquema_bloque.duracion.hour
-		m = self.hora_inicio.minute + self.esquema_bloque.duracion.minute
-		s = self.hora_inicio.second + self.esquema_bloque.duracion.second
-		return '%s - %02d:%02d:%02d' % (self.hora_inicio, h, m, s)
+		hora_salida = to_timedelta(self.hora_inicio) + to_timedelta(self.esquema_bloque.duracion)
+		return '%s - %s' % (self.hora_inicio, hora_salida)
 
 # class Ficha(models.Model):
 # 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
