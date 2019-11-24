@@ -31,11 +31,12 @@ class ProyectoEditView(TemplateView):
             data['form_data'] = self.request.session.pop('update_form_data', False)
             data['update_action'] = True
         if data['mostrar_modal'] == 'encuentro_create':
-            seccion_enc = self.request.session.pop('seccion_encuentro')
-            data['encuentros_dias'] = EncuentrosDias.objects.filter(encuentro__seccion__pk=seccion_enc)
+            data['seccion_encuentro'] = self.request.session.pop('seccion_encuentro')
+            data['encuentros_dias'] = EncuentrosDias.objects.filter(encuentro__seccion__pk=data['seccion_encuentro'])
         data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
         data['bloques'] = Bloque.objects.filter()
         data['aulas'] = Aula.objects.all()
+        data['dias'] = Dia.objects.all()
         data['tipos_encuentros'] = (
             ('pr', 'Presencial'),
             ('vi', 'Virtual'),
@@ -63,6 +64,7 @@ class SeccionCreateView(CreateView):
         return '/proyecto/%s/' % self.object.proyecto.pk
 
     def form_invalid(self, form, **kwars):
+        self.request.session['mostrar_modal'] = 'seccion_create'
         self.request.session['form_errors'] = dict(form.errors)
         self.request.session['form_data'] = dict(form.data)
         return HttpResponseRedirect('/proyecto/%s/' % dict(form.data)['proyecto'][0])
@@ -96,6 +98,7 @@ class SeccionUpdateView(UpdateView):
         if 'pk' in kwargs and self.model.objects.filter(pk=kwargs['pk']).exists():
             seccion = self.model.objects.get(pk=kwargs['pk'])
             self.request.session['update_form_data'] = {key:[value] for key, value in seccion.__dict__.items() if is_serializable(value)}
+            self.request.session['mostrar_modal'] = 'seccion_create'
             return HttpResponseRedirect('/proyecto/%s/' % seccion.proyecto.pk  ) 
         return HttpResponseRedirect('/')
 
@@ -113,6 +116,12 @@ class EncuentroCreateView(CreateView):
         self.request.session['seccion_encuentro'] = self.object.seccion.pk
         return '/proyecto/%s/' % self.object.seccion.proyecto.pk
 
+    def form_valid(self, form, **kwars):
+        res = super(EncuentroCreateView, self).form_valid(form, **kwars)
+        EncuentrosDias.objects.create(encuentro=self.object, dia=Dia.objects.get(pk=form.data['dia'][0]))
+        return res
+
+
     def form_invalid(self, form, **kwars):
         seccion = Seccion.objects.get(pk=dict(form.data)['seccion'][0])
         self.request.session['mostrar_modal'] = 'encuentro_create'
@@ -120,6 +129,16 @@ class EncuentroCreateView(CreateView):
         self.request.session['form_errors'] = dict(form.errors)
         self.request.session['form_data'] = dict(form.data)
         return HttpResponseRedirect('/proyecto/%s/' % seccion.proyecto.pk)
+
+class SeccionEncuentrosListView(TemplateView):
+    template_name = 'proyecto_edit.html'
+
+    def get(self, *args, **kwars):
+        self.request.session['mostrar_modal'] = 'encuentro_create'
+        self.request.session['seccion_encuentro'] = self.request.GET.get('seccion')
+        return HttpResponseRedirect('/proyecto/%s/' % self.request.GET.get('seccion'))
+
+
 
 
 

@@ -123,8 +123,8 @@ class Seccion(models.Model):
 	def __str__(self):
 		return "Seccion %s - %s" % (self.numero, self.materia)
 
-	def get_bloque_horario_display(self):
-		return '%02d:%02d - %02d:%02d' % (self.hora_inicio, self.minutos_inicio, self.hora_fin, self.minutos_fin)
+	def get_cantidad_encuentros(self):
+		return EncuentrosDias.objects.filter(encuentro__seccion=self).count()
 
 class Docente(models.Model):
 	cedula = models.IntegerField()
@@ -245,9 +245,15 @@ class Encuentro(models.Model):
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
+	def __str__(self):
+		return str(self.bloque)	
+
 class EncuentrosDias(models.Model):
 	encuentro = models.ForeignKey('Encuentro', on_delete=models.CASCADE)
 	dia = models.ForeignKey('Dia', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '%s: %s' % (self.dia, self.encuentro)
 
 
 class Estado(models.Model):
@@ -341,7 +347,8 @@ class Dia(models.Model):
 	))
 	esquema_dia = models.ForeignKey('EsquemaDia', models.CASCADE)
 
-
+	def __str__(self):
+		return self.get_dia_display()	
 	
 
 # class Aula(models.Model):

@@ -1,9 +1,9 @@
 {% extends 'adminlte/base.html' %}
+{% load staticfiles %}
 
 {% block title %}Editar proyecto{% endblock %}
 {% block content %}
     <h2>{{ proyecto.nombre }}</h2>
-
 
 {% block javascript %}
 	{{ block.super }}
@@ -30,7 +30,7 @@ $('#agregarSeccion').click(function(e){
 			<table class="table table-bordered">
 				<th>Sección</th>
 				<th>Materia</th>
-				<th>Bloque</th>
+				<th>Encuentros</th>
 				<th>Docente</th>
 				<th>Aula</th>
 
@@ -38,7 +38,8 @@ $('#agregarSeccion').click(function(e){
 				<tr>
 			    	<td align='center'>{{ sec.numero }}</td>
 			    	<td> <a href="/admin/core/seccion/{{ sec.pk }}/change/">{{ sec.materia }}</a> </td>
-			    	<td align='center'>{{ sec.get_bloque_horario_display }}</td>
+			    	<!-- <td align='center'><a href="#" data-seccion="{{ sec.pk }}" data-toggle="modal" data-target="#encuentrosSeccionModal" onclick="$('#encuentroSeccion').attr('value', $(this).attr('data-seccion'))">{{ sec.get_cantidad_encuentros }}</a></td> -->
+			    	<td align='center'><a href="/seccion-encuentros/?seccion={{ sec.pk }}">{{ sec.get_cantidad_encuentros }}</a></td>
 			    	<td align='center'>{{ sec.docente.nombres }}</td>
 			    	<td align='center'>{{ sec.aula }}</td>
 			    	<td>
@@ -63,7 +64,7 @@ $('#agregarSeccion').click(function(e){
 
 
 <!-- Modal -->
-<div class="modal {% if form_errors or update_action %}show{% else %}fade{% endif %}" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal {% if mostrar_modal == 'seccion_create' %}show{% else %}fade{% endif %}" id="agregarSeccionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
