@@ -11,6 +11,9 @@ from .models import *
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'
 
+class ProyectoEditDragDropView(TemplateView):
+    template_name = 'proyecto_edit_drag_drop.html'
+
 class ProyectoEditView(TemplateView):
     template_name = 'proyecto_edit.html'
 

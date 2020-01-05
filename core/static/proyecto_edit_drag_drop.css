@@ -1,0 +1,8 @@
+.dnd-encuentro {
+	background-color: #357ca5;
+}
+
+.tabla-encuentros td.over {
+  border: 2px dashed #357ca5 !important;
+  /*background-color: gray;*/
+}

@@ -29,4 +29,5 @@ urlpatterns = [
     path('seccion/<int:pk>/delete/', SeccionDeleteView.as_view(), name='eliminar_seccion'),
     path('seccion/<int:pk>/update/', SeccionUpdateView.as_view(), name='actualizar_seccion'),
     path('', DashboardView.as_view(), name='project-edit'),
+    path('proyectodnd/<int:pk>/', ProyectoEditDragDropView.as_view(), name='editar_proyecto_dnd'),
 ]

@@ -1,0 +1,225 @@
+{% extends 'adminlte/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Editar proyecto{% endblock %}
+{% block content %}
+    <h2>{{ proyecto.nombre }}</h2>
+
+{% block javascript %}
+	{{ block.super }}
+
+	<script type="text/javascript">
+
+	var dragSrcEl = null;
+
+	function handleDragStart(e) {
+	  // Target (this) element is the source node.
+	  // this.style.opacity = '0.4';
+
+	  dragSrcEl = this;
+
+	  e.dataTransfer.effectAllowed = 'move';
+	  e.dataTransfer.setData('text/html', this.innerHTML);
+	}	
+
+	function handleDragOver(e) {
+	  if (e.preventDefault) {
+	    e.preventDefault(); // Necessary. Allows us to drop.
+	  }
+
+	  e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+	  return false;
+	}
+
+	function handleDragEnter(e) {
+	  // this / e.target is the current hover target.
+	  this.classList.add('over');
+	}
+
+	function handleDragLeave(e) {
+	  this.classList.remove('over');  // this / e.target is previous target element.
+	}
+
+	// var cols = document.querySelectorAll('.dnd-encuentro');
+	// [].forEach.call(cols, function(col) {
+	//   col.addEventListener('dragstart', handleDragStart, false);
+	//   col.addEventListener('dragenter', handleDragEnter, false);
+	//   col.addEventListener('dragover', handleDragOver, false);
+	//   col.addEventListener('dragleave', handleDragLeave, false);
+	// });
+
+	function handleDrop(e) {
+	  // this/e.target is current target element.
+
+	  this.classList.remove('over');  // this / e.target is previous target element.
+	  
+
+	  if (e.stopPropagation) {
+	    e.stopPropagation(); // Stops some browsers from redirecting.
+	  }
+
+	  // Don't do anything if dropping the same column we're dragging.
+	  if (dragSrcEl != this) {
+	    // Set the source column's HTML to the HTML of the column we dropped on.
+	    dragSrcEl.innerHTML = this.innerHTML;
+	    this.innerHTML = e.dataTransfer.getData('text/html');
+	  }
+
+	  return false;
+	}
+
+	function handleDragEnd(e) {
+	  // this/e.target is the source node.
+	  // var cols = [e.target];
+	  // e.target.classList.remove('over');
+
+	  // [].forEach.call(cols, function (col) {
+	  //   col.classList.remove('over');
+	  // 	// col.style.opacity = '1';
+	  // });
+	}
+
+	var cols = document.querySelectorAll('.dnd-encuentro');
+	var cols2 = document.querySelectorAll('.tabla-encuentros td');
+
+
+
+	elements = Array.prototype.slice.call(cols);
+	elements2 = Array.prototype.slice.call(cols2);
+
+	var elements = elements.concat(elements2);
+
+
+
+	[].forEach.call(elements, function(col) {
+	  col.addEventListener('dragstart', handleDragStart, false);
+	  col.addEventListener('dragenter', handleDragEnter, false)
+	  col.addEventListener('dragover', handleDragOver, false);
+	  col.addEventListener('dragleave', handleDragLeave, false);
+	  col.addEventListener('drop', handleDrop, false);
+	  col.addEventListener('dragend', handleDragEnd, false);
+	});
+
+
+
+
+	</script>
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{% static 'proyecto_edit_drag_drop.css' %}">
+
+{% endblock %}
+
+<div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Secciones</h3>
+          <span class="pull-right">
+          	<button id="agregarSeccion" class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button>
+      	  </span>
+        </div>
+        <div class="box-body">
+			<table class="table table-bordered tabla-encuentros">
+				<thead>
+					<th></th>
+					<th>Lunes</th>
+					<th>Martes</th>
+					<th>Miércoles</th>
+					<th>Jueves</th>
+					<th>Viernes</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>07:00 - 07:45</td>
+						<td>
+							<div class="dnd-encuentro" draggable="true">
+								Matematica
+							</div>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>07:45 - 08:30</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+				</tbody>
+			</table>
+        </div>
+
+
+
+
+        <!-- /.box-body -->
+        <div class="box-footer">
+
+        </div>
+        <!-- /.box-footer-->
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
+      </div>
+      <form method='POST' action='/proyecto/'>
+      	  {% csrf_token %}
+	      <div class="modal-body">
+	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="submit" class="btn btn-primary">Guardar</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="deleteConfirmationModal" class="modal fade" style="display: none;">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<div class="icon-box">
+					<center>
+						<i class="fa fa-times-circle fa-4x" style='color: red !important'></i>
+						<h4 class="modal-title">Esta seguro?</h4>	
+					</center>
+				</div>				
+			</div>
+			<div class="modal-body">
+				<p>Realmente quiere eliminar este registro?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+				<a id="confirmarEliminarSeccion">
+					<button type="button" class="btn btn-danger">Eliminar</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'modal_encuentros_seccion.html' %}
+
+
+{% endblock %}
