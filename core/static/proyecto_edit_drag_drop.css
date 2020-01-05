@@ -1,5 +1,17 @@
 .dnd-encuentro {
+	background-color: #F0F0F0;
+	padding: 5px 5px;
+	border-radius: 10px;
+}
+
+.dnd-encuentro .titulo {
 	background-color: #357ca5;
+	border-radius: 3px;
+	padding: 2px 5px;
+}
+
+.tabla-encuentros td {
+	width: 8% !important;
 }
 
 .tabla-encuentros td.over {
