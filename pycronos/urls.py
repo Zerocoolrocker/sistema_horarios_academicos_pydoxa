@@ -30,4 +30,5 @@ urlpatterns = [
     path('seccion/<int:pk>/update/', SeccionUpdateView.as_view(), name='actualizar_seccion'),
     path('', DashboardView.as_view(), name='project-edit'),
     path('proyectodnd/<int:pk>/', ProyectoEditDragDropView.as_view(), name='editar_proyecto_dnd'),
+    path('api/encuentros/', EncuentrosAPIListView.as_view(), name='api_encuentros_list'),
 ]

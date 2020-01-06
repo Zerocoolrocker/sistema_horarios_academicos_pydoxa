@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -55,7 +55,7 @@ class ProyectoCreateView(CreateView):
     model = Proyecto
     fields = '__all__'
 
-    def get_success_url(self, *args, **kwars):
+    def get_success_url(self, *args, **kwargs):
         return '/proyecto/%s/' % self.object.pk
 
 class SeccionCreateView(CreateView):
@@ -63,10 +63,10 @@ class SeccionCreateView(CreateView):
     model = Seccion
     fields = '__all__'
 
-    def get_success_url(self, *args, **kwars):
+    def get_success_url(self, *args, **kwargs):
         return '/proyecto/%s/' % self.object.proyecto.pk
 
-    def form_invalid(self, form, **kwars):
+    def form_invalid(self, form, **kwargs):
         self.request.session['mostrar_modal'] = 'seccion_create'
         self.request.session['form_errors'] = dict(form.errors)
         self.request.session['form_data'] = dict(form.data)
@@ -105,7 +105,7 @@ class SeccionUpdateView(UpdateView):
             return HttpResponseRedirect('/proyecto/%s/' % seccion.proyecto.pk  ) 
         return HttpResponseRedirect('/')
 
-    def get_success_url(self, *args, **kwars):
+    def get_success_url(self, *args, **kwargs):
         return '/proyecto/%s/' % self.object.proyecto.pk
 
 
@@ -114,18 +114,18 @@ class EncuentroCreateView(CreateView):
     model = Encuentro
     fields = '__all__'
 
-    def get_success_url(self, *args, **kwars):
+    def get_success_url(self, *args, **kwargs):
         self.request.session['mostrar_modal'] = 'encuentro_create'
         self.request.session['seccion_encuentro'] = self.object.seccion.pk
         return '/proyecto/%s/' % self.object.seccion.proyecto.pk
 
-    def form_valid(self, form, **kwars):
-        res = super(EncuentroCreateView, self).form_valid(form, **kwars)
+    def form_valid(self, form, **kwargs):
+        res = super(EncuentroCreateView, self).form_valid(form, **kwargs)
         EncuentrosDias.objects.create(encuentro=self.object, dia=Dia.objects.get(pk=form.data['dia'][0]))
         return res
 
 
-    def form_invalid(self, form, **kwars):
+    def form_invalid(self, form, **kwargs):
         seccion = Seccion.objects.get(pk=dict(form.data)['seccion'][0])
         self.request.session['mostrar_modal'] = 'encuentro_create'
         self.request.session['seccion_encuentro'] = seccion.pk
@@ -136,7 +136,7 @@ class EncuentroCreateView(CreateView):
 class SeccionEncuentrosListView(TemplateView):
     template_name = 'proyecto_edit.html'
 
-    def get(self, *args, **kwars):
+    def get(self, *args, **kwargs):
         self.request.session['mostrar_modal'] = 'encuentro_create'
         self.request.session['seccion_encuentro'] = self.request.GET.get('seccion')
         return HttpResponseRedirect('/proyecto/%s/' % self.request.GET.get('seccion'))
@@ -163,6 +163,47 @@ class SeccionEncuentrosListView(TemplateView):
 #             return HttpResponseRedirect('/proyecto/%s/' % seccion.proyecto.pk  ) 
 #         return HttpResponseRedirect('/')
 
-#     def get_success_url(self, *args, **kwars):
+#     def get_success_url(self, *args, **kwargs):
 #         return '/proyecto/%s/' % self.object.proyecto.pk           
 
+
+
+class EncuentrosAPIListView(View):
+
+    def get(self, request, *args, **kwargs):
+        # @TODO: filtrar aqui por proyecto actual
+        # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos del proyecto
+        filtros = {}
+        if 'proyecto' in request.GET:
+            filtros['seccion__proyecto__pk'] = request.GET['proyecto']
+        if 'aula' in request.GET:
+            filtros['aula'] = request.GET['aula']
+        objetos = Encuentro.objects.filter(**filtros).all()
+        datos = [
+            {
+                "pk": x.pk,
+                "tipo": x.tipo,
+                "seccion": {
+                    "pk": x.seccion.pk,
+                    "numero": x.seccion.numero,
+                    "materia": {
+                        "pk": x.seccion.materia.pk,
+                        "codigo": x.seccion.materia.codigo,
+                        "nombre": x.seccion.materia.nombre,
+                        "pensum": x.seccion.materia.pensum.nombre,
+                    },
+                },
+                "aula": {
+                    "pk": x.aula.pk,
+                    "numero": x.aula.numero,
+                    "nombre": x.aula.nombre,
+                    "tipo": x.aula.tipo_aula.modalidad,
+                    "ubicacion": x.aula.ubicacion.nombre,
+                },
+
+
+            }
+            for x in objetos
+        ]
+        datos = json.dumps(datos)
+        return HttpResponse(datos, content_type='application/json')

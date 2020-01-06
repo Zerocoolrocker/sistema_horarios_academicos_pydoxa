@@ -18,6 +18,7 @@ class Area(models.Model):
 class Aula(models.Model):
 	nombre = models.CharField(max_length=60, blank=True, null=True)
 	tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
+	numero = models.IntegerField(blank=True, null=True)
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	creado = models.DateTimeField(auto_now_add=True)
