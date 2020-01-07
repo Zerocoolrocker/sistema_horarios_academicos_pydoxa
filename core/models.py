@@ -338,13 +338,13 @@ class EsquemaDia(models.Model):
 
 class Dia(models.Model):
 	dia = models.CharField(max_length=3, choices=(
-		('lun', 'Lunes'),
-		('mar', 'Martes'),
-		('mie', 'Miercoles'),
-		('jue', 'Jueves'),
-		('vie', 'Viernes'),
-		('sab', 'Sabado'),
-		('dom', 'Domingo'),
+		('1', 'Lunes'),
+		('2', 'Martes'),
+		('3', 'Miercoles'),
+		('4', 'Jueves'),
+		('5', 'Viernes'),
+		('6', 'Sabado'),
+		('7', 'Domingo'),
 	))
 	esquema_dia = models.ForeignKey('EsquemaDia', models.CASCADE)
 

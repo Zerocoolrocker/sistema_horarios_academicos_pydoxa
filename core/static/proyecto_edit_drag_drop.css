@@ -11,8 +11,13 @@
 }
 
 .tabla-encuentros td {
-	width: 8% !important;
+	width: 11% !important;
 }
+
+.tabla-encuentros td:nth-child(1) {
+	width: 6% !important;
+}
+
 
 .tabla-encuentros td.over {
   border: 2px dashed #357ca5 !important;

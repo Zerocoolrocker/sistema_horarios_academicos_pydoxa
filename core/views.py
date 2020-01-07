@@ -171,39 +171,55 @@ class SeccionEncuentrosListView(TemplateView):
 class EncuentrosAPIListView(View):
 
     def get(self, request, *args, **kwargs):
-        # @TODO: filtrar aqui por proyecto actual
         # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos del proyecto
         filtros = {}
         if 'proyecto' in request.GET:
-            filtros['seccion__proyecto__pk'] = request.GET['proyecto']
+            filtros['encuentro__seccion__proyecto__pk'] = request.GET['proyecto']
         if 'aula' in request.GET:
-            filtros['aula'] = request.GET['aula']
-        objetos = Encuentro.objects.filter(**filtros).all()
+            filtros['encuentro__aula'] = request.GET['aula']
+        objetos = EncuentrosDias.objects.filter(**filtros).all()
+        objetos = sorted(objetos, key=lambda x: (x.encuentro.bloque.hora_inicio, x.dia.dia))
         datos = [
             {
-                "pk": x.pk,
-                "tipo": x.tipo,
+                "pk": x.encuentro.pk,
+                "tipo": x.encuentro.tipo,
+                "dia": x.dia.get_dia_display(),
                 "seccion": {
-                    "pk": x.seccion.pk,
-                    "numero": x.seccion.numero,
+                    "pk": x.encuentro.seccion.pk,
+                    "numero": x.encuentro.seccion.numero,
+                    "docente": x.encuentro.seccion.docente.nombres,
+                    "cupo": x.encuentro.seccion.cupo,
                     "materia": {
-                        "pk": x.seccion.materia.pk,
-                        "codigo": x.seccion.materia.codigo,
-                        "nombre": x.seccion.materia.nombre,
-                        "pensum": x.seccion.materia.pensum.nombre,
+                        "pk": x.encuentro.seccion.materia.pk,
+                        "codigo": x.encuentro.seccion.materia.codigo,
+                        "nombre": x.encuentro.seccion.materia.nombre,
+                        "pensum": x.encuentro.seccion.materia.pensum.nombre,
                     },
                 },
                 "aula": {
-                    "pk": x.aula.pk,
-                    "numero": x.aula.numero,
-                    "nombre": x.aula.nombre,
-                    "tipo": x.aula.tipo_aula.modalidad,
-                    "ubicacion": x.aula.ubicacion.nombre,
+                    "pk": x.encuentro.aula.pk,
+                    "numero": x.encuentro.aula.numero,
+                    "nombre": x.encuentro.aula.nombre,
+                    "tipo": x.encuentro.aula.tipo_aula.modalidad,
+                    "ubicacion": x.encuentro.aula.ubicacion.nombre,
+                },
+                "bloque": {
+                    "pk": x.encuentro.bloque.pk,
+                    "hora_inicio": str(x.encuentro.bloque.hora_inicio),
+                    "esquema_bloque": {
+                        "pk": x.encuentro.bloque.esquema_bloque.pk,
+                        "duracion": str(x.encuentro.bloque.esquema_bloque.duracion),
+                        # "tipo_encuentro": x.encuentro.bloque.esquema_bloque.tipo_encuentro,
+                        "area": {
+                            "pk": x.encuentro.bloque.esquema_bloque.area.pk,
+                            "nombre": x.encuentro.bloque.esquema_bloque.area.nombre,
+                        },
+                    },
                 },
 
 
             }
             for x in objetos
         ]
-        datos = json.dumps(datos)
+        datos = json.dumps(datos, indent=2)
         return HttpResponse(datos, content_type='application/json')
