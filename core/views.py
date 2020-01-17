@@ -1,11 +1,13 @@
+import datetime
 import json
 
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import *
-# from .forms import ProyectoCreateForm
 
 
 class DashboardView(TemplateView):
@@ -14,13 +16,27 @@ class DashboardView(TemplateView):
 class ProyectoEditDragDropView(TemplateView):
     template_name = 'proyecto_edit_drag_drop.html'
 
+    def get(self, *args, pk=None, **kwargs):
+        self.proyecto = Proyecto.objects.filter(pk=pk).first()
+        if self.proyecto:
+            return super(ProyectoEditDragDropView, self).get(*args, **kwargs)
+        return HttpResponse(status=404)
+            
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(ProyectoEditDragDropView, self).get_context_data(*args, **kwargs)
+        data['numeros_aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera)
+        data['proyecto'] = self.proyecto.pk
+        data['carrera'] = self.proyecto.pensum.carrera.pk
+        return data
+
+
 class ProyectoEditView(TemplateView):
     template_name = 'proyecto_edit.html'
 
     def get(self, *args, **kwargs):
         if Proyecto.objects.filter(pk=kwargs['pk']).exists():
-            proyecto = Proyecto.objects.get(pk=kwargs['pk'])
-            self.proyecto = proyecto
+            self.proyecto = Proyecto.objects.get(pk=kwargs['pk'])
             return super(ProyectoEditView, self).get(*args, **kwargs)
         return HttpResponseRedirect('/')
 
@@ -48,6 +64,8 @@ class ProyectoEditView(TemplateView):
         # @TODO: filtrar docentes por area aqui
         data['todos_docentes_pertinentes'] = Docente.objects.all()
         data['turnos'] = Turno.objects.all()
+        data['pensums'] = Pensum.objects.all()
+        data['pk_pensum_mas_reciente'] = getattr(Pensum.objects.last(), 'pk', '')
         return data
 
 class ProyectoCreateView(CreateView):
@@ -167,6 +185,19 @@ class SeccionEncuentrosListView(TemplateView):
 #         return '/proyecto/%s/' % self.object.proyecto.pk           
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class EncuentrosAPIUpdateView(View):
+    def post(self, request, *args, **kwargs):
+        obj = EncuentrosDias.objects.get(pk=request.POST['pk'])
+        hora_inicio, minutos_inicio, segundos_inicio = map(int, request.POST['hora_inicio'].split(':'))
+        dia = Dia.objects.get(pk=request.POST['dia'])
+        bloque = Bloque.objects.get(hora_inicio=datetime.time(hour=hora_inicio, minute=minutos_inicio, second=segundos_inicio))
+        obj.encuentro.bloque = bloque
+        obj.encuentro.save()
+        obj.dia = dia
+        obj.save()
+        return HttpResponse()
+
 
 class EncuentrosAPIListView(View):
 
@@ -182,8 +213,10 @@ class EncuentrosAPIListView(View):
         datos = [
             {
                 "pk": x.encuentro.pk,
+                "encuentro_dia_pk": x.pk,
                 "tipo": x.encuentro.tipo,
                 "dia": x.dia.get_dia_display(),
+                "dia_pk": x.dia.dia,
                 "seccion": {
                     "pk": x.encuentro.seccion.pk,
                     "numero": x.encuentro.seccion.numero,
@@ -210,9 +243,9 @@ class EncuentrosAPIListView(View):
                         "pk": x.encuentro.bloque.esquema_bloque.pk,
                         "duracion": str(x.encuentro.bloque.esquema_bloque.duracion),
                         # "tipo_encuentro": x.encuentro.bloque.esquema_bloque.tipo_encuentro,
-                        "area": {
-                            "pk": x.encuentro.bloque.esquema_bloque.area.pk,
-                            "nombre": x.encuentro.bloque.esquema_bloque.area.nombre,
+                        "carrera": {
+                            "pk": x.encuentro.bloque.esquema_bloque.carrera.pk,
+                            "nombre": x.encuentro.bloque.esquema_bloque.carrera.nombre,
                         },
                     },
                 },
@@ -223,3 +256,43 @@ class EncuentrosAPIListView(View):
         ]
         datos = json.dumps(datos, indent=2)
         return HttpResponse(datos, content_type='application/json')
+
+
+
+class BloquesAPIListView(View):
+
+    def get(self, request, *args, **kwargs):
+        # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos
+        filtros = {}
+        if 'carrera' in request.GET:
+            objetos = Bloque.objects.filter(esquema_bloque__carrera=request.GET['carrera']).all()
+            datos = [
+                {
+                    "pk": x.pk,
+                    "hora_inicio": str(x.hora_inicio),
+                    "representacion": str(x),
+                }
+                for x in objetos
+            ]
+            datos = json.dumps(datos, indent=2)
+            return HttpResponse(datos, content_type='application/json')
+        return HttpResponseBadRequest()
+
+class DiasAPIListView(View):
+
+    def get(self, request, *args, **kwargs):
+        # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos
+        filtros = {}
+        if 'carrera' in request.GET:
+            objetos = Dia.objects.filter(esquema_dia__carrera=request.GET['carrera']).all()
+            datos = [
+                {
+                    "pk": x.pk,
+                    "numero": x.dia,
+                    "dia": str(x),
+                }
+                for x in objetos
+            ]
+            datos = json.dumps(datos, indent=2)
+            return HttpResponse(datos, content_type='application/json')
+        return HttpResponseBadRequest()

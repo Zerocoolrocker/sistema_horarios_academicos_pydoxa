@@ -2,15 +2,25 @@
 {% load staticfiles %}
 
 {% block title %}Editar proyecto{% endblock %}
-{% block content %}
-    <h2>{{ proyecto.nombre }}</h2>
 
 {% block javascript %}
 	{{ block.super }}
 
 	<script type="text/javascript">
 
+
+	var proyecto = {{ proyecto }};
+	var carrera = {{ carrera }};
 	var dragSrcEl = null;
+	// var esquemas_dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
+	var esquemas_dias = [];
+	// var data_dias = [];
+	var bloques_horas = [];
+	var esquemas_bloques = [];
+	var pks_dias = [];
+	var data_proyecto = {};
+
+
 
 	function handleDragStart(e) {
 	  // Target (this) element is the source node.
@@ -51,7 +61,6 @@
 
 	function handleDrop(e) {
 	  // this/e.target is current target element.
-
 	  this.classList.remove('over');  // this / e.target is previous target element.
 
 
@@ -64,6 +73,12 @@
 	    // Set the source column's HTML to the HTML of the column we dropped on.
 	    dragSrcEl.innerHTML = this.innerHTML;
 	    this.innerHTML = e.dataTransfer.getData('text/html');
+	    var encuentro_data = data_proyecto[Number($(e.target).find('.dnd-encuentro').data('encuentro-dia-pk'))];
+	    $.post('/api/encuentros/update/', {
+	    	pk: encuentro_data.encuentro_dia_pk,
+	    	hora_inicio: esquemas_bloques[$(this).data('hora')],
+	    	dia: pks_dias[$(this).data('dia')],
+	    })
 	  }
 
 	  return false;
@@ -80,69 +95,146 @@
 	  // });
 	}
 
-	var cols = document.querySelectorAll('.dnd-encuentro');
-	var cols2 = document.querySelectorAll('.tabla-encuentros td');
+	function isEmpty(obj) {
+	    for(var key in obj) {
+	        if(obj.hasOwnProperty(key))
+	            return false;
+	    }
+	    return true;
+    }	
+
+
+	function asignar_handlers_drag_and_drop(){
+		var cols = document.querySelectorAll('.dnd-encuentro');
+		var cols2 = document.querySelectorAll('.tabla-encuentros td');
 
 
 
-	elements = Array.prototype.slice.call(cols);
-	elements2 = Array.prototype.slice.call(cols2);
+		elements = Array.prototype.slice.call(cols);
+		elements2 = Array.prototype.slice.call(cols2);
 
-	var elements = elements.concat(elements2);
-
-
-
-	[].forEach.call(elements, function(col) {
-	  col.addEventListener('dragstart', handleDragStart, false);
-	  col.addEventListener('dragenter', handleDragEnter, false)
-	  col.addEventListener('dragover', handleDragOver, false);
-	  col.addEventListener('dragleave', handleDragLeave, false);
-	  col.addEventListener('drop', handleDrop, false);
-	  col.addEventListener('dragend', handleDragEnd, false);
-	});
+		var elements = elements.concat(elements2);
 
 
 
-	var dat = null;
-	var proyecto = '1'
-	// @TODO: hacer que estos dias se carguen ordenadamente desde la api dependiendo del proyecto/area
-	var esquemas_dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
-	var esquemas_horas = ['07:00:00', '07:45:00', '08:30:00', '09:15:00', '10:00:00', '10:45:00', '11:30:00']
-	var llenado = false;
-	$.getJSON('/api/encuentros/?proyecto=' + proyecto, function(data){
-		if(!llenado){
-			llenado = true;
+		[].forEach.call(elements, function(col) {
+		  col.addEventListener('dragstart', handleDragStart, false);
+		  col.addEventListener('dragenter', handleDragEnter, false)
+		  col.addEventListener('dragover', handleDragOver, false);
+		  col.addEventListener('dragleave', handleDragLeave, false);
+		  col.addEventListener('drop', handleDrop, false);
+		  col.addEventListener('dragend', handleDragEnd, false);
+		});
+
+	}
+
+	function callWhenReady(selector, callback) {
+	    var self = this;
+	    if ($(selector).closest('body').length) {
+	        callback();
+	    } else {
+	        setTimeout(function () {
+	            self.callWhenReady(selector, callback);
+	        }, 1);
+	    }
+	}	
+
+	// @TODO: hacer que se cargue el proyecto actual
+	function llenar_encuentros(){
+		$.getJSON('/api/encuentros/?proyecto=' + proyecto, function(data){
+			console.log('datos de encuentros recibida.')
 			var indice_bloques_dias = 0;
 			var indice_bloques_horas = 0;
 			for (var i = 0; i < data.length; i++) {
+				console.log('iteracion en for de datos de encuentros');
 				var bloque_objetivo = null;
 				indice_bloques_dias = esquemas_dias.indexOf(data[i].dia) + 2;
-				indice_bloques_horas = esquemas_horas.indexOf(data[i].bloque.hora_inicio) + 1;
-				bloque_objetivo = $('.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')');
-				var nuevo_encuentro  = $('<div>');
-				nuevo_encuentro.attr('class', 'dnd-encuentro');
-				nuevo_encuentro.attr('draggable', 'true');
-				var titulo_encuentro  = $('<div>');
-				titulo_encuentro.attr('class', 'titulo');
-				titulo_encuentro.append($('<strong>').text(data[i].seccion.materia.nombre));
-				nuevo_encuentro.append(titulo_encuentro);
-				var texto = $('<p>');
-				texto.text('Sección: ' + data[i].seccion.numero)
-				texto.append($('<br>'))
-				texto.append($('<strong>').append(data[i].seccion.docente))
-				texto.append($('<br>'))
-				texto.append('Cupo: ' + data[i].seccion.cupo)
-				nuevo_encuentro.append(texto);
-				bloque_objetivo.append(nuevo_encuentro);
+				indice_bloques_horas = esquemas_bloques.indexOf(data[i].bloque.hora_inicio) + 1;
+				// console.log(esquemas_bloques);
+				// console.log(esquemas_bloques.indexOf(data[i].bloque.hora_inicio), data[i].bloque.hora_inicio);
+				var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')'
+				bloque_objetivo = $(selector_bloque_objetivo);
+				console.log('bloque_objetivo', bloque_objetivo[0]);
+				// if(!bloque_objetivo.length){
+					
+				callWhenReady(selector_bloque_objetivo, function(){
+					var nuevo_encuentro  = $('<div>');
+					nuevo_encuentro.attr('class', 'dnd-encuentro');
+					nuevo_encuentro.attr('draggable', 'true');
+					var titulo_encuentro  = $('<div>');
+					titulo_encuentro.attr('class', 'titulo');
+					titulo_encuentro.append($('<strong>').text(data[i].seccion.materia.nombre));
+					nuevo_encuentro.append(titulo_encuentro);
+					var texto = $('<p>');
+					texto.text('Sección: ' + data[i].seccion.numero)
+					texto.append($('<br>'))
+					texto.append($('<strong>').append(data[i].seccion.docente))
+					texto.append($('<br>'))
+					texto.append('Cupo: ' + data[i].seccion.cupo)
+					nuevo_encuentro.append(texto);
+					nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk);
+					bloque_objetivo.append(nuevo_encuentro);
+					data_proyecto[data[i].encuentro_dia_pk] = data[i];
+				})
+
+
+
+
+				// }
 			};
 			
+		});
+	}
+
+	var tabla_recien_creada = false;
+	$(document).ready(function(){
+
+		var tabla = $('.tabla-encuentros');
+		if(!tabla.length){
+			tabla = $('<div>').attr('class', 'box-body').append('<table>').attr('class', 'table table-bordered tabla-encuentros').append('<tbody>');
+			tabla.append($('<div>').attr('class', 'box-footer'));
+			tabla_recien_creada = true
 		}
+		var thead = $('<thead>');
+		var tbody = $('<tbody>');
+		$.getJSON('/api/dias/?carrera=' + carrera, function(data){
+			for (var i = 0; i < data.length; i++) {
+				esquemas_dias.push(data[i].dia);
+				pks_dias.push(data[i].numero);
+			};
+			$.getJSON('/api/bloques/?carrera=' + carrera, function(data_bloques){
+				for (var i = 0; i < data_bloques.length; i++) {
+					bloques_horas.push(data_bloques[i].representacion);
+					esquemas_bloques.push(data_bloques[i].hora_inicio);
+				};
+				thead.append('<th>');
+				for (var i = 0; i < esquemas_dias.length; i++) {
+					thead.append($('<th>').text(esquemas_dias[i]));
+				};
+				for (var i = 0; i < bloques_horas.length; i++) {
+					var fila = $('<tr>');
+					fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+					for (var j = 0; j < esquemas_dias.length; j++) {
+						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
+					};
+					tbody.append(fila);
+				};
+				console.log(tabla);
+				tabla.append(thead);
+				tabla.append(tbody);
+				if(tabla_recien_creada){
+					tabla_recien_creada = false;
+					$('div.tabla-encuentros-wrapper').html(tabla).ready(llenar_encuentros()).ready(asignar_handlers_drag_and_drop());
+				}
+			});
+		});
+
 	});
 
 
+
+
 	</script>
-
-
 
 {% endblock %}
 
@@ -152,137 +244,79 @@
 
 {% endblock %}
 
-<div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Aula: 1</h3>
-          <span class="pull-right">
-          	<!-- <button id="agregarSeccion" class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button> -->
-      	  </span>
-        </div>
-        <div class="box-body">
-			<table class="table table-bordered tabla-encuentros">
-				<thead>
-					<th></th>
-					<th>Lunes</th>
-					<th>Martes</th>
-					<th>Miércoles</th>
-					<th>Jueves</th>
-					<th>Viernes</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>07:00 - 07:45</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>07:45 - 08:30</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>08:30 - 09:15</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>09:15 - 10:00</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>10:00 - 10:45</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>10:45 - 11:30</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+{% block content %}
 
-				</tbody>
-			</table>
-        </div>
+	<div>
+		{% for i in numeros_aulas %}
+			<button style="background-color: LightSkyBlue; border-radius: 4px;">{{ i }}</button>
+		{% endfor %}
+
+	</div>
+
+	<h2>{{ proyecto.nombre }}</h2>
+	<div class="box">
+	        <div class="box-header with-border">
+	          <h3 class="box-title">Aula: 1</h3>
+	          <span class="pull-right">
+	          	<!-- <button id="agregarSeccion" class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button> -->
+	      	  </span>
+	        </div>
+	        <div class='tabla-encuentros-wrapper'>
 
 
+	        </div>
+	</div>
 
 
-        <!-- /.box-body -->
-        <div class="box-footer">
-
-        </div>
-        <!-- /.box-footer-->
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
-      </div>
-      <form method='POST' action='/proyecto/'>
-      	  {% csrf_token %}
-	      <div class="modal-body">
-	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-	        <button type="submit" class="btn btn-primary">Guardar</button>
-	      </div>
-      </form>
-    </div>
-  </div>
-</div>
+	      <form method='POST' action='/proyecto/'>
+	      	  {% csrf_token %}
+		      <div class="modal-body">
+		        	<input class="input" placeholder="Nombre del proyecto" name='nombre'>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        <button type="submit" class="btn btn-primary">Guardar</button>
+		      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
 
 
-<div id="deleteConfirmationModal" class="modal fade" style="display: none;">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<div class="icon-box">
-					<center>
-						<i class="fa fa-times-circle fa-4x" style='color: red !important'></i>
-						<h4 class="modal-title">Esta seguro?</h4>	
-					</center>
-				</div>				
-			</div>
-			<div class="modal-body">
-				<p>Realmente quiere eliminar este registro?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-				<a id="confirmarEliminarSeccion">
-					<button type="button" class="btn btn-danger">Eliminar</button>
-				</a>
+	<div id="deleteConfirmationModal" class="modal fade" style="display: none;">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<div class="icon-box">
+						<center>
+							<i class="fa fa-times-circle fa-4x" style='color: red !important'></i>
+							<h4 class="modal-title">Esta seguro?</h4>	
+						</center>
+					</div>				
+				</div>
+				<div class="modal-body">
+					<p>Realmente quiere eliminar este registro?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+					<a id="confirmarEliminarSeccion">
+						<button type="button" class="btn btn-danger">Eliminar</button>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-{% include 'modal_encuentros_seccion.html' %}
+	{% include 'modal_encuentros_seccion.html' %}
 
 
 {% endblock %}

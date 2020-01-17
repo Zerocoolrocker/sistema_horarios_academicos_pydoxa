@@ -1,0 +1,26 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
+      </div>
+      <form method='POST' action='/proyecto/'>
+      	  {% csrf_token %}
+	      <div class="modal-body">
+	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'><br><br>
+	        	<select placeholder="Pensum" name='pensum' value='{{ pk_pensum_mas_reciente }}'>
+	        		{% for pensum in pensums %}
+	        			<option value="{{ pensum.pk }}">{{ pensum.nombre }}</option>
+	        		{% endfor %}
+	        	</select>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="submit" class="btn btn-primary">Guardar</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -20,9 +20,11 @@ class Aula(models.Model):
 	tipo_aula = models.ForeignKey('TipoAula', on_delete=models.CASCADE)
 	numero = models.IntegerField(blank=True, null=True)
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
+	carrera = models.ForeignKey('Carrera', blank=True, null=True, on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
+
 
 	def __str__(self):
 		return self.nombre	
@@ -30,7 +32,6 @@ class Aula(models.Model):
 class Carrera(models.Model):
 	nombre = models.CharField(max_length=60)
 	codigo = models.CharField(max_length=5)
-	area = models.ForeignKey('Area', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.nombre	
@@ -48,6 +49,8 @@ class Proyecto(models.Model):
 	nombre = models.CharField(max_length=60)
 
 	# usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	pensum = models.ForeignKey('Pensum', on_delete=models.CASCADE)
 
 	# lapso_academico = models.CharField(max_length=10)
 	fecha = models.DateField(auto_now_add=True)
@@ -131,7 +134,7 @@ class Docente(models.Model):
 	cedula = models.IntegerField()
 	nombres = models.CharField(max_length=60)
 	apellidos = models.CharField(max_length=60)
-	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 	# telf_movil = models.CharField(max_length=20, blank=True, null=True)
 	# telf_casa = models.CharField(max_length=20, blank=True, null=True)
 	email = models.CharField(max_length=100, blank=True, null=True)
@@ -163,7 +166,7 @@ class TelefonoDocente(models.Model):
 
 # class Direccion(models.Model):
 # 	nombre = models.CharField(max_length=30)
-# 	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+# 	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 
 # class Departamento(models.Model):
 # 	nombre = models.CharField(max_length=30)
@@ -273,7 +276,7 @@ class Municipio(models.Model):
 # 	cedula = models.IntegerField()
 # 	nombres = models.CharField(max_length=60)
 # 	apellidos = models.CharField(max_length=60)
-# 	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+# 	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 # 	telf_movil = models.CharField(max_length=20, blank=True, null=True)
 # 	telf_casa = models.CharField(max_length=20, blank=True, null=True)
 # 	email = models.CharField(max_length=100, blank=True, null=True)
@@ -300,7 +303,7 @@ class Municipio(models.Model):
 class UbicacionAula(models.Model):
 	nombre = models.CharField(max_length=60)
 	descripcion = models.TextField(blank=True, null=True)
-	area = models.ForeignKey('Area', blank=True, null=True, on_delete=models.CASCADE)
+	area = models.ForeignKey('Aula', blank=True, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.nombre	
@@ -313,15 +316,15 @@ class EsquemaBloque(models.Model):
 	duracion = models.TimeField()
 	esquema_dia = models.ForeignKey('EsquemaDia', on_delete=models.CASCADE)
 	tipo_encuentro = models.ForeignKey('TipoEncuentro', on_delete=models.CASCADE)
-	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return "(%s)%s" % (self.area, self.duracion)
+		return "(%s)%s" % (self.carrera, self.duracion)
 
 class RestriccionesBloques(models.Model):
-	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 	inicio_rango_hora = models.TimeField(blank=True, null=True)
 	fin_rango_hora = models.TimeField(blank=True, null=True)
 	creado = models.DateTimeField(auto_now_add=True)
@@ -329,7 +332,7 @@ class RestriccionesBloques(models.Model):
 
 class EsquemaDia(models.Model):
 	nombre = models.CharField(max_length=30)
-	area = models.ForeignKey('Area', on_delete=models.CASCADE)
+	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
 	tipo_encuentro = models.ForeignKey('TipoEncuentro', on_delete=models.CASCADE)
 	activo = models.BooleanField(default=True)
 	creado = models.DateTimeField(auto_now_add=True)
@@ -397,7 +400,9 @@ class Bloque(models.Model):
 
 	def __str__(self):
 		hora_salida = to_timedelta(self.hora_inicio) + to_timedelta(self.esquema_bloque.duracion)
-		return '%s - %s' % (self.hora_inicio, hora_salida)
+		hora_inicio = ':'.join([str(x).zfill(2) for x in str(self.hora_inicio).split(':')[:2]])
+		hora_salida = ':'.join([str(x).zfill(2) for x in str(hora_salida).split(':')[:2]])
+		return '%s - %s' % (hora_inicio, hora_salida)
 
 # class Ficha(models.Model):
 # 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
