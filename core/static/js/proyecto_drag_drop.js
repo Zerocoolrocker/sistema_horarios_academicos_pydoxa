@@ -1,6 +1,7 @@
 var drag_source_element = null;
 var esquemas_dias = [];
 var bloques_horas = [];
+var turnos_bloques_horas = [];
 var esquemas_bloques = [];
 var pks_dias = [];
 var data_encuentros = {};
@@ -220,18 +221,23 @@ $(document).ready(function(){
 			$.getJSON('/api/bloques/?carrera=' + carrera, function(data_bloques){
 				for (var i = 0; i < data_bloques.length; i++) {
 					bloques_horas.push(data_bloques[i].representacion);
+					turnos_bloques_horas.push(data_bloques[i].turno);
 					esquemas_bloques.push(data_bloques[i].hora_inicio);
 				};
 				thead.append('<th>');
 				for (var i = 0; i < esquemas_dias.length; i++) {
 					thead.append($('<th>').text(esquemas_dias[i]));
 				};
+				var tmp_turno = turnos_bloques_horas[0];
 				for (var i = 0; i < bloques_horas.length; i++) {
 					var fila = $('<tr>');
 					fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
 					for (var j = 0; j < esquemas_dias.length; j++) {
 						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
-					};
+					if(tmp_turno != turnos_bloques_horas[i]){
+						fila.attr('class', 'separador-turno');
+					}
+					tmp_turno = turnos_bloques_horas[i];
 					tbody.append(fila);
 				};
 				console.log(tabla);

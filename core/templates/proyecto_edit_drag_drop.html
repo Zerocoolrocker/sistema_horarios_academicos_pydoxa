@@ -5,12 +5,6 @@
 
 {% block javascript %}
 	{{ block.super }}
-    <script type="text/javascript" src='{% static "js/proyecto_drag_drop.js" %}'></script>
-
-{% endblock %}
-
-{% block stylesheets %}
-	{{ block.super }}
 	<script type="text/javascript">
 
 	var proyecto = {{ proyecto }};
@@ -24,6 +18,12 @@
 	{% endif %}
 
 	</script>
+    <script type="text/javascript" src='{% static "js/proyecto_drag_drop.js" %}'></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
 	<link rel="stylesheet" type="text/css" href="{% static 'proyecto_edit_drag_drop.css' %}">
 
 {% endblock %}

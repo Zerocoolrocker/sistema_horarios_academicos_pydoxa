@@ -273,6 +273,7 @@ class BloquesAPIListView(View):
                     "pk": x.pk,
                     "hora_inicio": str(x.hora_inicio),
                     "representacion": str(x),
+                    "turno": x.turno.nombre,
                 }
                 for x in objetos
             ]

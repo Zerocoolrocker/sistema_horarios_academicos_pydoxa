@@ -31,3 +31,7 @@
 .busqueda-encuentros input, .busqueda-encuentros button {
 	margin-left: 0.5% !important;
 }
+
+.table-bordered > tbody > tr.separador-turno > td, .table-bordered > tbody > tr.separador-turno > th, .table-bordered > tfoot > tr.separador-turno > td, .table-bordered > tfoot > tr.separador-turno > th, .table-bordered > thead > tr.separador-turno > td, .table-bordered > thead > tr.separador-turno > th {
+    border-top: 1px solid black;
+}
