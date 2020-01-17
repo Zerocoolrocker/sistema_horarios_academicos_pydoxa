@@ -15,6 +15,13 @@
 
 	var proyecto = {{ proyecto }};
 	var carrera = {{ carrera }};
+	{% if aulas %}
+		var aula = {{ aulas.0.nombre }};
+		var aula_pk = {{ aulas.0.pk }};	
+	{% else %}
+		var aula = null;
+		var aula_pk = null;	
+	{% endif %}
 
 	</script>
 	<link rel="stylesheet" type="text/css" href="{% static 'proyecto_edit_drag_drop.css' %}">

@@ -1,5 +1,3 @@
-var aula = null;
-var aula_pk = null;
 var drag_source_element = null;
 var esquemas_dias = [];
 var bloques_horas = [];
@@ -171,35 +169,34 @@ function llenar_encuentros(aul){
 	console.log('datos de encuentros recibida.')
 	var indice_bloques_dias = 0;
 	var indice_bloques_horas = 0;
-	for (var i = 0; i < data_aulas_encuentros[aul].length; i++) {
-		console.log('iteracion en for de datos de encuentros');
-		var bloque_objetivo = null;
-		indice_bloques_dias = esquemas_dias.indexOf(data_aulas_encuentros[aul][i].dia) + 2;
-		indice_bloques_horas = esquemas_bloques.indexOf(data_aulas_encuentros[aul][i].bloque.hora_inicio) + 1;
-		var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')'
-		bloque_objetivo = $(selector_bloque_objetivo);
-		console.log('bloque_objetivo', bloque_objetivo[0]);
-			
-		callWhenReady(selector_bloque_objetivo, function(){
-			var nuevo_encuentro  = $('<div>');
-			nuevo_encuentro.attr('class', 'dnd-encuentro');
-			nuevo_encuentro.attr('draggable', 'true');
-			var titulo_encuentro  = $('<div>');
-			titulo_encuentro.attr('class', 'titulo');
-			titulo_encuentro.append($('<strong>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
-			nuevo_encuentro.append(titulo_encuentro);
-			var texto = $('<p>');
-			texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero)
-			texto.append($('<br>'))
-			texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente))
-			texto.append($('<br>'))
-			texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo)
-			nuevo_encuentro.append(texto);
-			// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
-			nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros[aul][i].encuentro_dia_pk);
-			bloque_objetivo.append(nuevo_encuentro);
-		})
-	};
+	if(Boolean(data_aulas_encuentros[aul])){
+		for (var i = 0; i < data_aulas_encuentros[aul].length; i++) {
+			var bloque_objetivo = null;
+			indice_bloques_dias = esquemas_dias.indexOf(data_aulas_encuentros[aul][i].dia) + 2;
+			indice_bloques_horas = esquemas_bloques.indexOf(data_aulas_encuentros[aul][i].bloque.hora_inicio) + 1;
+			var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')'
+			bloque_objetivo = $(selector_bloque_objetivo);
+				
+			callWhenReady(selector_bloque_objetivo, function(){
+				var nuevo_encuentro  = $('<div>');
+				nuevo_encuentro.attr('class', 'dnd-encuentro');
+				nuevo_encuentro.attr('draggable', 'true');
+				var titulo_encuentro  = $('<div>');
+				titulo_encuentro.attr('class', 'titulo');
+				titulo_encuentro.append($('<strong>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
+				nuevo_encuentro.append(titulo_encuentro);
+				var texto = $('<p>');
+				texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero)
+				texto.append($('<br>'))
+				texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente))
+				texto.append($('<br>'))
+				texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo)
+				nuevo_encuentro.append(texto);
+				nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros[aul][i].encuentro_dia_pk);
+				bloque_objetivo.append(nuevo_encuentro);
+			})
+		}
+	}
 		
 }
 
@@ -243,7 +240,7 @@ $(document).ready(function(){
 				if(tabla_recien_creada){
 					tabla_recien_creada = false;
 					$('div.tabla-encuentros-wrapper').html(tabla).ready(
-						llenar_encuentros(data_aulas_encuentros['aulas_en_orden'][0].aula.nombre)
+						llenar_encuentros(aula)
 					).ready(
 						asignar_handlers_drag_and_drop()
 					);
@@ -251,8 +248,6 @@ $(document).ready(function(){
 			});
 		});
 		if(data_aulas_encuentros['aulas_en_orden'].length){
-			aula = data_aulas_encuentros['aulas_en_orden'][0].aula.nombre;
-			aula_pk = data_aulas_encuentros['aulas_en_orden'][0].aula.pk;
 			$('.aula-actual').text(aula);
 			llenar_encuentros(aula);
 		}
