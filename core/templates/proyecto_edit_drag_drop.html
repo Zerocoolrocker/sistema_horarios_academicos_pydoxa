@@ -23,6 +23,14 @@
 
 {% block content %}
 
+	<div class="box busqueda-encuentros">
+		<div class="box-body">
+			<input placeholder='ingrese materia' id='busqueda_materia'>
+			<input placeholder='ingrese sección' id='busqueda_seccion'>
+			<button class='btn btn-info' id='busqueda_encuentro'>Buscar encuentro</button>
+		</div>	
+	</div>
+
 	<div>
 		{% for i in nombres_aulas %}
 			<button class="aula-button" style="background-color: LightSkyBlue; border-radius: 4px;">{{ i }}</button>
