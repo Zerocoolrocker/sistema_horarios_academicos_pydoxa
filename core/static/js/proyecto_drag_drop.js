@@ -234,6 +234,7 @@ $(document).ready(function(){
 					fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
 					for (var j = 0; j < esquemas_dias.length; j++) {
 						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
+					};
 					if(tmp_turno != turnos_bloques_horas[i]){
 						fila.attr('class', 'separador-turno');
 					}
