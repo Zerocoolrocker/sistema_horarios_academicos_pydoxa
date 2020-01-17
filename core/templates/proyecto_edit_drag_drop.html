@@ -24,8 +24,8 @@
 {% block content %}
 
 	<div>
-		{% for i in numeros_aulas %}
-			<button style="background-color: LightSkyBlue; border-radius: 4px;">{{ i }}</button>
+		{% for i in nombres_aulas %}
+			<button class="aula-button" style="background-color: LightSkyBlue; border-radius: 4px;">{{ i }}</button>
 		{% endfor %}
 
 	</div>
@@ -33,7 +33,7 @@
 	<h2>{{ proyecto.nombre }}</h2>
 	<div class="box">
 	        <div class="box-header with-border">
-	          <h3 class="box-title">Aula: 1</h3>
+	          <h3 class="box-title">Aula: <span class="aula-actual"></span></h3>
 	          <span class="pull-right">
 	          	<!-- <button id="agregarSeccion" class='btn btn-success agregar-seccion-button' data-toggle="modal" data-target="#agregarSeccionModal">Agregar sección</button> -->
 	      	  </span>

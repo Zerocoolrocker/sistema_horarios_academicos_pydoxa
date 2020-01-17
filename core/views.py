@@ -25,7 +25,7 @@ class ProyectoEditDragDropView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         data = super(ProyectoEditDragDropView, self).get_context_data(*args, **kwargs)
-        data['numeros_aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera)
+        data['nombres_aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera).order_by('nombre').values_list('nombre', flat=True)
         data['proyecto'] = self.proyecto.pk
         data['carrera'] = self.proyecto.pensum.carrera.pk
         return data

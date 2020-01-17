@@ -25,6 +25,12 @@ class Aula(models.Model):
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
+	class Meta:
+		# @TODO validar esto en el front
+		unique_together = (
+			('ubicacion', 'numero'),
+		)
+
 
 	def __str__(self):
 		return self.nombre	
