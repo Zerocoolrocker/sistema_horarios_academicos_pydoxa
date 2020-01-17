@@ -1,5 +1,5 @@
 var aula = null;
-var dragSrcEl = null;
+var drag_source_element = null;
 var esquemas_dias = [];
 var bloques_horas = [];
 var esquemas_bloques = [];
@@ -11,11 +11,14 @@ var data_aulas_encuentros = {};
 function handleDragStart(e) {
   // Target (this) element is the source node.
   // this.style.opacity = '0.4';
-
-  dragSrcEl = this;
-
+  drag_source_element = this;
+  if($(this).attr('class') && $(this).attr('class').indexOf('dnd-encuentro') != -1){
+  	drag_source_element_real = this;
+  }
+  console.log('drag_source_element', drag_source_element);
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/html', this.innerHTML);
+  // debugger;
 }	
 
 function handleDragOver(e) {
@@ -37,13 +40,6 @@ function handleDragLeave(e) {
   this.classList.remove('over');  // this / e.target is previous target element.
 }
 
-// var cols = document.querySelectorAll('.dnd-encuentro');
-// [].forEach.call(cols, function(col) {
-//   col.addEventListener('dragstart', handleDragStart, false);
-//   col.addEventListener('dragenter', handleDragEnter, false);
-//   col.addEventListener('dragover', handleDragOver, false);
-//   col.addEventListener('dragleave', handleDragLeave, false);
-// });
 
 function handleDrop(e) {
   // this/e.target is current target element.
@@ -55,11 +51,13 @@ function handleDrop(e) {
   }
 
   // Don't do anything if dropping the same column we're dragging.
-  if (dragSrcEl != this) {
+  if (drag_source_element != this) {
     // Set the source column's HTML to the HTML of the column we dropped on.
-    dragSrcEl.innerHTML = this.innerHTML;
+    // debugger;
+    drag_source_element.innerHTML = this.innerHTML;
     this.innerHTML = e.dataTransfer.getData('text/html');
-    var encuentro_data = data_encuentros[Number($(e.target).find('.dnd-encuentro').data('encuentro-dia-pk'))];
+    var encuentro_data = data_encuentros[Number($(drag_source_element_real).data('encuentro-dia-pk'))];
+  	console.log('drop function drag_source_element', drag_source_element);
     $.post('/api/encuentros/update/', {
     	pk: encuentro_data.encuentro_dia_pk,
     	hora_inicio: esquemas_bloques[$(this).data('hora')],
@@ -68,6 +66,16 @@ function handleDrop(e) {
     encuentro_data.bloque.hora_inicio = esquemas_bloques[$(this).data('hora')];
     encuentro_data.dia = esquemas_dias[$(this).data('dia')];
     encuentro_data.dia_pk = pks_dias[$(this).data('dia')];
+  	var jquery_dse = $(drag_source_element_real);
+  	if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
+		console.log('se limpian la tabla');
+		limpiar_encuentros_tabla(function(){
+			if(Boolean(data_aulas_encuentros[aula])){
+				llenar_encuentros(aula);
+			}
+		})
+  	}
+
   }
 
   return false;
@@ -96,15 +104,14 @@ function isEmpty(obj) {
 function asignar_handlers_drag_and_drop(){
 	var cols = document.querySelectorAll('.dnd-encuentro');
 	var cols2 = document.querySelectorAll('.tabla-encuentros td');
+	var cols3 = document.querySelectorAll('#resultados_busqueda');
 
+	var elements = Array.prototype.slice.call(cols);
+	var elements2 = Array.prototype.slice.call(cols2);
+	var elements3 = Array.prototype.slice.call(cols3);
 
-
-	elements = Array.prototype.slice.call(cols);
-	elements2 = Array.prototype.slice.call(cols2);
-
-	var elements = elements.concat(elements2);
-
-
+	elements = elements.concat(elements2);
+	elements = elements.concat(elements3);
 
 	[].forEach.call(elements, function(col) {
 	  col.addEventListener('dragstart', handleDragStart, false);
@@ -261,6 +268,41 @@ $('.aula-button').click(function(){
 			llenar_encuentros(aula);
 		}
 	})
+});
+
+$('#busqueda_encuentro').click(function(){
+	var materia = $('#busqueda_materia').val().toLowerCase();
+	var seccion = $('#busqueda_seccion').val();
+	if(materia && seccion){
+		for (var i = data_aulas_encuentros['aulas_en_orden'].length - 1; i >= 0; i--) {
+			if(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre.toLowerCase().indexOf(materia) != -1){
+				if(data_aulas_encuentros['aulas_en_orden'][i].seccion.numero == Number(seccion)){
+					
+					var nuevo_encuentro  = $('<div>');
+					nuevo_encuentro.attr('class', 'dnd-encuentro resultado-busqueda');
+					nuevo_encuentro.attr('draggable', 'true');
+					var titulo_encuentro  = $('<div>');
+					titulo_encuentro.attr('class', 'titulo');
+					titulo_encuentro.append($('<strong>').text(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre));
+					nuevo_encuentro.append(titulo_encuentro);
+					var texto = $('<p>');
+					texto.text('Sección: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.numero)
+					texto.append($('<br>'))
+					texto.append($('<strong>').append(data_aulas_encuentros['aulas_en_orden'][i].seccion.docente))
+					texto.append($('<br>'))
+					texto.append('Cupo: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.cupo)
+					nuevo_encuentro.append(texto);
+					nuevo_encuentro.attr('data-aula', data_aulas_encuentros['aulas_en_orden'][i].aula.nombre);
+					// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
+					nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros['aulas_en_orden'][i].encuentro_dia_pk);
+					console.log('se agrega res busqueda');
+
+					$('#resultados_busqueda').append(nuevo_encuentro);
+					asignar_handlers_drag_and_drop();
+				}
+			}
+		};
+	}
 });
 
 
