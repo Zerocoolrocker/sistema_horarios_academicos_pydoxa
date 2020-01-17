@@ -25,7 +25,7 @@ class ProyectoEditDragDropView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         data = super(ProyectoEditDragDropView, self).get_context_data(*args, **kwargs)
-        data['nombres_aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera).order_by('nombre').values_list('nombre', flat=True)
+        data['aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera).order_by('nombre')
         data['proyecto'] = self.proyecto.pk
         data['carrera'] = self.proyecto.pensum.carrera.pk
         return data
@@ -195,6 +195,8 @@ class EncuentrosAPIUpdateView(View):
         obj.encuentro.bloque = bloque
         obj.encuentro.save()
         obj.dia = dia
+        obj.encuentro.aula = Aula.objects.get(pk=request.POST['aula'])
+        obj.encuentro.save()
         obj.save()
         return HttpResponse()
 

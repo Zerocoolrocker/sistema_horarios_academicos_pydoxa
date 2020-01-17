@@ -35,8 +35,8 @@
 	</div>
 
 	<div>
-		{% for i in nombres_aulas %}
-			<button class="aula-button" style="background-color: LightSkyBlue; border-radius: 4px;">{{ i }}</button>
+		{% for aula in aulas %}
+			<button class="aula-button" data-pk="{{ aula.pk }}" style="background-color: LightSkyBlue; border-radius: 4px;">{{ aula.nombre }}</button>
 		{% endfor %}
 
 	</div>

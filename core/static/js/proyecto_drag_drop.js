@@ -1,4 +1,5 @@
 var aula = null;
+var aula_pk = null;
 var drag_source_element = null;
 var esquemas_dias = [];
 var bloques_horas = [];
@@ -51,7 +52,7 @@ function handleDrop(e) {
   }
 
   // Don't do anything if dropping the same column we're dragging.
-  if (drag_source_element != this) {
+  if (drag_source_element_real != this) {
     // Set the source column's HTML to the HTML of the column we dropped on.
     // debugger;
     drag_source_element.innerHTML = this.innerHTML;
@@ -62,6 +63,7 @@ function handleDrop(e) {
     	pk: encuentro_data.encuentro_dia_pk,
     	hora_inicio: esquemas_bloques[$(this).data('hora')],
     	dia: pks_dias[$(this).data('dia')],
+    	aula: aula_pk,
     });
     encuentro_data.bloque.hora_inicio = esquemas_bloques[$(this).data('hora')];
     encuentro_data.dia = esquemas_dias[$(this).data('dia')];
@@ -250,6 +252,7 @@ $(document).ready(function(){
 		});
 		if(data_aulas_encuentros['aulas_en_orden'].length){
 			aula = data_aulas_encuentros['aulas_en_orden'][0].aula.nombre;
+			aula_pk = data_aulas_encuentros['aulas_en_orden'][0].aula.pk;
 			$('.aula-actual').text(aula);
 			llenar_encuentros(aula);
 		}
@@ -262,6 +265,7 @@ $(document).ready(function(){
 
 $('.aula-button').click(function(){
 	aula = $(this).text();
+	aula_pk = $(this).data('pk');
 	$('.aula-actual').text(aula);
 	limpiar_encuentros_tabla(function(){
 		if(Boolean(data_aulas_encuentros[aula])){
