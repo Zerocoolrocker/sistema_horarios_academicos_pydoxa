@@ -217,6 +217,7 @@ class EncuentrosAPIListView(View):
                 "pk": x.encuentro.pk,
                 "encuentro_dia_pk": x.pk,
                 "tipo": x.encuentro.tipo,
+                "numero_bloques": x.encuentro.numero_bloques,
                 "dia": x.dia.get_dia_display(),
                 "dia_pk": x.dia.dia,
                 "seccion": {

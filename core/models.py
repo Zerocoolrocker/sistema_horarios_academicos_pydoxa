@@ -244,6 +244,7 @@ class TipoEncuentro(models.Model):
 
 class Encuentro(models.Model):
 	bloque = models.ForeignKey('Bloque', on_delete=models.CASCADE)
+	numero_bloques = models.IntegerField(default=1)
 	aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 	seccion = models.ForeignKey('Seccion', on_delete=models.CASCADE)
 	# dia = models.ForeignKey('Dia', on_delete=models.CASCADE)

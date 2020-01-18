@@ -52,8 +52,11 @@ function handleDrop(e) {
 
   // Don't do anything if dropping the same column we're dragging.
   if (drag_source_element_real != this) {
+
+  	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
+  	// (mostrar advertencia o no permitir, dependiendo de configuracion)
+    
     // Set the source column's HTML to the HTML of the column we dropped on.
-    // debugger;
     drag_source_element.innerHTML = this.innerHTML;
     this.innerHTML = e.dataTransfer.getData('text/html');
     var encuentro_data = data_encuentros[Number($(drag_source_element_real).data('encuentro-dia-pk'))];
@@ -69,16 +72,38 @@ function handleDrop(e) {
     encuentro_data.dia_pk = pks_dias[$(this).data('dia')];
   	var jquery_dse = $(drag_source_element_real);
   	if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
-		console.log('se limpian la tabla');
+		console.log('se limpia la tabla');
 		limpiar_encuentros_tabla(function(){
 			if(Boolean(data_aulas_encuentros[aula])){
 				llenar_encuentros(aula);
 			}
 		})
   	}
+  	if($(drag_source_element).attr('id') != 'resultados_busqueda' && $(drag_source_element).attr('rowspan') > 1){
+  		
+  		$(drag_source_element).attr('rowspan', 1);
+  		var hora_bloque_anterior = $(drag_source_element).data('hora');
+  		var dia_bloque_anterior = $(drag_source_element).data('hora');
+  		var tmp_fila = $(drag_source_element).parent().next('tr');
+		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
+  			hora_bloque_anterior += 1
+  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+  			tmp_fila = $(tmp_fila).next('tr');
+		}
 
+  		$(this).attr('rowspan', encuentro_data.numero_bloques);
+  		var tmp_fila = $(this).parent().next('tr');
+		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
+	  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+  			tmp_fila = $(tmp_fila).next('tr');
+		};
+  		
+  		asignar_handlers_drag_and_drop();
+
+  	}
   }
-
   return false;
 }
 
@@ -179,7 +204,7 @@ function llenar_encuentros(aul){
 			bloque_objetivo = $(selector_bloque_objetivo);
 				
 			callWhenReady(selector_bloque_objetivo, function(){
-				var nuevo_encuentro  = $('<div>');
+				var nuevo_encuentro = $('<div>');
 				nuevo_encuentro.attr('class', 'dnd-encuentro');
 				nuevo_encuentro.attr('draggable', 'true');
 				var titulo_encuentro  = $('<div>');
@@ -195,6 +220,14 @@ function llenar_encuentros(aul){
 				nuevo_encuentro.append(texto);
 				nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros[aul][i].encuentro_dia_pk);
 				bloque_objetivo.append(nuevo_encuentro);
+
+				// @TODO: Hacer validaciones de numero de bloques de encuentro aqui
+				var numero_bloques = data_aulas_encuentros[aul][i].numero_bloques;
+				bloque_objetivo.attr('rowspan', numero_bloques);
+				for (var ind_blo = indice_bloques_horas + 1; ind_blo < esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
+					var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
+					$(selector_bloque_eliminar).remove();
+				};
 			})
 		}
 	}
@@ -301,6 +334,7 @@ $('#busqueda_encuentro').click(function(){
 					nuevo_encuentro.attr('data-aula', data_aulas_encuentros['aulas_en_orden'][i].aula.nombre);
 					// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
 					nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros['aulas_en_orden'][i].encuentro_dia_pk);
+					nuevo_encuentro.attr('rowspan', data_aulas_encuentros['aulas_en_orden'][i].numero_bloques);
 					console.log('se agrega res busqueda');
 
 					$('#resultados_busqueda').append(nuevo_encuentro);
