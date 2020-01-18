@@ -188,7 +188,8 @@ function obtener_datos_encuentros(callback){
 }
 
 function limpiar_encuentros_tabla(callback){
-	$('.tabla-encuentros .dnd-encuentro').remove().ready(callback);
+	// $('.tabla-encuentros .dnd-encuentro').remove().ready(callback);
+	renderizar_tabla();
 }
 
 function llenar_encuentros(aul){
@@ -234,9 +235,42 @@ function llenar_encuentros(aul){
 		
 }
 
-var tabla_recien_creada = false;
-$(document).ready(function(){
+function renderizar_tabla(){
+	var tabla = $('.tabla-encuentros');
+	tabla = $('<div>').attr('class', 'box-body').append('<table>').attr('class', 'table table-bordered tabla-encuentros').append('<tbody>');
+	tabla.append($('<div>').attr('class', 'box-footer'));
+	tabla_recien_creada = true
+	var thead = $('<thead>');
+	var tbody = $('<tbody>');
+	thead.append('<th>');
+	for (var i = 0; i < esquemas_dias.length; i++) {
+		thead.append($('<th>').text(esquemas_dias[i]));
+	};
+	var tmp_turno = turnos_bloques_horas[0];
+	for (var i = 0; i < bloques_horas.length; i++) {
+		var fila = $('<tr>');
+		fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+		for (var j = 0; j < esquemas_dias.length; j++) {
+			fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
+		};
+		if(tmp_turno != turnos_bloques_horas[i]){
+			fila.attr('class', 'separador-turno');
+		}
+		tmp_turno = turnos_bloques_horas[i];
+		tbody.append(fila);
+	};
+	console.log(tabla);
+	tabla.append(thead);
+	tabla.append(tbody);
+	$('div.tabla-encuentros-wrapper').html(tabla).ready(
+		llenar_encuentros(aula)
+	).ready(
+		asignar_handlers_drag_and_drop()
+	)
+}
 
+$(document).ready(function(){
+	tabla_recien_creada = false;
 	obtener_datos_encuentros(function(){
 		var tabla = $('.tabla-encuentros');
 		if(!tabla.length){
@@ -302,11 +336,12 @@ $('.aula-button').click(function(){
 	aula = $(this).text();
 	aula_pk = $(this).data('pk');
 	$('.aula-actual').text(aula);
-	limpiar_encuentros_tabla(function(){
-		if(Boolean(data_aulas_encuentros[aula])){
-			llenar_encuentros(aula);
-		}
-	})
+	limpiar_encuentros_tabla();
+	// limpiar_encuentros_tabla(function(){
+	// 	if(Boolean(data_aulas_encuentros[aula])){
+	// 		llenar_encuentros(aula);
+	// 	}
+	// })
 });
 
 $('#busqueda_encuentro').click(function(){
