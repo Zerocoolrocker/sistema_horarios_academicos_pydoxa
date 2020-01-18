@@ -79,30 +79,38 @@ function handleDrop(e) {
 			}
 		})
   	}
-  	if($(drag_source_element).attr('id') != 'resultados_busqueda' && $(drag_source_element).attr('rowspan') > 1){
-  		
-  		$(drag_source_element).attr('rowspan', 1);
-  		var hora_bloque_anterior = $(drag_source_element).data('hora');
-  		var dia_bloque_anterior = $(drag_source_element).data('hora');
-  		var tmp_fila = $(drag_source_element).parent().next('tr');
-		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
-  			hora_bloque_anterior += 1
-  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-  			tmp_fila = $(tmp_fila).next('tr');
-		}
+  	if($(drag_source_element).attr('rowspan') > 1 || $(drag_source_element).attr('id') == 'resultados_busqueda'){
+	  	if($(drag_source_element).attr('id') == 'resultados_busqueda'){
+	  		$(this).attr('rowspan', encuentro_data.numero_bloques);
+	  		var tmp_fila = $(this).parent().next('tr');
+			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
+		  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+	  			tmp_fila = $(tmp_fila).next('tr');
+			};
 
-  		$(this).attr('rowspan', encuentro_data.numero_bloques);
-  		var tmp_fila = $(this).parent().next('tr');
-		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-	  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
-  			tmp_fila = $(tmp_fila).next('tr');
-		};
-  		
-  		asignar_handlers_drag_and_drop();
+	  	} else {
+	  		$(drag_source_element).attr('rowspan', 1);
+	  		var hora_bloque_anterior = $(drag_source_element).data('hora');
+	  		var dia_bloque_anterior = $(drag_source_element).data('hora');
+	  		var tmp_fila = $(drag_source_element).parent().next('tr');
+			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+		  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
+	  			hora_bloque_anterior += 1
+	  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+	  			tmp_fila = $(tmp_fila).next('tr');
+			}
 
-  	}
+	  		$(this).attr('rowspan', encuentro_data.numero_bloques);
+	  		var tmp_fila = $(this).parent().next('tr');
+			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
+		  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+	  			tmp_fila = $(tmp_fila).next('tr');
+			};  		
+	  	}
+	asignar_handlers_drag_and_drop();
+	}
   }
   return false;
 }
