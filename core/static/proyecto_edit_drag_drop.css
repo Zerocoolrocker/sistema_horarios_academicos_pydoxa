@@ -33,9 +33,12 @@
 .busqueda-encuentros input, .busqueda-encuentros button {
 	margin-left: 0.5% !important;
 }
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid #d1d1d1;
+}
 
 .table-bordered > tbody > tr.separador-turno > td, .table-bordered > tbody > tr.separador-turno > th, .table-bordered > tfoot > tr.separador-turno > td, .table-bordered > tfoot > tr.separador-turno > th, .table-bordered > thead > tr.separador-turno > td, .table-bordered > thead > tr.separador-turno > th {
-    border-top: 1px solid black;
+    border-top: 2px solid rgba(86, 86, 86, 0.82);
 }
 
 .dnd-encuentro .icono-editar {
