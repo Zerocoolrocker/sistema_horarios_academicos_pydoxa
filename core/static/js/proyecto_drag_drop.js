@@ -103,7 +103,6 @@ function handleDrop(e) {
 			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
 		  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
 	  			hora_bloque_anterior += 1
-	  			debugger;
 	  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
 	  			tmp_fila = $(tmp_fila).next('tr');
 			}
