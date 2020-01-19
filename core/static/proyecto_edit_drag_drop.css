@@ -66,12 +66,19 @@
 }
 
 .aula-button {
-	background-color: #f3ad2f;
+	/*background-color: #f3ad2f;*/
+	/*background-color: #004a65;*/
+	/*background-color: rgba(0, 74, 101, 0.82);*/
+	background-color: #337ab7;
 	color: white;
 	height: 30px !important;
 	width: 30px !important;
 	border-radius: 4px;
 	border-radius: 4px;
+}
+
+.aula-button:hover {
+	color: orange;
 }
 
 .tabla-encuentros th {

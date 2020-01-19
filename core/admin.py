@@ -35,7 +35,7 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 class ProyectoChangeList(ChangeList):
     def url_for_result(self, result):
-        return '/proyecto/%d/' % (quote(result.pk))
+        return '/proyectodnd/%d/' % (quote(result.pk))
 
     def get_model(self):
         return self.model.__name__

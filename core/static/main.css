@@ -60,3 +60,12 @@ a.proyectos .agregar-proyecto-button-lock {
 	background-color: red !important;
 }*/
 
+a#vista_lista:hover {
+	color: orange !important;
+}
+a#vista_drag_drop {
+	margin: 0px 20px 0px 20px;
+}
+a#vista_drag_drop:hover {
+	color: orange !important;
+}
