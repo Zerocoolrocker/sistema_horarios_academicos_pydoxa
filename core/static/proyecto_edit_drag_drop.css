@@ -51,6 +51,7 @@
 .dnd-encuentro .icono-editar {
 	margin-left: 5px !important;
 	color: white !important;
+	cursor: pointer;
 }
 
 .aula-button {
