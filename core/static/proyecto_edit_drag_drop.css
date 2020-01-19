@@ -28,8 +28,9 @@
 
 
 .tabla-encuentros td.over {
-  border: 2px dashed #357ca5 !important;
-  /*background-color: gray;*/
+  /*border: 2px dashed #357ca5 !important;*/
+  box-shadow: 0px 0px 50px 2px #00c0ef;
+}
 }
 
 .busqueda-encuentros input, .busqueda-encuentros button {
@@ -62,6 +63,7 @@
 
 .dnd-encuentro .icono-editar:hover {
 	color: orange !important;
+}
 
 .aula-button {
 	background-color: #f3ad2f;
