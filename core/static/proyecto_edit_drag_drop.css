@@ -60,6 +60,9 @@
 	cursor: pointer;
 }
 
+.dnd-encuentro .icono-editar:hover {
+	color: orange !important;
+
 .aula-button {
 	background-color: #f3ad2f;
 	color: white;
