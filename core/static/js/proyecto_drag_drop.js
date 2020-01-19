@@ -103,7 +103,42 @@ function handleDrop(e) {
 			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
 		  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
 	  			hora_bloque_anterior += 1
-	  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+	  			// tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+	  			// debugger;
+	  			if($(drag_source_element).data('dia') == 0){
+	  				var columna_objetivo = tmp_fila.find('td:nth-child(1)');
+	  			} else {
+	  				var columna_objetivo = tmp_fila.find('td[data-dia=' + (dia_bloque_anterior - 1) + ']');
+	  				// caso cuando tiene al lado a otra (U OTRAS (hacer for y llevar contado)) materias
+	  				// debugger;
+	  				if(!columna_objetivo.length){
+	  					// columna_objetivo = tmp_fila.find('td[data-dia=' + ($(drag_source_element).data('dia') - 2) + ']')
+	  					for (var ind = dia_bloque_anterior - 2; ind >= 0; ind--) {
+	  						columna_objetivo = tmp_fila.find('td[data-dia=' + (ind) + ']');
+	  						if(columna_objetivo.length){
+	  							console.log('break');
+	  							break;
+	  						}
+	  					};
+	  				}
+	  			}
+	  			// debugger;
+  				if(columna_objetivo.length){
+  					console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+  					
+  				} else {
+  					// y si nunca se encuentra ninguna (porque la fila esta llena de encuentros de varios bloques que inician en otra linea), entonces 
+  					//hay que insertar la columna despues de la columna del bloque de hora
+  					
+  					// console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
+	  				// la columna de la hora como pivote
+	  				columna_objetivo = tmp_fila.find('td:nth-child(1)');
+  					console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+  					// tmp_fila.prepend($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+  				}
+	  			// debugger;
 	  			tmp_fila = $(tmp_fila).next('tr');
 			}
 
@@ -111,7 +146,11 @@ function handleDrop(e) {
 	  		var tmp_fila = $(this).parent().next('tr');
 			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
 	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-		  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+		  		// tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+	  			var columna_objetivo_eliminar = tmp_fila.find('td[data-dia=' + ($(this).data('dia') + 0) + ']');
+		  		console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
+	  			// debugger;
+		  		columna_objetivo_eliminar.remove();
 	  			tmp_fila = $(tmp_fila).next('tr');
 			};  		
 	  	}
@@ -228,10 +267,13 @@ function llenar_encuentros(aul){
 	if(Boolean(data_aulas_encuentros[aul])){
 		for (var i = 0; i < data_aulas_encuentros[aul].length; i++) {
 			var bloque_objetivo = null;
-			indice_bloques_dias = esquemas_dias.indexOf(data_aulas_encuentros[aul][i].dia) + 2;
+			// indice_bloques_dias = esquemas_dias.indexOf(data_aulas_encuentros[aul][i].dia) + 2;
+			indice_bloques_dias = esquemas_dias.indexOf(data_aulas_encuentros[aul][i].dia);
 			indice_bloques_horas = esquemas_bloques.indexOf(data_aulas_encuentros[aul][i].bloque.hora_inicio) + 1;
-			var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')'
+			// var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')';
+			var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td[data-dia=' + indice_bloques_dias + ']';
 			bloque_objetivo = $(selector_bloque_objetivo);
+			console.log('bloque_objetivo', bloque_objetivo[0]);
 				
 			callWhenReady(selector_bloque_objetivo, function(){
 				var nuevo_encuentro = $('<div>');
@@ -256,8 +298,11 @@ function llenar_encuentros(aul){
 				var numero_bloques = data_aulas_encuentros[aul][i].numero_bloques;
 				bloque_objetivo.attr('rowspan', numero_bloques);
 				for (var ind_blo = indice_bloques_horas + 1; ind_blo < esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
-					var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
-					$(selector_bloque_eliminar).remove();
+					// var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
+					var bloque_eliminar = $('.tabla-encuentros tr:nth-child(' + ind_blo + ') td[data-dia=' + indice_bloques_dias + ']');
+					console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
+					// debugger;
+					bloque_eliminar.remove();
 				};
 			})
 		}
