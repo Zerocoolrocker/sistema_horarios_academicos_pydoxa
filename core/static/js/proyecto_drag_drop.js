@@ -94,11 +94,16 @@ function handleDrop(e) {
 	  	} else {
 	  		$(drag_source_element).attr('rowspan', 1);
 	  		var hora_bloque_anterior = $(drag_source_element).data('hora');
-	  		var dia_bloque_anterior = $(drag_source_element).data('hora');
+	  		var dia_bloque_anterior = $(drag_source_element).data('dia');
 	  		var tmp_fila = $(drag_source_element).parent().next('tr');
+
+	  		// arreglar que se coloque bien los data hora y data dia de los bloques que se agregan
+	  		// filtrar por los data hora y data dia en vez de por posicion
+
 			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
 		  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
 	  			hora_bloque_anterior += 1
+	  			debugger;
 	  			tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
 	  			tmp_fila = $(tmp_fila).next('tr');
 			}
