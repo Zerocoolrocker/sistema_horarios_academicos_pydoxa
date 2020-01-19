@@ -29,6 +29,7 @@ class Aula(models.Model):
 		# @TODO validar esto en el front
 		unique_together = (
 			('ubicacion', 'numero'),
+			('carrera', 'nombre'),
 		)
 
 

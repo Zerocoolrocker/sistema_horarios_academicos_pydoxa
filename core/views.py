@@ -25,7 +25,13 @@ class ProyectoEditDragDropView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         data = super(ProyectoEditDragDropView, self).get_context_data(*args, **kwargs)
+        data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
         data['aulas'] = Aula.objects.filter(carrera=self.proyecto.pensum.carrera).order_by('nombre')
+        data['docentes'] = Docente.objects.filter(carrera=self.proyecto.pensum.carrera).order_by('nombres')
+        data['tipos_encuentros'] = (
+            ('pr', 'Presencial'),
+            ('vi', 'Virtual'),
+        )        
         data['proyecto'] = self.proyecto.pk
         data['carrera'] = self.proyecto.pensum.carrera.pk
         return data
@@ -189,15 +195,23 @@ class SeccionEncuentrosListView(TemplateView):
 class EncuentrosAPIUpdateView(View):
     def post(self, request, *args, **kwargs):
         obj = EncuentrosDias.objects.get(pk=request.POST['pk'])
-        hora_inicio, minutos_inicio, segundos_inicio = map(int, request.POST['hora_inicio'].split(':'))
-        dia = Dia.objects.get(pk=request.POST['dia'])
-        bloque = Bloque.objects.get(hora_inicio=datetime.time(hour=hora_inicio, minute=minutos_inicio, second=segundos_inicio))
-        obj.encuentro.bloque = bloque
-        obj.encuentro.save()
-        obj.dia = dia
-        obj.encuentro.aula = Aula.objects.get(pk=request.POST['aula'])
-        obj.encuentro.save()
-        obj.save()
+        if 'docente' in request.POST:
+            obj.encuentro.seccion.docente = Docente.objects.get(pk=request.POST['docente'])
+            obj.encuentro.aula = Aula.objects.get(pk=request.POST['aula'])
+            obj.encuentro.tipo = request.POST['tipo']
+            obj.encuentro.seccion.cupo = request.POST['cupo']
+            obj.encuentro.seccion.save()
+            obj.encuentro.save()
+        else:
+            hora_inicio, minutos_inicio, segundos_inicio = map(int, request.POST['hora_inicio'].split(':'))
+            dia = Dia.objects.get(pk=request.POST['dia'])
+            bloque = Bloque.objects.get(hora_inicio=datetime.time(hour=hora_inicio, minute=minutos_inicio, second=segundos_inicio))
+            obj.encuentro.bloque = bloque
+            obj.encuentro.save()
+            obj.dia = dia
+            obj.encuentro.aula = Aula.objects.get(pk=request.POST['aula'])
+            obj.encuentro.save()
+            obj.save()
         return HttpResponse()
 
 
@@ -224,6 +238,7 @@ class EncuentrosAPIListView(View):
                     "pk": x.encuentro.seccion.pk,
                     "numero": x.encuentro.seccion.numero,
                     "docente": x.encuentro.seccion.docente.nombres,
+                    "docente_pk": x.encuentro.seccion.docente.nombres,
                     "cupo": x.encuentro.seccion.cupo,
                     "materia": {
                         "pk": x.encuentro.seccion.materia.pk,
@@ -260,7 +275,26 @@ class EncuentrosAPIListView(View):
         datos = json.dumps(datos, indent=2)
         return HttpResponse(datos, content_type='application/json')
 
+class AulasAPIListView(View):
 
+    def get(self, request, *args, **kwargs):
+        # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos
+        filtros = {}
+        if 'carrera' in request.GET:
+            filtros['carrera'] = request.GET['carrera']
+        objetos = Aula.objects.filter(**filtros).order_by('numero')
+        datos = {
+                x.pk: {
+                    "pk": x.pk,
+                    "numero": x.numero,
+                    "nombre": x.nombre,
+                    "tipo": x.tipo_aula.modalidad,
+                    "ubicacion": x.ubicacion.nombre,
+                }
+                for x in objetos
+        }
+        datos = json.dumps(datos, indent=2)
+        return HttpResponse(datos, content_type='application/json')        
 
 class BloquesAPIListView(View):
 

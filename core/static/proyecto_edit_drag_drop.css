@@ -35,3 +35,8 @@
 .table-bordered > tbody > tr.separador-turno > td, .table-bordered > tbody > tr.separador-turno > th, .table-bordered > tfoot > tr.separador-turno > td, .table-bordered > tfoot > tr.separador-turno > th, .table-bordered > thead > tr.separador-turno > td, .table-bordered > thead > tr.separador-turno > th {
     border-top: 1px solid black;
 }
+
+.dnd-encuentro .icono-editar {
+	margin-left: 5px !important;
+	color: white !important;
+}

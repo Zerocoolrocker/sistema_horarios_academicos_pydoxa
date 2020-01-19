@@ -5,7 +5,9 @@ var turnos_bloques_horas = [];
 var esquemas_bloques = [];
 var pks_dias = [];
 var data_encuentros = {};
+var data_aulas = {};
 var data_aulas_encuentros = {};
+var data_encuentro_modal_actual = {};
 
 
 function handleDragStart(e) {
@@ -156,6 +158,17 @@ function asignar_handlers_drag_and_drop(){
 	  col.addEventListener('dragend', handleDragEnd, false);
 	});
 
+	$('.dnd-encuentro .icono-editar').click(function(){
+		$('#creacionEdicionencuentroModal')[0].classList.remove('fade');
+		$('#creacionEdicionencuentroModal')[0].classList.add('show');
+		data_encuentro_modal_actual = data_encuentros[this.parentElement.parentElement.getAttribute('data-encuentro-dia-pk')]
+		$('#creacionEdicionencuentroModal [name=docente] option[value=' + data_encuentro_modal_actual.seccion.docente_pk + ']').attr('selected', true);
+		$('#creacionEdicionencuentroModal [name=aula] option[value=' + data_encuentro_modal_actual.aula.pk + ']').attr('selected', true);
+		$('#creacionEdicionencuentroModal [name=tipo] option[value=' + data_encuentro_modal_actual.tipo + ']').attr('selected', true);
+		$('#creacionEdicionencuentroModal [name=cupo]').attr('value', data_encuentro_modal_actual.seccion.cupo);
+
+	});	
+
 }
 
 function callWhenReady(selector, callback) {
@@ -193,6 +206,9 @@ function obtener_datos_encuentros(callback){
 		};
 		callback();
 	});
+	$.getJSON('/api/aulas/?carrera=' + carrera, function(data_aulas_resp){
+		data_aulas = data_aulas_resp;
+	});	
 }
 
 function limpiar_encuentros_tabla(callback){
@@ -201,7 +217,6 @@ function limpiar_encuentros_tabla(callback){
 }
 
 function llenar_encuentros(aul){
-	console.log('datos de encuentros recibida.')
 	var indice_bloques_dias = 0;
 	var indice_bloques_horas = 0;
 	if(Boolean(data_aulas_encuentros[aul])){
@@ -219,6 +234,7 @@ function llenar_encuentros(aul){
 				var titulo_encuentro  = $('<div>');
 				titulo_encuentro.attr('class', 'titulo');
 				titulo_encuentro.append($('<strong>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
+				titulo_encuentro.append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o').attr('aria-hidden', 'true')));
 				nuevo_encuentro.append(titulo_encuentro);
 				var texto = $('<p>');
 				texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero)
@@ -356,6 +372,7 @@ $('#busqueda_encuentro').click(function(){
 	var materia = $('#busqueda_materia').val().toLowerCase();
 	var seccion = $('#busqueda_seccion').val();
 	if(materia && seccion){
+		$('#resultados_busqueda').html('');
 		for (var i = data_aulas_encuentros['aulas_en_orden'].length - 1; i >= 0; i--) {
 			if(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre.toLowerCase().indexOf(materia) != -1){
 				if(data_aulas_encuentros['aulas_en_orden'][i].seccion.numero == Number(seccion)){
@@ -365,7 +382,9 @@ $('#busqueda_encuentro').click(function(){
 					nuevo_encuentro.attr('draggable', 'true');
 					var titulo_encuentro  = $('<div>');
 					titulo_encuentro.attr('class', 'titulo');
+					// titulo_encuentro.append($('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'))
 					titulo_encuentro.append($('<strong>').text(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre));
+					titulo_encuentro.append($('<i>').attr('class', 'fa fa-pencil-square-o icono-editar').attr('aria-hidden', 'true'));
 					nuevo_encuentro.append(titulo_encuentro);
 					var texto = $('<p>');
 					texto.text('Sección: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.numero)
@@ -388,6 +407,41 @@ $('#busqueda_encuentro').click(function(){
 	}
 });
 
+$('#creacionEdicionencuentroModal .submit-modal').click(function(e){
+	e.preventDefault();
+	var anterior_aula = data_encuentro_modal_actual.aula;
+	var aula_edicion_encuentro = $('#creacionEdicionencuentroModal [name=aula]').val();
+	var nombre_aula_edicion = data_aulas[aula_edicion_encuentro].nombre;
+	var docente = $('#creacionEdicionencuentroModal [name=docente]').val();
+	var docente_nombre = $('#creacionEdicionencuentroModal [name=docente]').text();
+	var tipo = $('#creacionEdicionencuentroModal [name=tipo]').val();
+	var cupo = $('#creacionEdicionencuentroModal [name=cupo]').val();
+	$.post('/api/encuentros/update/', {
+		pk: data_encuentro_modal_actual.encuentro_dia_pk,
+		aula: aula_edicion_encuentro,
+		docente: docente,
+		tipo: tipo,
+		cupo: cupo,
+	}).done(function(algo){
+		$('#creacionEdicionencuentroModal')[0].classList.remove('show');	
+		$('#creacionEdicionencuentroModal')[0].classList.add('fade');
+		data_encuentro_modal_actual.aula = data_aulas[aula_edicion_encuentro];
+		data_encuentro_modal_actual.seccion.docente.nombres = docente_nombre;
+		data_encuentro_modal_actual.seccion.docente.pk = docente;
+		data_encuentro_modal_actual.tipo = tipo;
+		data_encuentro_modal_actual.seccion.cupo = cupo;
+		for (var i = 0; i < data_aulas_encuentros[anterior_aula.nombre].length; i++) {
+			if(data_aulas_encuentros[anterior_aula.nombre][i].encuentro_dia_pk == data_encuentro_modal_actual.encuentro_dia_pk){
+				data_aulas_encuentros[nombre_aula_edicion] = (data_aulas_encuentros[nombre_aula_edicion] || []).concat(data_aulas_encuentros[anterior_aula.nombre][i]);
+				data_aulas_encuentros[anterior_aula.nombre].splice(i, 1);
+				break;
+			}
+		};
+		renderizar_tabla();
+		$('#busqueda_encuentro').click();
+		
+	});
+});
 
 
 
