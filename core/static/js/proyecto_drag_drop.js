@@ -270,7 +270,7 @@ function renderizar_tabla(){
 	var tbody = $('<tbody>');
 	thead.append('<th>');
 	for (var i = 0; i < esquemas_dias.length; i++) {
-		thead.append($('<th>').text(esquemas_dias[i]));
+		thead.append($('<th>').text(esquemas_dias[i]).attr('class', 'text-center'));
 	};
 	var tmp_turno = turnos_bloques_horas[0];
 	for (var i = 0; i < bloques_horas.length; i++) {
