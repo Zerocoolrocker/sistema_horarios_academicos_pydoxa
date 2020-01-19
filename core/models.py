@@ -22,6 +22,7 @@ class Aula(models.Model):
 	ubicacion = models.ForeignKey('UbicacionAula', on_delete=models.CASCADE)
 	carrera = models.ForeignKey('Carrera', blank=True, null=True, on_delete=models.CASCADE)
 	# proyecto = models.ForeignKey('Proyecto', on_delete=models.CASCADE)
+
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
