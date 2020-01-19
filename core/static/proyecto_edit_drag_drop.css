@@ -51,3 +51,13 @@
 	color: white !important;
 }
 
+.aula-button {
+	/*background-color: rgba(243, 156, 18, 0.85);*/
+	background-color: #f3ad2f;
+	color: white;
+	height: 30px !important;
+	width: 30px !important;
+	border-radius: 4px;
+	border-radius: 4px;
+}
+
