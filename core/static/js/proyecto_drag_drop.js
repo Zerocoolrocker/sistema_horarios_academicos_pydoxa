@@ -189,20 +189,22 @@ function obtener_datos_encuentros(callback){
 			data_aulas_encuentros[data[i].aula.nombre] = (data_aulas_encuentros[data[i].aula.nombre] || []).concat(data[i]);
 			data_aulas_encuentros['aulas_en_orden'] = (data_aulas_encuentros['aulas_en_orden'] || []).concat(data[i]);
 
-			data_aulas_encuentros['aulas_en_orden'].sort(
-				function(a, b) {
-				  // Use toUpperCase() to ignore character casing
-				  var ele1 = a.aula.numero.toUpperCase();
-				  var ele2 = b.aula.numero.toUpperCase();
-				  var comparison = 0;
-				  if (ele1 > ele2) {
-				    comparison = 1;
-				  } else if (ele1 < ele2) {
-				    comparison = -1;
-				  }
-				  return comparison;
-				}
-			);
+			if(data_aulas_encuentros['aulas_en_orden'].length > 1){
+				data_aulas_encuentros['aulas_en_orden'].sort(
+					function(a, b) {
+					  var ele1 = a.aula.numero;
+					  var ele2 = b.aula.numero;
+					  var comparison = 0;
+					  if (ele1 > ele2) {
+					    comparison = 1;
+					  } else if (ele1 < ele2) {
+					    comparison = -1;
+					  }
+					  return comparison;
+					}
+				);
+				
+			}
 		};
 		callback();
 	});

@@ -5,6 +5,8 @@
 }
 .busqueda-encuentros .dnd-encuentro {
 	width: 17% !important;
+	display: inline-block !important;
+	margin-left: 1%;
 
 }
 
@@ -40,3 +42,4 @@
 	margin-left: 5px !important;
 	color: white !important;
 }
+
