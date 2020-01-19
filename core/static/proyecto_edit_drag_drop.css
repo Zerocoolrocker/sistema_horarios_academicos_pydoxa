@@ -56,7 +56,9 @@
 }
 
 .dnd-encuentro .icono-editar {
-	margin-left: 5px !important;
+	/*margin-left: 5px !important;*/
+	/*padding-top: 40px !important;*/
+	/*float: right !important;*/
 	color: white !important;
 	cursor: pointer;
 }

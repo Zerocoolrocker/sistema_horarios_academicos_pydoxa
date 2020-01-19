@@ -33,7 +33,7 @@
 					  <div class="col-sm-10">
 					    <select class="form-control" name="docente" value="{% if form_data.docente %}{{form_data.docente.0}}{% endif %}" id="docente">
 					    	{% for docente in docentes %}
-					    		<option value='{{ docente.pk }}'>{{ docente }}</option>
+					    		<option value='{{ docente.pk }}'>{{ docente.nombre_apellido }}</option>
 					    	{% endfor %}
 					   	</select>
 					  	{% if form_errors.bloque %}

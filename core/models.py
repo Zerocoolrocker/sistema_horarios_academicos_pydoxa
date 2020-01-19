@@ -155,6 +155,13 @@ class Docente(models.Model):
 	def __str__(self):
 		return '%s %s CI: %s' % (self.nombres, self.apellidos, self.cedula)
 
+	@property
+	def nombre_apellido(self):
+		nom = self.nombres.split(' ')[0]
+		if self.apellidos:
+			nom += ' ' + self.apellidos.split(' ')[0]
+		return nom
+
 class TelefonoDocente(models.Model):
 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
 	telefono = models.CharField(max_length=15)

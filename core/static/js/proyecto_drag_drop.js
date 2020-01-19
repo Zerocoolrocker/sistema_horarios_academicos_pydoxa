@@ -282,12 +282,12 @@ function llenar_encuentros(aul){
 				var titulo_encuentro  = $('<div>');
 				titulo_encuentro.attr('class', 'titulo');
 				titulo_encuentro.append($('<strong>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
-				titulo_encuentro.append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o').attr('aria-hidden', 'true')));
+				titulo_encuentro.append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true')));
 				nuevo_encuentro.append(titulo_encuentro);
 				var texto = $('<p>');
 				texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero)
 				texto.append($('<br>'))
-				texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente))
+				texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente_nombre_apellido))
 				texto.append($('<br>'))
 				texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo)
 				nuevo_encuentro.append(texto);
@@ -435,12 +435,12 @@ $('#busqueda_encuentro').click(function(){
 					titulo_encuentro.attr('class', 'titulo');
 					// titulo_encuentro.append($('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'))
 					titulo_encuentro.append($('<strong>').text(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre));
-					titulo_encuentro.append($('<i>').attr('class', 'fa fa-pencil-square-o icono-editar').attr('aria-hidden', 'true'));
+					titulo_encuentro.append($('<i>').attr('class', 'fa fa-pencil-square-o icono-editar pull-right').attr('aria-hidden', 'true'));
 					nuevo_encuentro.append(titulo_encuentro);
 					var texto = $('<p>');
 					texto.text('Sección: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.numero)
 					texto.append($('<br>'))
-					texto.append($('<strong>').append(data_aulas_encuentros['aulas_en_orden'][i].seccion.docente))
+					texto.append($('<strong>').append(data_aulas_encuentros['aulas_en_orden'][i].seccion.docente_nombre_apellido))
 					texto.append($('<br>'))
 					texto.append('Cupo: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.cupo)
 					nuevo_encuentro.append(texto);

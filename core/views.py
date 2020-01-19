@@ -238,7 +238,8 @@ class EncuentrosAPIListView(View):
                     "pk": x.encuentro.seccion.pk,
                     "numero": x.encuentro.seccion.numero,
                     "docente": x.encuentro.seccion.docente.nombres,
-                    "docente_pk": x.encuentro.seccion.docente.nombres,
+                    "docente_nombre_apellido": x.encuentro.seccion.docente.nombre_apellido,
+                    "docente_pk": x.encuentro.seccion.docente.pk,
                     "cupo": x.encuentro.seccion.cupo,
                     "materia": {
                         "pk": x.encuentro.seccion.materia.pk,
