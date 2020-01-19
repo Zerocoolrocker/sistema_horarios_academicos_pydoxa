@@ -1,2663 +1,1775 @@
 [
 {
-  "model": "core.area",
-  "pk": 1,
-  "fields": {
-    "nombre": "AIS",
-    "creado": "2019-11-24",
-    "actualizado": "2019-11-24"
-  }
-},
-{
-  "model": "core.aula",
-  "pk": 1,
-  "fields": {
-    "nombre": "1",
-    "tipo_aula": 1,
-    "numero": 1,
-    "ubicacion": 1,
-    "carrera": 1,
-    "creado": "2019-11-24T17:19:12.501Z",
-    "actualizado": "2020-01-19T03:10:43.388Z"
-  }
-},
-{
-  "model": "core.aula",
-  "pk": 2,
-  "fields": {
-    "nombre": "2",
-    "tipo_aula": 1,
-    "numero": 2,
-    "ubicacion": 1,
-    "carrera": 1,
-    "creado": "2020-01-17T16:54:52.297Z",
-    "actualizado": "2020-01-17T16:54:52.298Z"
-  }
-},
-{
-  "model": "core.carrera",
-  "pk": 1,
-  "fields": {
-    "nombre": "Igenieria en Informatica",
-    "codigo": "II"
-  }
-},
-{
-  "model": "core.pensum",
-  "pk": 1,
-  "fields": {
-    "nombre": "AIS 2019",
-    "fecha": "2019-11-24",
-    "carrera": 1
-  }
-},
-{
-  "model": "core.proyecto",
-  "pk": 1,
-  "fields": {
-    "nombre": "Proyecto prueba 1",
-    "pensum": 1,
-    "fecha": "2019-11-24",
-    "observaciones": "",
-    "creado": "2019-11-24T17:15:09.111Z",
-    "update": "2019-11-24T17:15:09.111Z"
-  }
-},
-{
-  "model": "core.materia",
-  "pk": 1,
-  "fields": {
-    "codigo": "COD",
-    "nombre": "Gerencia de proyectos",
-    "pensum": 1
-  }
-},
-{
-  "model": "core.materia",
-  "pk": 2,
-  "fields": {
-    "codigo": "COD2",
-    "nombre": "Programaci\u00f3n I",
-    "pensum": 1
-  }
-},
-{
-  "model": "core.materia",
-  "pk": 3,
-  "fields": {
-    "codigo": "COD3",
-    "nombre": "Programacion II",
-    "pensum": 1
-  }
-},
-{
-  "model": "core.materia",
-  "pk": 4,
-  "fields": {
-    "codigo": "COD4",
-    "nombre": "Programacion III",
-    "pensum": 1
-  }
-},
-{
-  "model": "core.materia",
-  "pk": 5,
-  "fields": {
-    "codigo": "COD5",
-    "nombre": "Algoritmo",
-    "pensum": 1
-  }
-},
-{
-  "model": "core.seccion",
-  "pk": 1,
-  "fields": {
-    "docente": 1,
-    "numero": 1,
-    "materia": 1,
-    "proyecto": 1,
-    "cupo": 10,
-    "creado": "2019-11-24T21:49:15.747Z",
-    "actualizado": "2020-01-19T07:33:42.214Z"
-  }
-},
-{
-  "model": "core.seccion",
-  "pk": 6,
-  "fields": {
-    "docente": 2,
-    "numero": 1,
-    "materia": 2,
-    "proyecto": 1,
-    "cupo": 15,
-    "creado": "2020-01-19T17:01:52.009Z",
-    "actualizado": "2020-01-19T17:01:52.009Z"
-  }
-},
-{
-  "model": "core.docente",
-  "pk": 1,
-  "fields": {
-    "cedula": 111,
-    "nombres": "Aristoteles",
-    "apellidos": "Rodriguez",
-    "carrera": 1,
-    "email": null,
-    "estado": 1,
-    "municipio": 2,
-    "direccion": "",
-    "creado": "2019-11-24T17:10:16.739Z",
-    "actualizado": "2019-11-24T17:10:16.739Z"
-  }
-},
-{
-  "model": "core.docente",
-  "pk": 2,
-  "fields": {
-    "cedula": 111,
-    "nombres": "John",
-    "apellidos": "Doe",
-    "carrera": 1,
-    "email": null,
-    "estado": 1,
-    "municipio": 1,
-    "direccion": "",
-    "creado": "2020-01-19T17:01:28.035Z",
-    "actualizado": "2020-01-19T17:01:28.035Z"
-  }
-},
-{
-  "model": "core.turno",
-  "pk": 1,
-  "fields": {
-    "nombre": "Diurno"
-  }
-},
-{
-  "model": "core.turno",
-  "pk": 2,
-  "fields": {
-    "nombre": "Nocturno"
-  }
-},
-{
-  "model": "core.turno",
-  "pk": 3,
-  "fields": {
-    "nombre": "Tarde"
-  }
-},
-{
-  "model": "core.tipoaula",
-  "pk": 1,
-  "fields": {
-    "nombre": "Fisica",
-    "descripcion": "",
-    "modalidad": "pr"
-  }
-},
-{
-  "model": "core.tipoencuentro",
-  "pk": 1,
-  "fields": {
-    "nombre": "Presencial",
-    "descripcion": "",
-    "modalidad": "pr"
-  }
-},
-{
-  "model": "core.tipoencuentro",
-  "pk": 2,
-  "fields": {
-    "nombre": "Presencial",
-    "descripcion": "",
-    "modalidad": "pr"
-  }
-},
-{
-  "model": "core.encuentro",
-  "pk": 1,
-  "fields": {
-    "bloque": 4,
-    "numero_bloques": 2,
-    "aula": 1,
-    "seccion": 1,
-    "tipo": "pr",
-    "activo": true,
-    "creado": "2019-11-24T22:11:36.620Z",
-    "actualizado": "2020-01-19T18:01:26.742Z"
-  }
-},
-{
-  "model": "core.encuentro",
-  "pk": 12,
-  "fields": {
-    "bloque": 1,
-    "numero_bloques": 4,
-    "aula": 1,
-    "seccion": 1,
-    "tipo": "pr",
-    "activo": false,
-    "creado": "2020-01-15T09:58:27.410Z",
-    "actualizado": "2020-01-19T18:01:24.462Z"
-  }
-},
-{
-  "model": "core.encuentro",
-  "pk": 13,
-  "fields": {
-    "bloque": 1,
-    "numero_bloques": 1,
-    "aula": 1,
-    "seccion": 6,
-    "tipo": "pr",
-    "activo": true,
-    "creado": "2020-01-19T17:01:55.331Z",
-    "actualizado": "2020-01-19T18:01:20.908Z"
-  }
-},
-{
-  "model": "core.encuentrosdias",
-  "pk": 6,
-  "fields": {
-    "encuentro": 12,
-    "dia": 5
-  }
-},
-{
-  "model": "core.encuentrosdias",
-  "pk": 7,
-  "fields": {
-    "encuentro": 1,
-    "dia": 2
-  }
-},
-{
-  "model": "core.encuentrosdias",
-  "pk": 8,
-  "fields": {
-    "encuentro": 13,
-    "dia": 1
-  }
-},
-{
-  "model": "core.estado",
-  "pk": 1,
-  "fields": {
-    "nombre": "Guarico"
-  }
-},
-{
-  "model": "core.estado",
-  "pk": 2,
-  "fields": {
-    "nombre": "Roscio"
-  }
-},
-{
-  "model": "core.municipio",
-  "pk": 1,
-  "fields": {
-    "nombre": "Roscio"
-  }
-},
-{
-  "model": "core.municipio",
-  "pk": 2,
-  "fields": {
-    "nombre": "X"
-  }
-},
-{
-  "model": "core.ubicacionaula",
-  "pk": 1,
-  "fields": {
-    "nombre": "Edificio 1",
-    "descripcion": "",
-    "area": 1
-  }
-},
-{
-  "model": "core.esquemabloque",
-  "pk": 1,
-  "fields": {
-    "duracion": "00:45:00",
-    "esquema_dia": 1,
-    "tipo_encuentro": 2,
-    "carrera": 1,
-    "creado": "2019-11-24T17:14:00.099Z",
-    "actualizado": "2019-11-24T17:14:00.099Z"
-  }
-},
-{
-  "model": "core.esquemadia",
-  "pk": 1,
-  "fields": {
-    "nombre": "Presencial AIS 1",
-    "carrera": 1,
-    "tipo_encuentro": 1,
-    "activo": true,
-    "creado": "2019-11-24T17:13:28.848Z",
-    "actualizado": "2019-11-24T17:13:38.760Z"
-  }
-},
-{
-  "model": "core.dia",
-  "pk": 1,
-  "fields": {
-    "dia": "1",
-    "esquema_dia": 1
-  }
-},
-{
-  "model": "core.dia",
-  "pk": 2,
-  "fields": {
-    "dia": "2",
-    "esquema_dia": 1
-  }
-},
-{
-  "model": "core.dia",
-  "pk": 3,
-  "fields": {
-    "dia": "3",
-    "esquema_dia": 1
-  }
-},
-{
-  "model": "core.dia",
-  "pk": 4,
-  "fields": {
-    "dia": "4",
-    "esquema_dia": 1
-  }
-},
-{
-  "model": "core.dia",
-  "pk": 5,
-  "fields": {
-    "dia": "5",
-    "esquema_dia": 1
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 1,
-  "fields": {
-    "hora_inicio": "07:00:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2019-11-24T18:02:43.771Z",
-    "actualizado": "2019-11-24T18:02:43.771Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 4,
-  "fields": {
-    "hora_inicio": "07:45:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2020-01-07T21:58:42.478Z",
-    "actualizado": "2020-01-07T21:58:42.478Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 5,
-  "fields": {
-    "hora_inicio": "08:30:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2020-01-07T21:58:42.771Z",
-    "actualizado": "2020-01-07T21:58:42.771Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 6,
-  "fields": {
-    "hora_inicio": "09:15:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2020-01-07T21:58:43.027Z",
-    "actualizado": "2020-01-07T21:58:43.028Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 7,
-  "fields": {
-    "hora_inicio": "10:00:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2020-01-07T21:58:43.280Z",
-    "actualizado": "2020-01-07T21:58:43.280Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 8,
-  "fields": {
-    "hora_inicio": "10:45:00",
-    "esquema_bloque": 1,
-    "turno": 1,
-    "activo": true,
-    "creado": "2020-01-07T21:58:43.437Z",
-    "actualizado": "2020-01-07T21:58:43.437Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 9,
-  "fields": {
-    "hora_inicio": "13:00:00",
-    "esquema_bloque": 1,
-    "turno": 3,
-    "activo": true,
-    "creado": "2020-01-17T22:42:39.855Z",
-    "actualizado": "2020-01-17T22:42:39.855Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 10,
-  "fields": {
-    "hora_inicio": "13:45:00",
-    "esquema_bloque": 1,
-    "turno": 3,
-    "activo": true,
-    "creado": "2020-01-17T22:43:22.383Z",
-    "actualizado": "2020-01-17T22:43:22.383Z"
-  }
-},
-{
-  "model": "core.bloque",
-  "pk": 11,
-  "fields": {
-    "hora_inicio": "14:30:00",
-    "esquema_bloque": 1,
-    "turno": 3,
-    "activo": true,
-    "creado": "2020-01-17T22:43:43.639Z",
-    "actualizado": "2020-01-17T22:43:43.640Z"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 1,
-  "fields": {
-    "app_label": "core",
-    "model": "area"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 2,
-  "fields": {
-    "app_label": "core",
-    "model": "aula"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 3,
-  "fields": {
-    "app_label": "core",
-    "model": "carrera"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 4,
-  "fields": {
-    "app_label": "core",
-    "model": "docente"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 5,
-  "fields": {
-    "app_label": "core",
-    "model": "estado"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 6,
-  "fields": {
-    "app_label": "core",
-    "model": "materia"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 7,
-  "fields": {
-    "app_label": "core",
-    "model": "municipio"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 8,
-  "fields": {
-    "app_label": "core",
-    "model": "pensum"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 9,
-  "fields": {
-    "app_label": "core",
-    "model": "proyecto"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 10,
-  "fields": {
-    "app_label": "core",
-    "model": "turno"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 11,
-  "fields": {
-    "app_label": "core",
-    "model": "ubicacionaula"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 12,
-  "fields": {
-    "app_label": "core",
-    "model": "telefonodocente"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 13,
-  "fields": {
-    "app_label": "core",
-    "model": "seccion"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 14,
-  "fields": {
-    "app_label": "core",
-    "model": "bloque"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 15,
-  "fields": {
-    "app_label": "core",
-    "model": "dia"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 16,
-  "fields": {
-    "app_label": "core",
-    "model": "encuentro"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 17,
-  "fields": {
-    "app_label": "core",
-    "model": "esquemabloque"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 18,
-  "fields": {
-    "app_label": "core",
-    "model": "esquemadia"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 19,
-  "fields": {
-    "app_label": "core",
-    "model": "restriccionesbloques"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 20,
-  "fields": {
-    "app_label": "core",
-    "model": "tipoaula"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 21,
-  "fields": {
-    "app_label": "core",
-    "model": "tipoencuentro"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 22,
-  "fields": {
-    "app_label": "admin",
-    "model": "logentry"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 23,
-  "fields": {
-    "app_label": "auth",
-    "model": "permission"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 24,
-  "fields": {
-    "app_label": "auth",
-    "model": "group"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 25,
-  "fields": {
-    "app_label": "auth",
-    "model": "user"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 26,
-  "fields": {
-    "app_label": "contenttypes",
-    "model": "contenttype"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 27,
-  "fields": {
-    "app_label": "sessions",
-    "model": "session"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "pk": 28,
-  "fields": {
-    "app_label": "core",
-    "model": "encuentrosdias"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "0s2xxfiiuxtpr8vc4qs2ckaair13dliy",
-  "fields": {
-    "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
-    "expire_date": "2020-02-01T15:11:42.074Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "denk5n8ef0yqg1gaw834lrfkroc7yulc",
-  "fields": {
-    "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
-    "expire_date": "2019-12-08T22:57:56.730Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "werb7m94bf1cygt6mm3b75n1n6b574sn",
-  "fields": {
-    "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
-    "expire_date": "2020-01-23T14:22:28.401Z"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 1,
-  "fields": {
-    "name": "Can add area",
-    "content_type": 1,
-    "codename": "add_area"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 2,
-  "fields": {
-    "name": "Can change area",
-    "content_type": 1,
-    "codename": "change_area"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 3,
-  "fields": {
-    "name": "Can delete area",
-    "content_type": 1,
-    "codename": "delete_area"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 4,
-  "fields": {
-    "name": "Can view area",
-    "content_type": 1,
-    "codename": "view_area"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 5,
-  "fields": {
-    "name": "Can add aula",
-    "content_type": 2,
-    "codename": "add_aula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 6,
-  "fields": {
-    "name": "Can change aula",
-    "content_type": 2,
-    "codename": "change_aula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 7,
-  "fields": {
-    "name": "Can delete aula",
-    "content_type": 2,
-    "codename": "delete_aula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 8,
-  "fields": {
-    "name": "Can view aula",
-    "content_type": 2,
-    "codename": "view_aula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 9,
-  "fields": {
-    "name": "Can add carrera",
-    "content_type": 3,
-    "codename": "add_carrera"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 10,
-  "fields": {
-    "name": "Can change carrera",
-    "content_type": 3,
-    "codename": "change_carrera"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 11,
-  "fields": {
-    "name": "Can delete carrera",
-    "content_type": 3,
-    "codename": "delete_carrera"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 12,
-  "fields": {
-    "name": "Can view carrera",
-    "content_type": 3,
-    "codename": "view_carrera"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 13,
-  "fields": {
-    "name": "Can add docente",
-    "content_type": 4,
-    "codename": "add_docente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 14,
-  "fields": {
-    "name": "Can change docente",
-    "content_type": 4,
-    "codename": "change_docente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 15,
-  "fields": {
-    "name": "Can delete docente",
-    "content_type": 4,
-    "codename": "delete_docente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 16,
-  "fields": {
-    "name": "Can view docente",
-    "content_type": 4,
-    "codename": "view_docente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 17,
-  "fields": {
-    "name": "Can add estado",
-    "content_type": 5,
-    "codename": "add_estado"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 18,
-  "fields": {
-    "name": "Can change estado",
-    "content_type": 5,
-    "codename": "change_estado"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 19,
-  "fields": {
-    "name": "Can delete estado",
-    "content_type": 5,
-    "codename": "delete_estado"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 20,
-  "fields": {
-    "name": "Can view estado",
-    "content_type": 5,
-    "codename": "view_estado"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 21,
-  "fields": {
-    "name": "Can add materia",
-    "content_type": 6,
-    "codename": "add_materia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 22,
-  "fields": {
-    "name": "Can change materia",
-    "content_type": 6,
-    "codename": "change_materia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 23,
-  "fields": {
-    "name": "Can delete materia",
-    "content_type": 6,
-    "codename": "delete_materia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 24,
-  "fields": {
-    "name": "Can view materia",
-    "content_type": 6,
-    "codename": "view_materia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 25,
-  "fields": {
-    "name": "Can add municipio",
-    "content_type": 7,
-    "codename": "add_municipio"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 26,
-  "fields": {
-    "name": "Can change municipio",
-    "content_type": 7,
-    "codename": "change_municipio"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 27,
-  "fields": {
-    "name": "Can delete municipio",
-    "content_type": 7,
-    "codename": "delete_municipio"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 28,
-  "fields": {
-    "name": "Can view municipio",
-    "content_type": 7,
-    "codename": "view_municipio"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 29,
-  "fields": {
-    "name": "Can add pensum",
-    "content_type": 8,
-    "codename": "add_pensum"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 30,
-  "fields": {
-    "name": "Can change pensum",
-    "content_type": 8,
-    "codename": "change_pensum"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 31,
-  "fields": {
-    "name": "Can delete pensum",
-    "content_type": 8,
-    "codename": "delete_pensum"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 32,
-  "fields": {
-    "name": "Can view pensum",
-    "content_type": 8,
-    "codename": "view_pensum"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 33,
-  "fields": {
-    "name": "Can add proyecto",
-    "content_type": 9,
-    "codename": "add_proyecto"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 34,
-  "fields": {
-    "name": "Can change proyecto",
-    "content_type": 9,
-    "codename": "change_proyecto"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 35,
-  "fields": {
-    "name": "Can delete proyecto",
-    "content_type": 9,
-    "codename": "delete_proyecto"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 36,
-  "fields": {
-    "name": "Can view proyecto",
-    "content_type": 9,
-    "codename": "view_proyecto"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 37,
-  "fields": {
-    "name": "Can add turno",
-    "content_type": 10,
-    "codename": "add_turno"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 38,
-  "fields": {
-    "name": "Can change turno",
-    "content_type": 10,
-    "codename": "change_turno"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 39,
-  "fields": {
-    "name": "Can delete turno",
-    "content_type": 10,
-    "codename": "delete_turno"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 40,
-  "fields": {
-    "name": "Can view turno",
-    "content_type": 10,
-    "codename": "view_turno"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 41,
-  "fields": {
-    "name": "Can add ubicacion aula",
-    "content_type": 11,
-    "codename": "add_ubicacionaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 42,
-  "fields": {
-    "name": "Can change ubicacion aula",
-    "content_type": 11,
-    "codename": "change_ubicacionaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 43,
-  "fields": {
-    "name": "Can delete ubicacion aula",
-    "content_type": 11,
-    "codename": "delete_ubicacionaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 44,
-  "fields": {
-    "name": "Can view ubicacion aula",
-    "content_type": 11,
-    "codename": "view_ubicacionaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 45,
-  "fields": {
-    "name": "Can add telefono docente",
-    "content_type": 12,
-    "codename": "add_telefonodocente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 46,
-  "fields": {
-    "name": "Can change telefono docente",
-    "content_type": 12,
-    "codename": "change_telefonodocente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 47,
-  "fields": {
-    "name": "Can delete telefono docente",
-    "content_type": 12,
-    "codename": "delete_telefonodocente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 48,
-  "fields": {
-    "name": "Can view telefono docente",
-    "content_type": 12,
-    "codename": "view_telefonodocente"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 49,
-  "fields": {
-    "name": "Can add seccion",
-    "content_type": 13,
-    "codename": "add_seccion"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 50,
-  "fields": {
-    "name": "Can change seccion",
-    "content_type": 13,
-    "codename": "change_seccion"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 51,
-  "fields": {
-    "name": "Can delete seccion",
-    "content_type": 13,
-    "codename": "delete_seccion"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 52,
-  "fields": {
-    "name": "Can view seccion",
-    "content_type": 13,
-    "codename": "view_seccion"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 53,
-  "fields": {
-    "name": "Can add bloque",
-    "content_type": 14,
-    "codename": "add_bloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 54,
-  "fields": {
-    "name": "Can change bloque",
-    "content_type": 14,
-    "codename": "change_bloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 55,
-  "fields": {
-    "name": "Can delete bloque",
-    "content_type": 14,
-    "codename": "delete_bloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 56,
-  "fields": {
-    "name": "Can view bloque",
-    "content_type": 14,
-    "codename": "view_bloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 57,
-  "fields": {
-    "name": "Can add dia",
-    "content_type": 15,
-    "codename": "add_dia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 58,
-  "fields": {
-    "name": "Can change dia",
-    "content_type": 15,
-    "codename": "change_dia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 59,
-  "fields": {
-    "name": "Can delete dia",
-    "content_type": 15,
-    "codename": "delete_dia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 60,
-  "fields": {
-    "name": "Can view dia",
-    "content_type": 15,
-    "codename": "view_dia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 61,
-  "fields": {
-    "name": "Can add encuentro",
-    "content_type": 16,
-    "codename": "add_encuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 62,
-  "fields": {
-    "name": "Can change encuentro",
-    "content_type": 16,
-    "codename": "change_encuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 63,
-  "fields": {
-    "name": "Can delete encuentro",
-    "content_type": 16,
-    "codename": "delete_encuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 64,
-  "fields": {
-    "name": "Can view encuentro",
-    "content_type": 16,
-    "codename": "view_encuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 65,
-  "fields": {
-    "name": "Can add esquema bloque",
-    "content_type": 17,
-    "codename": "add_esquemabloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 66,
-  "fields": {
-    "name": "Can change esquema bloque",
-    "content_type": 17,
-    "codename": "change_esquemabloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 67,
-  "fields": {
-    "name": "Can delete esquema bloque",
-    "content_type": 17,
-    "codename": "delete_esquemabloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 68,
-  "fields": {
-    "name": "Can view esquema bloque",
-    "content_type": 17,
-    "codename": "view_esquemabloque"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 69,
-  "fields": {
-    "name": "Can add esquema dia",
-    "content_type": 18,
-    "codename": "add_esquemadia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 70,
-  "fields": {
-    "name": "Can change esquema dia",
-    "content_type": 18,
-    "codename": "change_esquemadia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 71,
-  "fields": {
-    "name": "Can delete esquema dia",
-    "content_type": 18,
-    "codename": "delete_esquemadia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 72,
-  "fields": {
-    "name": "Can view esquema dia",
-    "content_type": 18,
-    "codename": "view_esquemadia"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 73,
-  "fields": {
-    "name": "Can add restricciones bloques",
-    "content_type": 19,
-    "codename": "add_restriccionesbloques"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 74,
-  "fields": {
-    "name": "Can change restricciones bloques",
-    "content_type": 19,
-    "codename": "change_restriccionesbloques"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 75,
-  "fields": {
-    "name": "Can delete restricciones bloques",
-    "content_type": 19,
-    "codename": "delete_restriccionesbloques"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 76,
-  "fields": {
-    "name": "Can view restricciones bloques",
-    "content_type": 19,
-    "codename": "view_restriccionesbloques"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 77,
-  "fields": {
-    "name": "Can add tipo aula",
-    "content_type": 20,
-    "codename": "add_tipoaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 78,
-  "fields": {
-    "name": "Can change tipo aula",
-    "content_type": 20,
-    "codename": "change_tipoaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 79,
-  "fields": {
-    "name": "Can delete tipo aula",
-    "content_type": 20,
-    "codename": "delete_tipoaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 80,
-  "fields": {
-    "name": "Can view tipo aula",
-    "content_type": 20,
-    "codename": "view_tipoaula"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 81,
-  "fields": {
-    "name": "Can add tipo encuentro",
-    "content_type": 21,
-    "codename": "add_tipoencuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 82,
-  "fields": {
-    "name": "Can change tipo encuentro",
-    "content_type": 21,
-    "codename": "change_tipoencuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 83,
-  "fields": {
-    "name": "Can delete tipo encuentro",
-    "content_type": 21,
-    "codename": "delete_tipoencuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 84,
-  "fields": {
-    "name": "Can view tipo encuentro",
-    "content_type": 21,
-    "codename": "view_tipoencuentro"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 85,
-  "fields": {
-    "name": "Can add log entry",
-    "content_type": 22,
-    "codename": "add_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 86,
-  "fields": {
-    "name": "Can change log entry",
-    "content_type": 22,
-    "codename": "change_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 87,
-  "fields": {
-    "name": "Can delete log entry",
-    "content_type": 22,
-    "codename": "delete_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 88,
-  "fields": {
-    "name": "Can view log entry",
-    "content_type": 22,
-    "codename": "view_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 89,
-  "fields": {
-    "name": "Can add permission",
-    "content_type": 23,
-    "codename": "add_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 90,
-  "fields": {
-    "name": "Can change permission",
-    "content_type": 23,
-    "codename": "change_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 91,
-  "fields": {
-    "name": "Can delete permission",
-    "content_type": 23,
-    "codename": "delete_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 92,
-  "fields": {
-    "name": "Can view permission",
-    "content_type": 23,
-    "codename": "view_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 93,
-  "fields": {
-    "name": "Can add group",
-    "content_type": 24,
-    "codename": "add_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 94,
-  "fields": {
-    "name": "Can change group",
-    "content_type": 24,
-    "codename": "change_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 95,
-  "fields": {
-    "name": "Can delete group",
-    "content_type": 24,
-    "codename": "delete_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 96,
-  "fields": {
-    "name": "Can view group",
-    "content_type": 24,
-    "codename": "view_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 97,
-  "fields": {
-    "name": "Can add user",
-    "content_type": 25,
-    "codename": "add_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 98,
-  "fields": {
-    "name": "Can change user",
-    "content_type": 25,
-    "codename": "change_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 99,
-  "fields": {
-    "name": "Can delete user",
-    "content_type": 25,
-    "codename": "delete_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 100,
-  "fields": {
-    "name": "Can view user",
-    "content_type": 25,
-    "codename": "view_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 101,
-  "fields": {
-    "name": "Can add content type",
-    "content_type": 26,
-    "codename": "add_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 102,
-  "fields": {
-    "name": "Can change content type",
-    "content_type": 26,
-    "codename": "change_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 103,
-  "fields": {
-    "name": "Can delete content type",
-    "content_type": 26,
-    "codename": "delete_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 104,
-  "fields": {
-    "name": "Can view content type",
-    "content_type": 26,
-    "codename": "view_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 105,
-  "fields": {
-    "name": "Can add session",
-    "content_type": 27,
-    "codename": "add_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 106,
-  "fields": {
-    "name": "Can change session",
-    "content_type": 27,
-    "codename": "change_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 107,
-  "fields": {
-    "name": "Can delete session",
-    "content_type": 27,
-    "codename": "delete_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 108,
-  "fields": {
-    "name": "Can view session",
-    "content_type": 27,
-    "codename": "view_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 109,
-  "fields": {
-    "name": "Can add encuentros dias",
-    "content_type": 28,
-    "codename": "add_encuentrosdias"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 110,
-  "fields": {
-    "name": "Can change encuentros dias",
-    "content_type": 28,
-    "codename": "change_encuentrosdias"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 111,
-  "fields": {
-    "name": "Can delete encuentros dias",
-    "content_type": 28,
-    "codename": "delete_encuentrosdias"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 112,
-  "fields": {
-    "name": "Can view encuentros dias",
-    "content_type": 28,
-    "codename": "view_encuentrosdias"
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 1,
-  "fields": {
-    "password": "pbkdf2_sha256$150000$pDjmvTDjdhQd$fxJR07D4DY2XHjlLZ+syQl6AIJtbrkLFSReew/3VIsM=",
-    "last_login": "2020-01-13T21:56:58.863Z",
-    "is_superuser": true,
-    "username": "zer0",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2019-11-24T17:09:02.473Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 1,
-  "fields": {
-    "action_time": "2019-11-24T17:10:01.171Z",
-    "user": 1,
-    "content_type": 1,
-    "object_id": "1",
-    "object_repr": "AIS",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 2,
-  "fields": {
-    "action_time": "2019-11-24T17:10:08.718Z",
-    "user": 1,
-    "content_type": 5,
-    "object_id": "1",
-    "object_repr": "Guarico",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 3,
-  "fields": {
-    "action_time": "2019-11-24T17:10:12.963Z",
-    "user": 1,
-    "content_type": 5,
-    "object_id": "2",
-    "object_repr": "Roscio",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 4,
-  "fields": {
-    "action_time": "2019-11-24T17:10:16.741Z",
-    "user": 1,
-    "content_type": 4,
-    "object_id": "1",
-    "object_repr": "Aristoteles Rodriguez CI: 111",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 5,
-  "fields": {
-    "action_time": "2019-11-24T17:11:30.439Z",
-    "user": 1,
-    "content_type": 3,
-    "object_id": "1",
-    "object_repr": "Igenieria en Informatica",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 6,
-  "fields": {
-    "action_time": "2019-11-24T17:13:25.731Z",
-    "user": 1,
-    "content_type": 21,
-    "object_id": "1",
-    "object_repr": "Presencial",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 7,
-  "fields": {
-    "action_time": "2019-11-24T17:13:28.849Z",
-    "user": 1,
-    "content_type": 18,
-    "object_id": "1",
-    "object_repr": "EsquemaDia object (1)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 8,
-  "fields": {
-    "action_time": "2019-11-24T17:13:38.762Z",
-    "user": 1,
-    "content_type": 18,
-    "object_id": "1",
-    "object_repr": "EsquemaDia object (1)",
-    "action_flag": 2,
-    "change_message": "[]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 9,
-  "fields": {
-    "action_time": "2019-11-24T17:13:46.952Z",
-    "user": 1,
-    "content_type": 21,
-    "object_id": "2",
-    "object_repr": "Presencial",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 10,
-  "fields": {
-    "action_time": "2019-11-24T17:14:00.101Z",
-    "user": 1,
-    "content_type": 17,
-    "object_id": "1",
-    "object_repr": "EsquemaBloque object (1)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 11,
-  "fields": {
-    "action_time": "2019-11-24T17:17:33.969Z",
-    "user": 1,
-    "content_type": 20,
-    "object_id": "1",
-    "object_repr": "Fisica",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 12,
-  "fields": {
-    "action_time": "2019-11-24T17:19:10.114Z",
-    "user": 1,
-    "content_type": 11,
-    "object_id": "1",
-    "object_repr": "Edificio 1",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 13,
-  "fields": {
-    "action_time": "2019-11-24T17:19:12.502Z",
-    "user": 1,
-    "content_type": 2,
-    "object_id": "1",
-    "object_repr": "Aula 1",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 14,
-  "fields": {
-    "action_time": "2019-11-24T17:20:11.561Z",
-    "user": 1,
-    "content_type": 8,
-    "object_id": "1",
-    "object_repr": "AIS 2019 - Igenieria en Informatica - 2019-11-24",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 15,
-  "fields": {
-    "action_time": "2019-11-24T17:20:13.658Z",
-    "user": 1,
-    "content_type": 6,
-    "object_id": "1",
-    "object_repr": "Gerencia de proyectos(COD)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 16,
-  "fields": {
-    "action_time": "2019-11-24T17:21:52.322Z",
-    "user": 1,
-    "content_type": 10,
-    "object_id": "1",
-    "object_repr": "Diurno",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 17,
-  "fields": {
-    "action_time": "2019-11-24T18:02:43.776Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "1",
-    "object_repr": "07:00:00 - 07:45:00",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 18,
-  "fields": {
-    "action_time": "2019-11-24T19:47:28.323Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "2",
-    "object_repr": "08:20:00 - 08:65:00",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 19,
-  "fields": {
-    "action_time": "2019-11-24T19:49:07.962Z",
-    "user": 1,
-    "content_type": 10,
-    "object_id": "2",
-    "object_repr": "Nocturno",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 20,
-  "fields": {
-    "action_time": "2019-11-24T19:56:35.906Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "3",
-    "object_repr": "15:26:29 - 16:11:29",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 21,
-  "fields": {
-    "action_time": "2019-11-24T22:18:14.110Z",
-    "user": 1,
-    "content_type": 15,
-    "object_id": "1",
-    "object_repr": "Dia object (1)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 22,
-  "fields": {
-    "action_time": "2019-11-24T22:18:26.261Z",
-    "user": 1,
-    "content_type": 15,
-    "object_id": "2",
-    "object_repr": "Dia object (2)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 23,
-  "fields": {
-    "action_time": "2019-11-24T22:18:32.972Z",
-    "user": 1,
-    "content_type": 15,
-    "object_id": "3",
-    "object_repr": "Dia object (3)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 24,
-  "fields": {
-    "action_time": "2019-11-24T22:18:40.002Z",
-    "user": 1,
-    "content_type": 15,
-    "object_id": "4",
-    "object_repr": "Dia object (4)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 25,
-  "fields": {
-    "action_time": "2019-11-24T22:18:46.568Z",
-    "user": 1,
-    "content_type": 15,
-    "object_id": "5",
-    "object_repr": "Dia object (5)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 26,
-  "fields": {
-    "action_time": "2020-01-06T18:47:13.982Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "10",
-    "object_repr": "08:20:00 - 9:05:00",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 27,
-  "fields": {
-    "action_time": "2020-01-06T18:47:16.881Z",
-    "user": 1,
-    "content_type": 28,
-    "object_id": "1",
-    "object_repr": "Lunes: 08:20:00 - 9:05:00",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"encuentro\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 28,
-  "fields": {
-    "action_time": "2020-01-07T03:26:43.110Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "2",
-    "object_repr": "08:30:00 - 9:15:00",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"hora_inicio\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 29,
-  "fields": {
-    "action_time": "2020-01-07T03:26:46.136Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "10",
-    "object_repr": "08:30:00 - 9:15:00",
-    "action_flag": 2,
-    "change_message": "[]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 30,
-  "fields": {
-    "action_time": "2020-01-07T21:49:24.889Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "3",
-    "object_repr": "15:26:29 - 16:11:29",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 31,
-  "fields": {
-    "action_time": "2020-01-07T21:49:25.058Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "2",
-    "object_repr": "08:30:00 - 9:15:00",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 32,
-  "fields": {
-    "action_time": "2020-01-15T09:57:26.956Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "11",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 33,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.122Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "9",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 34,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.277Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "8",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 35,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.433Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "7",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 36,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.666Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "6",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 37,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.800Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "5",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 38,
-  "fields": {
-    "action_time": "2020-01-15T09:57:27.933Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "4",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 39,
-  "fields": {
-    "action_time": "2020-01-15T09:57:28.122Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "3",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 40,
-  "fields": {
-    "action_time": "2020-01-15T09:57:28.257Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "2",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 41,
-  "fields": {
-    "action_time": "2020-01-15T10:12:42.747Z",
-    "user": 1,
-    "content_type": 28,
-    "object_id": "6",
-    "object_repr": "Martes: 07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"dia\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 42,
-  "fields": {
-    "action_time": "2020-01-17T16:54:52.319Z",
-    "user": 1,
-    "content_type": 2,
-    "object_id": "2",
-    "object_repr": "2",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 43,
-  "fields": {
-    "action_time": "2020-01-17T22:42:34.917Z",
-    "user": 1,
-    "content_type": 10,
-    "object_id": "3",
-    "object_repr": "Tarde",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 44,
-  "fields": {
-    "action_time": "2020-01-17T22:42:39.856Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "9",
-    "object_repr": "13:00 - 13:45",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 45,
-  "fields": {
-    "action_time": "2020-01-17T22:43:22.385Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "10",
-    "object_repr": "13:45 - 14:30",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 46,
-  "fields": {
-    "action_time": "2020-01-17T22:43:43.641Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "11",
-    "object_repr": "14:30 - 15:15",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 47,
-  "fields": {
-    "action_time": "2020-01-18T00:11:43.620Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "1",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 48,
-  "fields": {
-    "action_time": "2020-01-18T00:33:14.557Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:45 - 08:30",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 49,
-  "fields": {
-    "action_time": "2020-01-18T02:12:32.977Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "08:30 - 09:15",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 50,
-  "fields": {
-    "action_time": "2020-01-18T02:16:18.365Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:45 - 08:30",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 51,
-  "fields": {
-    "action_time": "2020-01-18T02:17:51.148Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 52,
-  "fields": {
-    "action_time": "2020-01-18T02:18:13.488Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"bloque\", \"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 53,
-  "fields": {
-    "action_time": "2020-01-18T03:25:55.127Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 54,
-  "fields": {
-    "action_time": "2020-01-18T03:26:25.926Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 55,
-  "fields": {
-    "action_time": "2020-01-18T03:26:45.255Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "12",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"bloque\", \"numero_bloques\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 56,
-  "fields": {
-    "action_time": "2020-01-19T03:01:25.451Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "1",
-    "object_repr": "07:00 - 07:45",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"activo\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 57,
-  "fields": {
-    "action_time": "2020-01-19T03:02:34.422Z",
-    "user": 1,
-    "content_type": 28,
-    "object_id": "7",
-    "object_repr": "Lunes: 07:00 - 07:45",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 58,
-  "fields": {
-    "action_time": "2020-01-19T03:10:43.410Z",
-    "user": 1,
-    "content_type": 2,
-    "object_id": "1",
-    "object_repr": "1",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"numero\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 59,
-  "fields": {
-    "action_time": "2020-01-19T03:20:05.640Z",
-    "user": 1,
-    "content_type": 28,
-    "object_id": "7",
-    "object_repr": "Lunes: 08:30 - 09:15",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"dia\"]}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 60,
-  "fields": {
-    "action_time": "2020-01-19T15:29:10.624Z",
-    "user": 1,
-    "content_type": 9,
-    "object_id": "3",
-    "object_repr": "Proyecto 3",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 61,
-  "fields": {
-    "action_time": "2020-01-19T15:29:10.849Z",
-    "user": 1,
-    "content_type": 9,
-    "object_id": "2",
-    "object_repr": "Proyecto prueba 1",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 62,
-  "fields": {
-    "action_time": "2020-01-19T16:58:34.025Z",
-    "user": 1,
-    "content_type": 6,
-    "object_id": "2",
-    "object_repr": "Programaci\u00f3n I(COD2)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 63,
-  "fields": {
-    "action_time": "2020-01-19T16:59:02.962Z",
-    "user": 1,
-    "content_type": 6,
-    "object_id": "3",
-    "object_repr": "Programacion II(COD3)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 64,
-  "fields": {
-    "action_time": "2020-01-19T16:59:25.028Z",
-    "user": 1,
-    "content_type": 6,
-    "object_id": "4",
-    "object_repr": "Programacion III(COD4)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 65,
-  "fields": {
-    "action_time": "2020-01-19T16:59:47.625Z",
-    "user": 1,
-    "content_type": 6,
-    "object_id": "5",
-    "object_repr": "Algoritmo(COD5)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 66,
-  "fields": {
-    "action_time": "2020-01-19T17:01:28.037Z",
-    "user": 1,
-    "content_type": 4,
-    "object_id": "2",
-    "object_repr": "John Doe CI: 111",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 67,
-  "fields": {
-    "action_time": "2020-01-19T17:01:52.010Z",
-    "user": 1,
-    "content_type": 13,
-    "object_id": "6",
-    "object_repr": "Seccion 1 - Programaci\u00f3n I(COD2)",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 68,
-  "fields": {
-    "action_time": "2020-01-19T17:01:55.335Z",
-    "user": 1,
-    "content_type": 16,
-    "object_id": "13",
-    "object_repr": "09:15 - 10:00",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 69,
-  "fields": {
-    "action_time": "2020-01-19T17:02:00.689Z",
-    "user": 1,
-    "content_type": 28,
-    "object_id": "8",
-    "object_repr": "Jueves: 09:15 - 10:00",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
+    "model": "core.area",
+    "pk": 1,
+    "fields": {
+        "nombre": "AIS",
+        "creado": "2019-11-24",
+        "actualizado": "2019-11-24"
+    }
+},
+{
+    "model": "core.aula",
+    "pk": 1,
+    "fields": {
+        "nombre": "1",
+        "tipo_aula": 1,
+        "numero": 1,
+        "ubicacion": 1,
+        "carrera": 1,
+        "creado": "2019-11-24T17:19:12.501Z",
+        "actualizado": "2020-01-19T03:10:43.388Z"
+    }
+},
+{
+    "model": "core.aula",
+    "pk": 2,
+    "fields": {
+        "nombre": "2",
+        "tipo_aula": 1,
+        "numero": 2,
+        "ubicacion": 1,
+        "carrera": 1,
+        "creado": "2020-01-17T16:54:52.297Z",
+        "actualizado": "2020-01-17T16:54:52.298Z"
+    }
+},
+{
+    "model": "core.carrera",
+    "pk": 1,
+    "fields": {
+        "nombre": "Igenieria en Informatica",
+        "codigo": "II"
+    }
+},
+{
+    "model": "core.pensum",
+    "pk": 1,
+    "fields": {
+        "nombre": "AIS 2019",
+        "fecha": "2019-11-24",
+        "carrera": 1
+    }
+},
+{
+    "model": "core.proyecto",
+    "pk": 1,
+    "fields": {
+        "nombre": "Proyecto prueba 1",
+        "pensum": 1,
+        "fecha": "2019-11-24",
+        "observaciones": "",
+        "creado": "2019-11-24T17:15:09.111Z",
+        "update": "2019-11-24T17:15:09.111Z"
+    }
+},
+{
+    "model": "core.materia",
+    "pk": 1,
+    "fields": {
+        "codigo": "COD",
+        "nombre": "Gerencia de proyectos",
+        "pensum": 1
+    }
+},
+{
+    "model": "core.materia",
+    "pk": 2,
+    "fields": {
+        "codigo": "COD2",
+        "nombre": "Programaci\u00f3n I",
+        "pensum": 1
+    }
+},
+{
+    "model": "core.materia",
+    "pk": 3,
+    "fields": {
+        "codigo": "COD3",
+        "nombre": "Programacion II",
+        "pensum": 1
+    }
+},
+{
+    "model": "core.materia",
+    "pk": 4,
+    "fields": {
+        "codigo": "COD4",
+        "nombre": "Programacion III",
+        "pensum": 1
+    }
+},
+{
+    "model": "core.materia",
+    "pk": 5,
+    "fields": {
+        "codigo": "COD5",
+        "nombre": "Algoritmo",
+        "pensum": 1
+    }
+},
+{
+    "model": "core.seccion",
+    "pk": 1,
+    "fields": {
+        "docente": 1,
+        "numero": 1,
+        "materia": 1,
+        "proyecto": 1,
+        "cupo": 10,
+        "creado": "2019-11-24T21:49:15.747Z",
+        "actualizado": "2020-01-19T07:33:42.214Z"
+    }
+},
+{
+    "model": "core.seccion",
+    "pk": 6,
+    "fields": {
+        "docente": 2,
+        "numero": 1,
+        "materia": 2,
+        "proyecto": 1,
+        "cupo": 15,
+        "creado": "2020-01-19T17:01:52.009Z",
+        "actualizado": "2020-01-19T17:01:52.009Z"
+    }
+},
+{
+    "model": "core.docente",
+    "pk": 1,
+    "fields": {
+        "cedula": 111,
+        "nombres": "Aristoteles",
+        "apellidos": "Rodriguez",
+        "carrera": 1,
+        "email": null,
+        "estado": 1,
+        "municipio": 2,
+        "direccion": "",
+        "creado": "2019-11-24T17:10:16.739Z",
+        "actualizado": "2019-11-24T17:10:16.739Z"
+    }
+},
+{
+    "model": "core.docente",
+    "pk": 2,
+    "fields": {
+        "cedula": 111,
+        "nombres": "John",
+        "apellidos": "Doe",
+        "carrera": 1,
+        "email": null,
+        "estado": 1,
+        "municipio": 1,
+        "direccion": "",
+        "creado": "2020-01-19T17:01:28.035Z",
+        "actualizado": "2020-01-19T17:01:28.035Z"
+    }
+},
+{
+    "model": "core.turno",
+    "pk": 1,
+    "fields": {
+        "nombre": "Diurno"
+    }
+},
+{
+    "model": "core.turno",
+    "pk": 2,
+    "fields": {
+        "nombre": "Nocturno"
+    }
+},
+{
+    "model": "core.turno",
+    "pk": 3,
+    "fields": {
+        "nombre": "Tarde"
+    }
+},
+{
+    "model": "core.tipoaula",
+    "pk": 1,
+    "fields": {
+        "nombre": "Fisica",
+        "descripcion": "",
+        "modalidad": "pr"
+    }
+},
+{
+    "model": "core.tipoencuentro",
+    "pk": 1,
+    "fields": {
+        "nombre": "Presencial",
+        "descripcion": "",
+        "modalidad": "pr"
+    }
+},
+{
+    "model": "core.tipoencuentro",
+    "pk": 2,
+    "fields": {
+        "nombre": "Presencial",
+        "descripcion": "",
+        "modalidad": "pr"
+    }
+},
+{
+    "model": "core.encuentro",
+    "pk": 1,
+    "fields": {
+        "bloque": 4,
+        "numero_bloques": 2,
+        "aula": 1,
+        "seccion": 1,
+        "tipo": "pr",
+        "activo": true,
+        "creado": "2019-11-24T22:11:36.620Z",
+        "actualizado": "2020-01-19T18:01:26.742Z"
+    }
+},
+{
+    "model": "core.encuentro",
+    "pk": 12,
+    "fields": {
+        "bloque": 1,
+        "numero_bloques": 4,
+        "aula": 1,
+        "seccion": 1,
+        "tipo": "pr",
+        "activo": false,
+        "creado": "2020-01-15T09:58:27.410Z",
+        "actualizado": "2020-01-19T18:01:24.462Z"
+    }
+},
+{
+    "model": "core.encuentro",
+    "pk": 13,
+    "fields": {
+        "bloque": 1,
+        "numero_bloques": 1,
+        "aula": 1,
+        "seccion": 6,
+        "tipo": "pr",
+        "activo": true,
+        "creado": "2020-01-19T17:01:55.331Z",
+        "actualizado": "2020-01-19T18:01:20.908Z"
+    }
+},
+{
+    "model": "core.encuentrosdias",
+    "pk": 6,
+    "fields": {
+        "encuentro": 12,
+        "dia": 5
+    }
+},
+{
+    "model": "core.encuentrosdias",
+    "pk": 7,
+    "fields": {
+        "encuentro": 1,
+        "dia": 2
+    }
+},
+{
+    "model": "core.encuentrosdias",
+    "pk": 8,
+    "fields": {
+        "encuentro": 13,
+        "dia": 1
+    }
+},
+{
+    "model": "core.estado",
+    "pk": 1,
+    "fields": {
+        "nombre": "Guarico"
+    }
+},
+{
+    "model": "core.estado",
+    "pk": 2,
+    "fields": {
+        "nombre": "Roscio"
+    }
+},
+{
+    "model": "core.municipio",
+    "pk": 1,
+    "fields": {
+        "nombre": "Roscio"
+    }
+},
+{
+    "model": "core.municipio",
+    "pk": 2,
+    "fields": {
+        "nombre": "X"
+    }
+},
+{
+    "model": "core.ubicacionaula",
+    "pk": 1,
+    "fields": {
+        "nombre": "Edificio 1",
+        "descripcion": "",
+        "area": 1
+    }
+},
+{
+    "model": "core.esquemabloque",
+    "pk": 1,
+    "fields": {
+        "duracion": "00:45:00",
+        "esquema_dia": 1,
+        "tipo_encuentro": 2,
+        "carrera": 1,
+        "creado": "2019-11-24T17:14:00.099Z",
+        "actualizado": "2019-11-24T17:14:00.099Z"
+    }
+},
+{
+    "model": "core.esquemadia",
+    "pk": 1,
+    "fields": {
+        "nombre": "Presencial AIS 1",
+        "carrera": 1,
+        "tipo_encuentro": 1,
+        "activo": true,
+        "creado": "2019-11-24T17:13:28.848Z",
+        "actualizado": "2019-11-24T17:13:38.760Z"
+    }
+},
+{
+    "model": "core.dia",
+    "pk": 1,
+    "fields": {
+        "dia": "1",
+        "esquema_dia": 1
+    }
+},
+{
+    "model": "core.dia",
+    "pk": 2,
+    "fields": {
+        "dia": "2",
+        "esquema_dia": 1
+    }
+},
+{
+    "model": "core.dia",
+    "pk": 3,
+    "fields": {
+        "dia": "3",
+        "esquema_dia": 1
+    }
+},
+{
+    "model": "core.dia",
+    "pk": 4,
+    "fields": {
+        "dia": "4",
+        "esquema_dia": 1
+    }
+},
+{
+    "model": "core.dia",
+    "pk": 5,
+    "fields": {
+        "dia": "5",
+        "esquema_dia": 1
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 1,
+    "fields": {
+        "hora_inicio": "07:00:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2019-11-24T18:02:43.771Z",
+        "actualizado": "2019-11-24T18:02:43.771Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 4,
+    "fields": {
+        "hora_inicio": "07:45:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2020-01-07T21:58:42.478Z",
+        "actualizado": "2020-01-07T21:58:42.478Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 5,
+    "fields": {
+        "hora_inicio": "08:30:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2020-01-07T21:58:42.771Z",
+        "actualizado": "2020-01-07T21:58:42.771Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 6,
+    "fields": {
+        "hora_inicio": "09:15:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2020-01-07T21:58:43.027Z",
+        "actualizado": "2020-01-07T21:58:43.028Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 7,
+    "fields": {
+        "hora_inicio": "10:00:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2020-01-07T21:58:43.280Z",
+        "actualizado": "2020-01-07T21:58:43.280Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 8,
+    "fields": {
+        "hora_inicio": "10:45:00",
+        "esquema_bloque": 1,
+        "turno": 1,
+        "activo": true,
+        "creado": "2020-01-07T21:58:43.437Z",
+        "actualizado": "2020-01-07T21:58:43.437Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 9,
+    "fields": {
+        "hora_inicio": "13:00:00",
+        "esquema_bloque": 1,
+        "turno": 3,
+        "activo": true,
+        "creado": "2020-01-17T22:42:39.855Z",
+        "actualizado": "2020-01-17T22:42:39.855Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 10,
+    "fields": {
+        "hora_inicio": "13:45:00",
+        "esquema_bloque": 1,
+        "turno": 3,
+        "activo": true,
+        "creado": "2020-01-17T22:43:22.383Z",
+        "actualizado": "2020-01-17T22:43:22.383Z"
+    }
+},
+{
+    "model": "core.bloque",
+    "pk": 11,
+    "fields": {
+        "hora_inicio": "14:30:00",
+        "esquema_bloque": 1,
+        "turno": 3,
+        "activo": true,
+        "creado": "2020-01-17T22:43:43.639Z",
+        "actualizado": "2020-01-17T22:43:43.640Z"
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$150000$pDjmvTDjdhQd$fxJR07D4DY2XHjlLZ+syQl6AIJtbrkLFSReew/3VIsM=",
+        "last_login": "2020-01-13T21:56:58.863Z",
+        "is_superuser": true,
+        "username": "zer0",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-11-24T17:09:02.473Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "0s2xxfiiuxtpr8vc4qs2ckaair13dliy",
+    "fields": {
+        "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
+        "expire_date": "2020-02-01T15:11:42.074Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "denk5n8ef0yqg1gaw834lrfkroc7yulc",
+    "fields": {
+        "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
+        "expire_date": "2019-12-08T22:57:56.730Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "werb7m94bf1cygt6mm3b75n1n6b574sn",
+    "fields": {
+        "session_data": "YjE2YTYxMzNmNzExMjBlODljZTYxMTMyZDlmY2YyNTQwNDFkNGEyNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1N2VkYmM4MjNlNjIzZGM1NjIyYTY5ZWVlNzE5YmJiYWU3MzI1YjBkIn0=",
+        "expire_date": "2020-01-23T14:22:28.401Z"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2019-11-24T17:10:01.171Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "area"
+        ],
+        "object_id": "1",
+        "object_repr": "AIS",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2019-11-24T17:10:08.718Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "estado"
+        ],
+        "object_id": "1",
+        "object_repr": "Guarico",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2019-11-24T17:10:12.963Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "estado"
+        ],
+        "object_id": "2",
+        "object_repr": "Roscio",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2019-11-24T17:10:16.741Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "docente"
+        ],
+        "object_id": "1",
+        "object_repr": "Aristoteles Rodriguez CI: 111",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2019-11-24T17:11:30.439Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "carrera"
+        ],
+        "object_id": "1",
+        "object_repr": "Igenieria en Informatica",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2019-11-24T17:13:25.731Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "tipoencuentro"
+        ],
+        "object_id": "1",
+        "object_repr": "Presencial",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2019-11-24T17:13:28.849Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "esquemadia"
+        ],
+        "object_id": "1",
+        "object_repr": "EsquemaDia object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2019-11-24T17:13:38.762Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "esquemadia"
+        ],
+        "object_id": "1",
+        "object_repr": "EsquemaDia object (1)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2019-11-24T17:13:46.952Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "tipoencuentro"
+        ],
+        "object_id": "2",
+        "object_repr": "Presencial",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2019-11-24T17:14:00.101Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "esquemabloque"
+        ],
+        "object_id": "1",
+        "object_repr": "EsquemaBloque object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2019-11-24T17:17:33.969Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "tipoaula"
+        ],
+        "object_id": "1",
+        "object_repr": "Fisica",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2019-11-24T17:19:10.114Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "ubicacionaula"
+        ],
+        "object_id": "1",
+        "object_repr": "Edificio 1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2019-11-24T17:19:12.502Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "aula"
+        ],
+        "object_id": "1",
+        "object_repr": "Aula 1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2019-11-24T17:20:11.561Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "pensum"
+        ],
+        "object_id": "1",
+        "object_repr": "AIS 2019 - Igenieria en Informatica - 2019-11-24",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2019-11-24T17:20:13.658Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "materia"
+        ],
+        "object_id": "1",
+        "object_repr": "Gerencia de proyectos(COD)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2019-11-24T17:21:52.322Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "turno"
+        ],
+        "object_id": "1",
+        "object_repr": "Diurno",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2019-11-24T18:02:43.776Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "1",
+        "object_repr": "07:00:00 - 07:45:00",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2019-11-24T19:47:28.323Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "2",
+        "object_repr": "08:20:00 - 08:65:00",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2019-11-24T19:49:07.962Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "turno"
+        ],
+        "object_id": "2",
+        "object_repr": "Nocturno",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2019-11-24T19:56:35.906Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "3",
+        "object_repr": "15:26:29 - 16:11:29",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2019-11-24T22:18:14.110Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "dia"
+        ],
+        "object_id": "1",
+        "object_repr": "Dia object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2019-11-24T22:18:26.261Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "dia"
+        ],
+        "object_id": "2",
+        "object_repr": "Dia object (2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2019-11-24T22:18:32.972Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "dia"
+        ],
+        "object_id": "3",
+        "object_repr": "Dia object (3)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2019-11-24T22:18:40.002Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "dia"
+        ],
+        "object_id": "4",
+        "object_repr": "Dia object (4)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2019-11-24T22:18:46.568Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "dia"
+        ],
+        "object_id": "5",
+        "object_repr": "Dia object (5)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2020-01-06T18:47:13.982Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "10",
+        "object_repr": "08:20:00 - 9:05:00",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2020-01-06T18:47:16.881Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentrosdias"
+        ],
+        "object_id": "1",
+        "object_repr": "Lunes: 08:20:00 - 9:05:00",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"encuentro\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2020-01-07T03:26:43.110Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "2",
+        "object_repr": "08:30:00 - 9:15:00",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"hora_inicio\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2020-01-07T03:26:46.136Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "10",
+        "object_repr": "08:30:00 - 9:15:00",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2020-01-07T21:49:24.889Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "3",
+        "object_repr": "15:26:29 - 16:11:29",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2020-01-07T21:49:25.058Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "2",
+        "object_repr": "08:30:00 - 9:15:00",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2020-01-15T09:57:26.956Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "11",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.122Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "9",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.277Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "8",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.433Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "7",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.666Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "6",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.800Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "5",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2020-01-15T09:57:27.933Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "4",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2020-01-15T09:57:28.122Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "3",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+        "action_time": "2020-01-15T09:57:28.257Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "2",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+        "action_time": "2020-01-15T10:12:42.747Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentrosdias"
+        ],
+        "object_id": "6",
+        "object_repr": "Martes: 07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"dia\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2020-01-17T16:54:52.319Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "aula"
+        ],
+        "object_id": "2",
+        "object_repr": "2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2020-01-17T22:42:34.917Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "turno"
+        ],
+        "object_id": "3",
+        "object_repr": "Tarde",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2020-01-17T22:42:39.856Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "9",
+        "object_repr": "13:00 - 13:45",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+        "action_time": "2020-01-17T22:43:22.385Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "10",
+        "object_repr": "13:45 - 14:30",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+        "action_time": "2020-01-17T22:43:43.641Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "bloque"
+        ],
+        "object_id": "11",
+        "object_repr": "14:30 - 15:15",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+        "action_time": "2020-01-18T00:11:43.620Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "1",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 48,
+    "fields": {
+        "action_time": "2020-01-18T00:33:14.557Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:45 - 08:30",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+        "action_time": "2020-01-18T02:12:32.977Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "08:30 - 09:15",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+        "action_time": "2020-01-18T02:16:18.365Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:45 - 08:30",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+        "action_time": "2020-01-18T02:17:51.148Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+        "action_time": "2020-01-18T02:18:13.488Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"bloque\", \"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+        "action_time": "2020-01-18T03:25:55.127Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+        "action_time": "2020-01-18T03:26:25.926Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+        "action_time": "2020-01-18T03:26:45.255Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "12",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"bloque\", \"numero_bloques\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+        "action_time": "2020-01-19T03:01:25.451Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "1",
+        "object_repr": "07:00 - 07:45",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"activo\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 57,
+    "fields": {
+        "action_time": "2020-01-19T03:02:34.422Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentrosdias"
+        ],
+        "object_id": "7",
+        "object_repr": "Lunes: 07:00 - 07:45",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 58,
+    "fields": {
+        "action_time": "2020-01-19T03:10:43.410Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "aula"
+        ],
+        "object_id": "1",
+        "object_repr": "1",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"numero\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 59,
+    "fields": {
+        "action_time": "2020-01-19T03:20:05.640Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentrosdias"
+        ],
+        "object_id": "7",
+        "object_repr": "Lunes: 08:30 - 09:15",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"dia\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 60,
+    "fields": {
+        "action_time": "2020-01-19T15:29:10.624Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "proyecto"
+        ],
+        "object_id": "3",
+        "object_repr": "Proyecto 3",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 61,
+    "fields": {
+        "action_time": "2020-01-19T15:29:10.849Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "proyecto"
+        ],
+        "object_id": "2",
+        "object_repr": "Proyecto prueba 1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 62,
+    "fields": {
+        "action_time": "2020-01-19T16:58:34.025Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "materia"
+        ],
+        "object_id": "2",
+        "object_repr": "Programaci\u00f3n I(COD2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 63,
+    "fields": {
+        "action_time": "2020-01-19T16:59:02.962Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "materia"
+        ],
+        "object_id": "3",
+        "object_repr": "Programacion II(COD3)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 64,
+    "fields": {
+        "action_time": "2020-01-19T16:59:25.028Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "materia"
+        ],
+        "object_id": "4",
+        "object_repr": "Programacion III(COD4)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 65,
+    "fields": {
+        "action_time": "2020-01-19T16:59:47.625Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "materia"
+        ],
+        "object_id": "5",
+        "object_repr": "Algoritmo(COD5)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 66,
+    "fields": {
+        "action_time": "2020-01-19T17:01:28.037Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "docente"
+        ],
+        "object_id": "2",
+        "object_repr": "John Doe CI: 111",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 67,
+    "fields": {
+        "action_time": "2020-01-19T17:01:52.010Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "seccion"
+        ],
+        "object_id": "6",
+        "object_repr": "Seccion 1 - Programaci\u00f3n I(COD2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 68,
+    "fields": {
+        "action_time": "2020-01-19T17:01:55.335Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentro"
+        ],
+        "object_id": "13",
+        "object_repr": "09:15 - 10:00",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 69,
+    "fields": {
+        "action_time": "2020-01-19T17:02:00.689Z",
+        "user": [
+            "zer0"
+        ],
+        "content_type": [
+            "core",
+            "encuentrosdias"
+        ],
+        "object_id": "8",
+        "object_repr": "Jueves: 09:15 - 10:00",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
 }
 ]
