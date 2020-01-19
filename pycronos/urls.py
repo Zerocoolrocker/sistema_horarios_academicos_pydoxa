@@ -15,21 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 
 from core.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('proyecto/', ProyectoCreateView.as_view(), name='dashboard'),
-    path('proyecto/<int:pk>/', ProyectoEditView.as_view(), name='editar_proyecto'),
-    path('seccion/', SeccionCreateView.as_view(), name='crear_seccion'),
-    path('encuentro/', EncuentroCreateView.as_view(), name='crear_encuentro'),
-    path('seccion-encuentros/', SeccionEncuentrosListView.as_view(), name='seccion_encuentros_list'),
-    # path('seccion/<int:pk>/delete/', ConfirmacionEliminacionSeccionView.as_view(), name='eliminar_seccion'),
-    path('seccion/<int:pk>/delete/', SeccionDeleteView.as_view(), name='eliminar_seccion'),
-    path('seccion/<int:pk>/update/', SeccionUpdateView.as_view(), name='actualizar_seccion'),
-    path('', DashboardView.as_view(), name='project-edit'),
-    path('proyectodnd/<int:pk>/', ProyectoEditDragDropView.as_view(), name='editar_proyecto_dnd'),
+    path('proyecto/', login_required(ProyectoCreateView.as_view()), name='dashboard'),
+    path('proyecto/<int:pk>/', login_required(ProyectoEditView.as_view()), name='editar_proyecto'),
+    path('seccion/', login_required(SeccionCreateView.as_view()), name='crear_seccion'),
+    path('encuentro/', login_required(EncuentroCreateView.as_view()), name='crear_encuentro'),
+    path('seccion-encuentros/', login_required(SeccionEncuentrosListView.as_view()), name='seccion_encuentros_list'),
+    # path('seccion/<int:pk>/delete/', login_required(ConfirmacionEliminacionSeccionView.as_view()), name='eliminar_seccion'),
+    path('seccion/<int:pk>/delete/', login_required(SeccionDeleteView.as_view()), name='eliminar_seccion'),
+    path('seccion/<int:pk>/update/', login_required(SeccionUpdateView.as_view()), name='actualizar_seccion'),
+    path('', login_required(DashboardView.as_view()), name='project-edit'),
+    path('proyectodnd/<int:pk>/', login_required(ProyectoEditDragDropView.as_view()), name='editar_proyecto_dnd'),
     path('api/encuentros/', EncuentrosAPIListView.as_view(), name='api_encuentros_list'),
     path('api/bloques/', BloquesAPIListView.as_view(), name='api_bloques_list'),
     path('api/aulas/', AulasAPIListView.as_view(), name='api_aulas_list'),
