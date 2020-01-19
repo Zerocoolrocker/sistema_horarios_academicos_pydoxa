@@ -32,6 +32,11 @@
 
 .busqueda-encuentros input, .busqueda-encuentros button {
 	margin-left: 0.5% !important;
+	margin-bottom: 5px;
+}
+.busqueda-encuentros input {
+	border-radius: 5px;
+	padding: 0.4%;
 }
 .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
     border: 1px solid #d1d1d1;
