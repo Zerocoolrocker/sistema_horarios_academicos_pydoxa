@@ -17,15 +17,13 @@ function handleDragStart(e) {
   // this.style.opacity = '0.4';
   if($(this).attr('class') && $(this).attr('class').indexOf('dnd-encuentro') != -1){
   	drag_source_element = this;
-  	// debugger;
   	drag_source_element_real = this;
-  	console.log('drag source element real', drag_source_element_real);
+  	// console.log('drag source element real', drag_source_element_real);
 	  e.dataTransfer.effectAllowed = 'move';
 	  // e.dataTransfer.setData('text/html', this.innerHTML);
 	  e.dataTransfer.setData('text/html', this.outerHTML);
   }
-  console.log('drag_source_element', drag_source_element);
-  // debugger;
+  // console.log('drag_source_element', drag_source_element);
   drag_start_list.push(this);
 }	
 
@@ -80,89 +78,91 @@ function handleDrop(e) {
     encuentro_data.dia = esquemas_dias[$(this).data('dia')];
     encuentro_data.dia_pk = pks_dias[$(this).data('dia')];
   	var jquery_dse = $(drag_source_element_real);
-  	if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
-		// console.log('se limpia la tabla');
-		limpiar_encuentros_tabla(function(){
-			if(Boolean(data_aulas_encuentros[aula])){
-				llenar_encuentros(aula);
-			}
-		})
-  	}
-  	if($(drag_source_element).attr('rowspan') > 1 || $(drag_source_element).attr('id') == 'resultados_busqueda'){
-	  	if($(drag_source_element).attr('id') == 'resultados_busqueda'){
-	  		$(this).attr('rowspan', encuentro_data.numero_bloques);
-	  		var tmp_fila = $(this).parent().next('tr');
-			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-		  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
-	  			tmp_fila = $(tmp_fila).next('tr');
-			};
-
-	  	} else {
-	  		$(drag_source_element).attr('rowspan', 1);
-	  		var hora_bloque_anterior = $(drag_source_element).data('hora');
-	  		var dia_bloque_anterior = $(drag_source_element).data('dia');
-	  		var tmp_fila = $(drag_source_element).parent().next('tr');
-
-	  		// arreglar que se coloque bien los data hora y data dia de los bloques que se agregan
-	  		// filtrar por los data hora y data dia en vez de por posicion
-
-			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-		  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
-	  			hora_bloque_anterior += 1
-	  			// tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-	  			// debugger;
-	  			if($(drag_source_element).data('dia') == 0){
-	  				var columna_objetivo = tmp_fila.find('td:nth-child(1)');
-	  			} else {
-	  				var columna_objetivo = tmp_fila.find('td[data-dia=' + (dia_bloque_anterior - 1) + ']');
-	  				// caso cuando tiene al lado a otra (U OTRAS (hacer for y llevar contado)) materias
-	  				// debugger;
-	  				if(!columna_objetivo.length){
-	  					// columna_objetivo = tmp_fila.find('td[data-dia=' + ($(drag_source_element).data('dia') - 2) + ']')
-	  					for (var ind = dia_bloque_anterior - 2; ind >= 0; ind--) {
-	  						columna_objetivo = tmp_fila.find('td[data-dia=' + (ind) + ']');
-	  						if(columna_objetivo.length){
-	  							// console.log('break');
-	  							break;
-	  						}
-	  					};
-	  				}
-	  			}
-	  			// debugger;
-  				if(columna_objetivo.length){
-  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
-  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-  					
-  				} else {
-  					// y si nunca se encuentra ninguna (porque la fila esta llena de encuentros de varios bloques que inician en otra linea), entonces 
-  					//hay que insertar la columna despues de la columna del bloque de hora
-  					
-  					console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
-	  				// la columna de la hora como pivote
-	  				columna_objetivo = tmp_fila.find('td:nth-child(1)');
-  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
-  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-  					// tmp_fila.prepend($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-  				}
-	  			// debugger;
-	  			tmp_fila = $(tmp_fila).next('tr');
-			}
-
-	  		$(this).attr('rowspan', encuentro_data.numero_bloques);
-	  		var tmp_fila = $(this).parent().next('tr');
-			for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-		  		// tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
-	  			var columna_objetivo_eliminar = tmp_fila.find('td[data-dia=' + ($(this).data('dia') + 0) + ']');
-		  		// console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
-	  			// debugger;
-		  		columna_objetivo_eliminar.remove();
-	  			tmp_fila = $(tmp_fila).next('tr');
-			};  		
-	  	}
-	asignar_handlers_drag_and_drop();
+  	// if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
+	// console.log('se limpia la tabla');
+	function limpiar_y_llenar_tabla_con_validacion(){
+		if($('.dnd-encuentro').length != data_aulas_encuentros[aula].length){
+			// limpiar_encuentros_tabla(tmp_callback);
+			console.log('se vuelve a llenar tabla desde validacion!');
+			limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);
+		}
+		// if(Boolean(data_aulas_encuentros[aula])){
+		// 	llenar_encuentros(aula, function(){
+		// 	});
+		// }
 	}
+	limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);
+  	// }
+ //  	if($(drag_source_element).attr('rowspan') > 1 || $(drag_source_element).attr('id') == 'resultados_busqueda'){
+	//   	if($(drag_source_element).attr('id') == 'resultados_busqueda'){
+	//   		$(this).attr('rowspan', encuentro_data.numero_bloques);
+	//   		var tmp_fila = $(this).parent().next('tr');
+	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	//   			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
+	// 	  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+	//   			tmp_fila = $(tmp_fila).next('tr');
+	// 		};
+
+	//   	} else {
+	//   		$(drag_source_element).attr('rowspan', 1);
+	//   		var hora_bloque_anterior = $(drag_source_element).data('hora');
+	//   		var dia_bloque_anterior = $(drag_source_element).data('dia');
+	//   		var tmp_fila = $(drag_source_element).parent().next('tr');
+
+	//   		// arreglar que se coloque bien los data hora y data dia de los bloques que se agregan
+	//   		// filtrar por los data hora y data dia en vez de por posicion
+
+	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	// 	  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
+	//   			hora_bloque_anterior += 1
+	//   			// tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+	//   			if($(drag_source_element).data('dia') == 0){
+	//   				var columna_objetivo = tmp_fila.find('td:nth-child(1)');
+	//   			} else {
+	//   				var columna_objetivo = tmp_fila.find('td[data-dia=' + (dia_bloque_anterior - 1) + ']');
+	//   				// caso cuando tiene al lado a otra (U OTRAS (hacer for y llevar contado)) materias
+	//   				if(!columna_objetivo.length){
+	//   					// columna_objetivo = tmp_fila.find('td[data-dia=' + ($(drag_source_element).data('dia') - 2) + ']')
+	//   					for (var ind = dia_bloque_anterior - 2; ind >= 0; ind--) {
+	//   						columna_objetivo = tmp_fila.find('td[data-dia=' + (ind) + ']');
+	//   						if(columna_objetivo.length){
+	  							// console.log('break');
+	//   							break;
+	//   						}
+	//   					};
+	//   				}
+	//   			}
+ //  				if(columna_objetivo.length){
+  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+ //  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+  					
+ //  				} else {
+ //  					// y si nunca se encuentra ninguna (porque la fila esta llena de encuentros de varios bloques que inician en otra linea), entonces 
+ //  					//hay que insertar la columna despues de la columna del bloque de hora
+  					
+  					// console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
+	//   				// la columna de la hora como pivote
+	//   				columna_objetivo = tmp_fila.find('td:nth-child(1)');
+  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+ //  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+ //  					// tmp_fila.prepend($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
+ //  				}
+	//   			tmp_fila = $(tmp_fila).next('tr');
+	// 		}
+
+	//   		$(this).attr('rowspan', encuentro_data.numero_bloques);
+	//   		var tmp_fila = $(this).parent().next('tr');
+	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
+	//   			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
+	// 	  		// tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
+	//   			var columna_objetivo_eliminar = tmp_fila.find('td[data-dia=' + ($(this).data('dia') + 0) + ']');
+		  		// console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
+	// 	  		columna_objetivo_eliminar.remove();
+	//   			tmp_fila = $(tmp_fila).next('tr');
+	// 		};  		
+	//   	}
+	// asignar_handlers_drag_and_drop();
+	// }
   }
   return false;
 }
@@ -265,10 +265,10 @@ function obtener_datos_encuentros(callback){
 
 function limpiar_encuentros_tabla(callback){
 	// $('.tabla-encuentros .dnd-encuentro').remove().ready(callback);
-	renderizar_tabla();
+	renderizar_tabla(callback);
 }
 
-function llenar_encuentros(aul){
+function llenar_encuentros(aul, callback){
 	var indice_bloques_dias = 0;
 	var indice_bloques_horas = 0;
 	if(Boolean(data_aulas_encuentros[aul])){
@@ -280,9 +280,13 @@ function llenar_encuentros(aul){
 			// var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')';
 			var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td[data-dia=' + indice_bloques_dias + ']';
 			bloque_objetivo = $(selector_bloque_objetivo);
+			if(!bloque_objetivo.length){
+				selector_bloque_objetivo = '.tabla-encuentros tr td[data-dia=' + indice_bloques_dias + ']';
+				bloque_objetivo = $(".tabla-encuentros tr td[data-dia=2]").slice(0, indice_bloques_horas - 1).last();
+			}
 			// console.log('bloque_objetivo', bloque_objetivo[0]);
 				
-			callWhenReady(selector_bloque_objetivo, function(){
+			// callWhenReady(selector_bloque_objetivo, function(){
 				var nuevo_encuentro = $('<div>');
 				nuevo_encuentro.attr('class', 'dnd-encuentro');
 				nuevo_encuentro.attr('draggable', 'true');
@@ -299,6 +303,7 @@ function llenar_encuentros(aul){
 				texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo)
 				nuevo_encuentro.append(texto);
 				nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros[aul][i].encuentro_dia_pk);
+				// console.log('nuevo_encuentro', nuevo_encuentro[0]);
 				bloque_objetivo.append(nuevo_encuentro);
 
 				// @TODO: Hacer validaciones de numero de bloques de encuentro aqui
@@ -308,16 +313,19 @@ function llenar_encuentros(aul){
 					// var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
 					var bloque_eliminar = $('.tabla-encuentros tr:nth-child(' + ind_blo + ') td[data-dia=' + indice_bloques_dias + ']');
 					// console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
-					// debugger;
 					bloque_eliminar.remove();
 				};
-			})
+			// })
 		}
+		if(callback){
+			callback();
+		}
+		
 	}
 		
 }
 
-function renderizar_tabla(){
+function renderizar_tabla(callback){
 	var tabla = $('.tabla-encuentros');
 	tabla = $('<div>').attr('class', 'box-body').append('<table>').attr('class', 'table table-bordered tabla-encuentros').append('<tbody>');
 	tabla.append($('<div>').attr('class', 'box-footer'));
@@ -345,7 +353,7 @@ function renderizar_tabla(){
 	tabla.append(thead);
 	tabla.append(tbody);
 	$('div.tabla-encuentros-wrapper').html(tabla).ready(
-		llenar_encuentros(aula)
+		llenar_encuentros(aula, callback)
 	).ready(
 		asignar_handlers_drag_and_drop()
 	)
