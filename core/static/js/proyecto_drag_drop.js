@@ -47,13 +47,12 @@ function handleDrop(e) {
   // this/e.target is current target element.
   this.classList.remove('over');  // this / e.target is previous target element.
 
-
   if (e.stopPropagation) {
     e.stopPropagation(); // Stops some browsers from redirecting.
   }
 
   // Don't do anything if dropping the same column we're dragging.
-  if (drag_source_element_real != this) {
+  if (drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
 
   	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
   	// (mostrar advertencia o no permitir, dependiendo de configuracion)
