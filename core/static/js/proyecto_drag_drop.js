@@ -81,7 +81,7 @@ function handleDrop(e) {
   	// if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
 	// console.log('se limpia la tabla');
 	function limpiar_y_llenar_tabla_con_validacion(){
-		if($('.dnd-encuentro').length != data_aulas_encuentros[aula].length){
+		if($('.tabla-encuentros .dnd-encuentro').length != data_aulas_encuentros[aula].length){
 			// limpiar_encuentros_tabla(tmp_callback);
 			console.log('se vuelve a llenar tabla desde validacion!');
 			limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);
