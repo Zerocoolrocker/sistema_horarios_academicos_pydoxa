@@ -9,18 +9,24 @@ var data_aulas = {};
 var data_aulas_encuentros = {};
 var data_encuentro_modal_actual = {};
 
+var drag_start_list = [];
+var drag_source_element_real;
 
 function handleDragStart(e) {
   // Target (this) element is the source node.
   // this.style.opacity = '0.4';
-  drag_source_element = this;
   if($(this).attr('class') && $(this).attr('class').indexOf('dnd-encuentro') != -1){
+  	drag_source_element = this;
+  	// debugger;
   	drag_source_element_real = this;
+  	console.log('drag source element real', drag_source_element_real);
+	  e.dataTransfer.effectAllowed = 'move';
+	  // e.dataTransfer.setData('text/html', this.innerHTML);
+	  e.dataTransfer.setData('text/html', this.outerHTML);
   }
   console.log('drag_source_element', drag_source_element);
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/html', this.innerHTML);
   // debugger;
+  drag_start_list.push(this);
 }	
 
 function handleDragOver(e) {
@@ -52,16 +58,18 @@ function handleDrop(e) {
   }
 
   // Don't do anything if dropping the same column we're dragging.
-  if (drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
+  if (drag_source_element_real && drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
 
   	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
   	// (mostrar advertencia o no permitir, dependiendo de configuracion)
     
-    // Set the source column's HTML to the HTML of the column we dropped on.
-    drag_source_element.innerHTML = this.innerHTML;
+    // se borra del html del anterior padre al bloque
+    // drag_source_element.innerHTML = this.innerHTML;
+    $(drag_source_element.parentElement).find('[data-encuentro-dia-pk=' + $(drag_source_element).data('encuentro-dia-pk') + ']').remove()
     this.innerHTML = e.dataTransfer.getData('text/html');
+    // this.innerHTML = e.dataTransfer.getData('text/html');
     var encuentro_data = data_encuentros[Number($(drag_source_element_real).data('encuentro-dia-pk'))];
-  	console.log('drop function drag_source_element', drag_source_element);
+  	// console.log('drop function drag_source_element', drag_source_element);
     $.post('/api/encuentros/update/', {
     	pk: encuentro_data.encuentro_dia_pk,
     	hora_inicio: esquemas_bloques[$(this).data('hora')],
@@ -73,7 +81,7 @@ function handleDrop(e) {
     encuentro_data.dia_pk = pks_dias[$(this).data('dia')];
   	var jquery_dse = $(drag_source_element_real);
   	if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
-		console.log('se limpia la tabla');
+		// console.log('se limpia la tabla');
 		limpiar_encuentros_tabla(function(){
 			if(Boolean(data_aulas_encuentros[aula])){
 				llenar_encuentros(aula);
@@ -115,7 +123,7 @@ function handleDrop(e) {
 	  					for (var ind = dia_bloque_anterior - 2; ind >= 0; ind--) {
 	  						columna_objetivo = tmp_fila.find('td[data-dia=' + (ind) + ']');
 	  						if(columna_objetivo.length){
-	  							console.log('break');
+	  							// console.log('break');
 	  							break;
 	  						}
 	  					};
@@ -123,17 +131,17 @@ function handleDrop(e) {
 	  			}
 	  			// debugger;
   				if(columna_objetivo.length){
-  					console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
   					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
   					
   				} else {
   					// y si nunca se encuentra ninguna (porque la fila esta llena de encuentros de varios bloques que inician en otra linea), entonces 
   					//hay que insertar la columna despues de la columna del bloque de hora
   					
-  					// console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
+  					console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
 	  				// la columna de la hora como pivote
 	  				columna_objetivo = tmp_fila.find('td:nth-child(1)');
-  					console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
+  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
   					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
   					// tmp_fila.prepend($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
   				}
@@ -147,7 +155,7 @@ function handleDrop(e) {
 	  			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
 		  		// tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
 	  			var columna_objetivo_eliminar = tmp_fila.find('td[data-dia=' + ($(this).data('dia') + 0) + ']');
-		  		console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
+		  		// console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
 	  			// debugger;
 		  		columna_objetivo_eliminar.remove();
 	  			tmp_fila = $(tmp_fila).next('tr');
@@ -272,7 +280,7 @@ function llenar_encuentros(aul){
 			// var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td:nth-child(' + indice_bloques_dias + ')';
 			var selector_bloque_objetivo = '.tabla-encuentros tr:nth-child(' + indice_bloques_horas + ') td[data-dia=' + indice_bloques_dias + ']';
 			bloque_objetivo = $(selector_bloque_objetivo);
-			console.log('bloque_objetivo', bloque_objetivo[0]);
+			// console.log('bloque_objetivo', bloque_objetivo[0]);
 				
 			callWhenReady(selector_bloque_objetivo, function(){
 				var nuevo_encuentro = $('<div>');
@@ -299,7 +307,7 @@ function llenar_encuentros(aul){
 				for (var ind_blo = indice_bloques_horas + 1; ind_blo < esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
 					// var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
 					var bloque_eliminar = $('.tabla-encuentros tr:nth-child(' + ind_blo + ') td[data-dia=' + indice_bloques_dias + ']');
-					console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
+					// console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
 					// debugger;
 					bloque_eliminar.remove();
 				};
@@ -333,7 +341,7 @@ function renderizar_tabla(){
 		tmp_turno = turnos_bloques_horas[i];
 		tbody.append(fila);
 	};
-	console.log(tabla);
+	// console.log(tabla);
 	tabla.append(thead);
 	tabla.append(tbody);
 	$('div.tabla-encuentros-wrapper').html(tabla).ready(
@@ -382,7 +390,7 @@ $(document).ready(function(){
 					tmp_turno = turnos_bloques_horas[i];
 					tbody.append(fila);
 				};
-				console.log(tabla);
+				// console.log(tabla);
 				tabla.append(thead);
 				tabla.append(tbody);
 				if(tabla_recien_creada){
@@ -447,7 +455,7 @@ $('#busqueda_encuentro').click(function(){
 					// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
 					nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros['aulas_en_orden'][i].encuentro_dia_pk);
 					nuevo_encuentro.attr('rowspan', data_aulas_encuentros['aulas_en_orden'][i].numero_bloques);
-					console.log('se agrega res busqueda');
+					// console.log('se agrega res busqueda');
 
 					$('#resultados_busqueda').append(nuevo_encuentro);
 					asignar_handlers_drag_and_drop();
