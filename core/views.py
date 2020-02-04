@@ -1,6 +1,8 @@
 import datetime
 import json
+import os
 
+import pdfkit
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -335,3 +337,77 @@ class DiasAPIListView(View):
             datos = json.dumps(datos, indent=2)
             return HttpResponse(datos, content_type='application/json')
         return HttpResponseBadRequest()
+
+
+class ReporteSemestresView(TemplateView):
+    template_name = 'reporte_por_semestres.html'
+
+    def generar_html_reporte(self):
+        proyecto = Proyecto.objects.get(id=self.kwargs.get('proyecto_id'))
+        secciones = Seccion.objects.filter(proyecto=proyecto).order_by('numero', 'materia__nombre')
+        materias = [sec.materia for sec in secciones]
+        materias_ordenadas_por_nombre = sorted(materias, key=lambda mat: mat.nombre)
+        numeros_secciones = sorted(set(secciones.values_list('numero', flat=True)))
+
+        html = '''<html> <head> <meta charset="utf-8"> <title></title>
+<style>
+
+{css}
+
+
+</style>
+</head> <body>{body}</body> </html>'''
+        body = '<table> <thead>{thead}</thead> <tbody>{tbody}</tbody> </table>'
+        thead = '<th>Sección</th>'
+        tbody = ''
+        for materia in materias_ordenadas_por_nombre:
+            thead += '<th>%s</th>' % materia.nombre
+
+        secciones_materias_dict = {(sec.numero, sec.materia.pk): sec for sec in secciones}
+        for num_seccion in numeros_secciones:
+            tbody += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
+            for materia in materias_ordenadas_por_nombre:
+                seccion_de_materia = secciones_materias_dict.get((num_seccion, materia.pk), False)
+                if seccion_de_materia:
+                    tbody += '<td>%s</td>' % seccion_de_materia.representacion_texto_encuentros()
+                else:
+                    tbody += '<td></td>'
+            tbody += '</tr>'
+
+        body = body.format(thead=thead, tbody=tbody)
+        css = '''td, th{
+    border:  1px solid black !important;
+    outline: 1px solid black !important;
+    width:.auto !important;
+    height:.4cm !important;
+    min-height: 10px !important;
+    padding: 3px;
+    margin:1px;
+    background: #ffffff !important;
+  }
+}'''        
+        html = html.format(body=body, css=css)
+        return html
+
+
+    def render_to_response(self, *args, **kwargs):
+        # res = super(ReporteSemestresView, self).render_to_response(*args, **kwargs)
+        res = super(ReporteSemestresView, self).render_to_response(*args, **kwargs)
+        # pdfkit.from_string(res.rendered_content, 'reporte.pdf')
+        options = {
+            'page-size':'Letter',
+            'orientation': 'Portrait',
+            'encoding':'utf-8', 
+            'margin-top':'3cm',
+            'margin-bottom':'2cm',
+            'margin-left':'2cm',
+            'margin-right':'2cm',
+        }        
+        html_reporte = self.generar_html_reporte()
+        pdfkit.from_string(html_reporte, 'reporte.pdf', options=options)
+        with open('reporte.pdf', 'rb') as fil:
+            response = HttpResponse(fil.read(), content_type='application/pdf')
+            response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+        os.remove('reporte.pdf')
+        # return HttpResponse(html_reporte)
+        return response    

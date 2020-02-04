@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/aulas/', AulasAPIListView.as_view(), name='api_aulas_list'),
     path('api/dias/', DiasAPIListView.as_view(), name='api_dias_list'),
     path('api/encuentros/update/', EncuentrosAPIUpdateView.as_view(), name='api_encuentros_update'),
+    path('reporte/semestres/<int:proyecto_id>/', ReporteSemestresView.as_view(), name='reporte_por_semestres'),
 ]

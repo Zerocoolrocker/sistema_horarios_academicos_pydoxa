@@ -138,6 +138,24 @@ class Seccion(models.Model):
 	def get_cantidad_encuentros(self):
 		return EncuentrosDias.objects.filter(encuentro__seccion=self).count()
 
+	def encuentros_dias(self):
+		return EncuentrosDias.objects.filter(encuentro__seccion=self).order_by('dia__dia')
+
+	def representacion_texto_encuentros(self):
+		texto = ''
+		formato = "{dia} : {ubicacion}<br>Aula: {aula} / {bloque}<br>Cupo: {cupo}<br>"
+		for enc_dia in self.encuentros_dias():
+			tex_tmp = formato.format(
+				dia=enc_dia.dia.get_dia_display(),
+				ubicacion=enc_dia.encuentro.aula.ubicacion.nombre,
+				aula=enc_dia.encuentro.aula.nombre,
+				bloque=enc_dia.encuentro.bloque.representar_inicio_fin(),
+				cupo=enc_dia.encuentro.seccion.cupo,
+			)
+			texto += tex_tmp
+		return texto
+
+
 class Docente(models.Model):
 	cedula = models.IntegerField()
 	nombres = models.CharField(max_length=60)
@@ -319,7 +337,7 @@ class Municipio(models.Model):
 class UbicacionAula(models.Model):
 	nombre = models.CharField(max_length=60)
 	descripcion = models.TextField(blank=True, null=True)
-	area = models.ForeignKey('Aula', blank=True, null=True, on_delete=models.CASCADE)
+	area = models.ForeignKey('Area', blank=True, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.nombre	
@@ -414,11 +432,15 @@ class Bloque(models.Model):
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 
-	def __str__(self):
+	def representar_inicio_fin(self):
 		hora_salida = to_timedelta(self.hora_inicio) + to_timedelta(self.esquema_bloque.duracion)
 		hora_inicio = ':'.join([str(x).zfill(2) for x in str(self.hora_inicio).split(':')[:2]])
 		hora_salida = ':'.join([str(x).zfill(2) for x in str(hora_salida).split(':')[:2]])
 		return '%s - %s' % (hora_inicio, hora_salida)
+
+	def __str__(self):
+		return self.representar_inicio_fin()
+
 
 # class Ficha(models.Model):
 # 	docente = models.ForeignKey('Docente', on_delete=models.CASCADE)
