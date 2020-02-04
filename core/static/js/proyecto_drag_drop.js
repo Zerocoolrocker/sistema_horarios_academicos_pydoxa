@@ -12,6 +12,15 @@ var data_encuentro_modal_actual = {};
 var drag_start_list = [];
 var drag_source_element_real;
 
+function mostrar_modal_confirmacion(){
+	$('#modalConfirmacionAlerta .mensaje').text('Ya existe otro encuentro en ese bloque horario en la misma aula. Realmente desea compartir el aula en el mismo momento?');
+	$('#modalConfirmacionAlerta').removeClass('fade').addClass('show');
+}
+
+function ocultar_modal_confirmacion(){
+	$('#modalConfirmacionAlerta').removeClass('show').addClass('fade');
+}
+
 function handleDragStart(e) {
   // Target (this) element is the source node.
   // this.style.opacity = '0.4';
@@ -46,37 +55,26 @@ function handleDragLeave(e) {
   this.classList.remove('over');  // this / e.target is previous target element.
 }
 
+function acciones_drop_permitido(e){
 
-function handleDrop(e) {
-  // this/e.target is current target element.
-  this.classList.remove('over');  // this / e.target is previous target element.
+	var this_element = (e && e.target) || contenedor_drop;
 
-  if (e.stopPropagation) {
-    e.stopPropagation(); // Stops some browsers from redirecting.
-  }
-
-  // Don't do anything if dropping the same column we're dragging.
-  if (drag_source_element_real && drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
-
-  	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
-  	// (mostrar advertencia o no permitir, dependiendo de configuracion)
-    
     // se borra del html del anterior padre al bloque
     // drag_source_element.innerHTML = this.innerHTML;
-    $(drag_source_element.parentElement).find('[data-encuentro-dia-pk=' + $(drag_source_element).data('encuentro-dia-pk') + ']').remove()
-    this.innerHTML = e.dataTransfer.getData('text/html');
+    // $(drag_source_element.parentElement).find('[data-encuentro-dia-pk=' + $(drag_source_element).data('encuentro-dia-pk') + ']').remove()
+    // this.innerHTML = e.dataTransfer.getData('text/html');
     // this.innerHTML = e.dataTransfer.getData('text/html');
     var encuentro_data = data_encuentros[Number($(drag_source_element_real).data('encuentro-dia-pk'))];
   	// console.log('drop function drag_source_element', drag_source_element);
     $.post('/api/encuentros/update/', {
     	pk: encuentro_data.encuentro_dia_pk,
-    	hora_inicio: esquemas_bloques[$(this).data('hora')],
-    	dia: pks_dias[$(this).data('dia')],
+    	hora_inicio: esquemas_bloques[$(this_element).data('hora')],
+    	dia: pks_dias[$(this_element).data('dia')],
     	aula: aula_pk,
     });
-    encuentro_data.bloque.hora_inicio = esquemas_bloques[$(this).data('hora')];
-    encuentro_data.dia = esquemas_dias[$(this).data('dia')];
-    encuentro_data.dia_pk = pks_dias[$(this).data('dia')];
+    encuentro_data.bloque.hora_inicio = esquemas_bloques[$(this_element).data('hora')];
+    encuentro_data.dia = esquemas_dias[$(this_element).data('dia')];
+    encuentro_data.dia_pk = pks_dias[$(this_element).data('dia')];
   	var jquery_dse = $(drag_source_element_real);
   	// if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
 	// console.log('se limpia la tabla');
@@ -91,78 +89,29 @@ function handleDrop(e) {
 		// 	});
 		// }
 	}
-	limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);
-  	// }
- //  	if($(drag_source_element).attr('rowspan') > 1 || $(drag_source_element).attr('id') == 'resultados_busqueda'){
-	//   	if($(drag_source_element).attr('id') == 'resultados_busqueda'){
-	//   		$(this).attr('rowspan', encuentro_data.numero_bloques);
-	//   		var tmp_fila = $(this).parent().next('tr');
-	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	//   			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-	// 	  		tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
-	//   			tmp_fila = $(tmp_fila).next('tr');
-	// 		};
+	limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);	
+}
 
-	//   	} else {
-	//   		$(drag_source_element).attr('rowspan', 1);
-	//   		var hora_bloque_anterior = $(drag_source_element).data('hora');
-	//   		var dia_bloque_anterior = $(drag_source_element).data('dia');
-	//   		var tmp_fila = $(drag_source_element).parent().next('tr');
+var contenedor_drop = null;
+function handleDrop(e) {
+  // this/e.target is current target element.
+  this.classList.remove('over');  // this / e.target is previous target element.
 
-	//   		// arreglar que se coloque bien los data hora y data dia de los bloques que se agregan
-	//   		// filtrar por los data hora y data dia en vez de por posicion
+  if (e.stopPropagation) {
+    e.stopPropagation(); // Stops some browsers from redirecting.
+  }
 
-	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	// 	  		// @TODO: validar que quepa dependiendo de la cantidad de bloques que ocupe el encuentro
-	//   			hora_bloque_anterior += 1
-	//   			// tmp_fila.find('td:nth-child(' + ($(drag_source_element).data('dia') + 1) + ')').after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-	//   			if($(drag_source_element).data('dia') == 0){
-	//   				var columna_objetivo = tmp_fila.find('td:nth-child(1)');
-	//   			} else {
-	//   				var columna_objetivo = tmp_fila.find('td[data-dia=' + (dia_bloque_anterior - 1) + ']');
-	//   				// caso cuando tiene al lado a otra (U OTRAS (hacer for y llevar contado)) materias
-	//   				if(!columna_objetivo.length){
-	//   					// columna_objetivo = tmp_fila.find('td[data-dia=' + ($(drag_source_element).data('dia') - 2) + ']')
-	//   					for (var ind = dia_bloque_anterior - 2; ind >= 0; ind--) {
-	//   						columna_objetivo = tmp_fila.find('td[data-dia=' + (ind) + ']');
-	//   						if(columna_objetivo.length){
-	  							// console.log('break');
-	//   							break;
-	//   						}
-	//   					};
-	//   				}
-	//   			}
- //  				if(columna_objetivo.length){
-  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
- //  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
-  					
- //  				} else {
- //  					// y si nunca se encuentra ninguna (porque la fila esta llena de encuentros de varios bloques que inician en otra linea), entonces 
- //  					//hay que insertar la columna despues de la columna del bloque de hora
-  					
-  					// console.log('No se encontraron columnas pivote en la fila. Se va a insertar un td en la primera posicion de la fila:', tmp_fila);
-	//   				// la columna de la hora como pivote
-	//   				columna_objetivo = tmp_fila.find('td:nth-child(1)');
-  					// console.log('Se va a insertar un td despues de:', columna_objetivo[0]);
- //  					columna_objetivo.after($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
- //  					// tmp_fila.prepend($('<td>').attr('data-hora', hora_bloque_anterior).attr('data-dia', dia_bloque_anterior));
- //  				}
-	//   			tmp_fila = $(tmp_fila).next('tr');
-	// 		}
+  // Don't do anything if dropping the same column we're dragging.
+  if (drag_source_element_real && drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
 
-	//   		$(this).attr('rowspan', encuentro_data.numero_bloques);
-	//   		var tmp_fila = $(this).parent().next('tr');
-	// 		for (var cont = 1; cont < encuentro_data.numero_bloques; cont++){
-	//   			// @TODO: validar que no haya encuentro en el bloque que se va a eliminar
-	// 	  		// tmp_fila.find('td:nth-child(' + ($(this).data('dia') + 2) + ')').remove();
-	//   			var columna_objetivo_eliminar = tmp_fila.find('td[data-dia=' + ($(this).data('dia') + 0) + ']');
-		  		// console.log('se va a eliminar:', columna_objetivo_eliminar[0]);
-	// 	  		columna_objetivo_eliminar.remove();
-	//   			tmp_fila = $(tmp_fila).next('tr');
-	// 		};  		
-	//   	}
-	// asignar_handlers_drag_and_drop();
-	// }
+  	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
+  	// (mostrar advertencia o no permitir, dependiendo de configuracion)
+  	if($(this).find('.dnd-encuentro').length){
+  		contenedor_drop = this;
+  		mostrar_modal_confirmacion();
+  	} else {
+  		acciones_drop_permitido(e);
+  	}
   }
   return false;
 }
@@ -509,6 +458,15 @@ $('#creacionEdicionencuentroModal .submit-modal').click(function(e){
 	});
 });
 
+$('#modalConfirmacionAlerta .aceptar').click(function(e){
+	console.log('acepto modal de confirmacion de alerta');
+	ocultar_modal_confirmacion();
+	acciones_drop_permitido();
+});
+
+$('#modalConfirmacionAlerta .cancelar').click(function(e){
+	ocultar_modal_confirmacion();
+});
 
 
 // ###############################

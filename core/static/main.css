@@ -69,3 +69,7 @@ a#vista_drag_drop {
 a#vista_drag_drop:hover {
 	color: orange !important;
 }
+
+#modalConfirmacionAlerta .mensaje {
+	text-align: center;
+}
