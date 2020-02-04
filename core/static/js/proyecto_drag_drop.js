@@ -116,15 +116,19 @@ function handleDrop(e) {
 
 
   	// se valida que hayan suficientes bloques disponibles para en el turno para mover el encuentro
-  	var turnos_a_ocupar = turnos_bloques_horas.slice($(this).data('hora'), $(this).data('hora') + data_encuentros[$(drag_source_element).data('encuentro-dia-pk')].numero_bloques)
-  	var turno_anterior = turnos_a_ocupar[0];
   	var turno_disponible = true;
-  	for (var i = 1; i < turnos_a_ocupar.length; i++) {
-  		if(turnos_a_ocupar[i] != turno_anterior){
-  			turno_disponible = false;
-  		}
-  	};
-
+  	var indice_bloque_hora_final_abarcado = $(this).data('hora') + data_encuentros[$(drag_source_element).data('encuentro-dia-pk')].numero_bloques;
+  	if(indice_bloque_hora_final_abarcado > turnos_bloques_horas.length){
+  		turno_disponible = false;
+  	} else {
+	  	var turnos_a_ocupar = turnos_bloques_horas.slice($(this).data('hora'), indice_bloque_hora_final_abarcado)
+	  	var turno_anterior = turnos_a_ocupar[0];
+	  	for (var i = 1; i < turnos_a_ocupar.length; i++) {
+	  		if(turnos_a_ocupar[i] != turno_anterior){
+	  			turno_disponible = false;
+	  		}
+	  	};
+  	}
 
   	if(turno_disponible){
 	  	// @TODO: hacer validacion parecida a la de abajo, pero que se muestre el modal de advertencia si
