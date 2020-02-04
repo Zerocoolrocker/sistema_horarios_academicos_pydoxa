@@ -12,6 +12,15 @@ var data_encuentro_modal_actual = {};
 var drag_start_list = [];
 var drag_source_element_real;
 
+function mostrar_modal_error(mensaje){
+	$('#modalError .mensaje').text(mensaje);
+	$('#modalError').removeClass('fade').addClass('show');
+}
+
+function ocultar_modal_error(){
+	$('#modalError').removeClass('show').addClass('fade');
+}
+
 function mostrar_modal_confirmacion(){
 	$('#modalConfirmacionAlerta .mensaje').text('Ya existe otro encuentro en ese bloque horario en la misma aula. Realmente desea compartir el aula en el mismo momento?');
 	$('#modalConfirmacionAlerta').removeClass('fade').addClass('show');
@@ -92,6 +101,7 @@ function acciones_drop_permitido(e){
 	limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);	
 }
 
+
 var contenedor_drop = null;
 function handleDrop(e) {
   // this/e.target is current target element.
@@ -104,13 +114,34 @@ function handleDrop(e) {
   // Don't do anything if dropping the same column we're dragging.
   if (drag_source_element_real && drag_source_element_real != this && !this.classList.contains('dnd-encuentro')) {
 
-  	// @TODO: validar que no haya encuentro en el bloque en el que se solto el encuentro
-  	// (mostrar advertencia o no permitir, dependiendo de configuracion)
-  	if($(this).find('.dnd-encuentro').length){
-  		contenedor_drop = this;
-  		mostrar_modal_confirmacion();
+
+  	// se valida que hayan suficientes bloques disponibles para en el turno para mover el encuentro
+  	var turnos_a_ocupar = turnos_bloques_horas.slice($(this).data('hora'), $(this).data('hora') + data_encuentros[$(drag_source_element).data('encuentro-dia-pk')].numero_bloques)
+  	var turno_anterior = turnos_a_ocupar[0];
+  	var turno_disponible = true;
+  	for (var i = 1; i < turnos_a_ocupar.length; i++) {
+  		if(turnos_a_ocupar[i] != turno_anterior){
+  			turno_disponible = false;
+  		}
+  	};
+
+
+  	if(turno_disponible){
+	  	// @TODO: hacer validacion parecida a la de abajo, pero que se muestre el modal de advertencia si
+	  	// el encuentro ocupa mas de un bloque y alguno de los bloques que desea ocupar esta ocupado por
+	  	// otro encuentro
+
+
+
+	  	// @TODO: (mostrar advertencia o no permitir, dependiendo de configuracion)
+	  	if($(this).find('.dnd-encuentro').length){
+	  		contenedor_drop = this;
+	  		mostrar_modal_confirmacion();
+	  	} else {
+	  		acciones_drop_permitido(e);
+	  	}
   	} else {
-  		acciones_drop_permitido(e);
+  		mostrar_modal_error('No hay suficientes bloques disponibles en el turno para este encuentro.')
   	}
   }
   return false;
@@ -466,6 +497,10 @@ $('#modalConfirmacionAlerta .aceptar').click(function(e){
 
 $('#modalConfirmacionAlerta .cancelar').click(function(e){
 	ocultar_modal_confirmacion();
+});
+
+$('#modalError .cancelar').click(function(e){
+	ocultar_modal_error();
 });
 
 
