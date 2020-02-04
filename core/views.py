@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.conf import settings
 
 from .models import *
 
@@ -348,6 +349,8 @@ class ReporteSemestresView(TemplateView):
         materias = [sec.materia for sec in secciones]
         materias_ordenadas_por_nombre = sorted(materias, key=lambda mat: mat.nombre)
         numeros_secciones = sorted(set(secciones.values_list('numero', flat=True)))
+        semestres = sorted(set(secciones.values_list('materia__semestre', flat=True)))
+
 
         html = '''<html> <head> <meta charset="utf-8"> <title></title>
 <style>
@@ -357,25 +360,53 @@ class ReporteSemestresView(TemplateView):
 
 </style>
 </head> <body>{body}</body> </html>'''
-        body = '<table> <thead>{thead}</thead> <tbody>{tbody}</tbody> </table>'
+
+
+        pages_header = """<table class="header">
+    <tr>
+        <td><img style="width:200px;height:90px;display:inline-block;" src="{base_dir}/core/static/img/logo_ais.jpg"></td>
+        <td>
+<strong>{institucion}</strong><br>
+<strong>{area}</strong><br>
+<strong>Programa: Ingeniería en Informática</strong><br>
+<strong>Lapso Académico: {lapso}</strong><br>
+<strong>Comisión de Horarios Académicos</strong><br>
+        </td>
+
+    </tr>
+
+</table>
+<hr>
+<center><h3>Resúmen de Horarios Semanales<br>{semestre}° Semestre</h3></center>""".format(
+            base_dir=settings.BASE_DIR,
+            semestre=1,
+            lapso='2019-2',
+            area='Área de Ingeniería de Sistémas',
+            institucion='Universidad Nacional Experimental Rómulo Gallegos'
+        )
+
+        body = '''<table class="horario"> <thead>{thead}</thead> <tbody>{tbody}</tbody> </table>'''
         thead = '<th>Sección</th>'
         tbody = ''
         for materia in materias_ordenadas_por_nombre:
             thead += '<th>%s</th>' % materia.nombre
 
-        secciones_materias_dict = {(sec.numero, sec.materia.pk): sec for sec in secciones}
-        for num_seccion in numeros_secciones:
-            tbody += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
-            for materia in materias_ordenadas_por_nombre:
-                seccion_de_materia = secciones_materias_dict.get((num_seccion, materia.pk), False)
-                if seccion_de_materia:
-                    tbody += '<td>%s</td>' % seccion_de_materia.representacion_texto_encuentros()
-                else:
-                    tbody += '<td></td>'
-            tbody += '</tr>'
+
+        semestres_secciones_materias_dict = {(sec.materia.semestre, sec.numero, sec.materia.pk): sec for sec in secciones}
+        body = pages_header + body   
+        for semestre in semestres:
+            for num_seccion in numeros_secciones:
+                tbody += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
+                for materia in materias_ordenadas_por_nombre:
+                    seccion_de_materia = semestres_secciones_materias_dict.get((semestre, num_seccion, materia.pk), False)
+                    if seccion_de_materia:
+                        tbody += '<td>%s</td>' % seccion_de_materia.representacion_texto_encuentros()
+                    else:
+                        tbody += '<td></td>'
+                tbody += '</tr>'
 
         body = body.format(thead=thead, tbody=tbody)
-        css = '''td, th{
+        css = '''table.horario td, th{
     border:  1px solid black !important;
     outline: 1px solid black !important;
     width:.auto !important;
@@ -384,6 +415,10 @@ class ReporteSemestresView(TemplateView):
     padding: 3px;
     margin:1px;
     background: #ffffff !important;
+  }
+
+  table.header {
+    width: 100%;
   }
 }'''        
         html = html.format(body=body, css=css)

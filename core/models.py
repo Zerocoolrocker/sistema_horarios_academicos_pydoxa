@@ -82,6 +82,7 @@ class Materia(models.Model):
 	# @TODO: averiguar como se usa este campo
 	# nivel = models.IntegerField()
 	# departamento = models.ForeignKey('Departamento', on_delete=models.CASCADE)
+	semestre = models.IntegerField()
 
 	def __str__(self):
 		return '%s(%s)' % (self.nombre, self.codigo)
