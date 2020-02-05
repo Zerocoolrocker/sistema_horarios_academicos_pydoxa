@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from itertools import groupby
 
 import pdfkit
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
@@ -340,26 +341,56 @@ class DiasAPIListView(View):
         return HttpResponseBadRequest()
 
 
+def group_by(object_list, key=None, sort_by=None):
+    object_list = sorted(object_list, key=key)
+    data = {}
+    for key, group in groupby(object_list, key):
+        if sort_by is None:
+            data[key] = list(group)
+        else:
+            data[key] = sorted(list(group), key=sort_by)
+        print("Objects of:", key, "Number:", len(list(group)))
+    return data  
+
+
 class ReporteSemestresView(TemplateView):
     template_name = 'reporte_por_semestres.html'
 
-    def generar_html_reporte(self):
-        proyecto = Proyecto.objects.get(id=self.kwargs.get('proyecto_id'))
-        secciones = Seccion.objects.filter(proyecto=proyecto).order_by('numero', 'materia__nombre')
-        materias = [sec.materia for sec in secciones]
-        materias_ordenadas_por_nombre = sorted(materias, key=lambda mat: mat.nombre)
-        numeros_secciones = sorted(set(secciones.values_list('numero', flat=True)))
-        semestres = sorted(set(secciones.values_list('materia__semestre', flat=True)))
 
+
+    def generar_html_reporte2(self):
+        proyecto = Proyecto.objects.get(id=self.kwargs.get('proyecto_id'))
+        secciones = Seccion.objects.filter(proyecto=proyecto).all()
+        semestres_ordenados = sorted(set(secciones.values_list('materia__semestre', flat=True)))
+        secciones_agrupadas_por_semestre = group_by(secciones, key=lambda x: x.materia.semestre)
 
         html = '''<html> <head> <meta charset="utf-8"> <title></title>
 <style>
 
-{css}
+table.horario td, th{
+    border:  1px solid black !important;
+    outline: 1px solid black !important;
+    width:.auto !important;
+    height:.4cm !important;
+    min-height: 10px !important;
+    padding: 3px;
+    margin:1px;
+    background: #ffffff !important;
+  }
+
+  table.header {
+    width: 100%;
+  }
+
+    @media print {
+      .nueva-pagina {
+        page-break-before: always;
+      }
+    }
 
 
 </style>
-</head> <body>{body}</body> </html>'''
+</head> <body>'''
 
 
         pages_header = """<table class="header">
@@ -377,51 +408,50 @@ class ReporteSemestresView(TemplateView):
 
 </table>
 <hr>
-<center><h3>Resúmen de Horarios Semanales<br>{semestre}° Semestre</h3></center>""".format(
-            base_dir=settings.BASE_DIR,
-            semestre=1,
-            lapso='2019-2',
-            area='Área de Ingeniería de Sistémas',
-            institucion='Universidad Nacional Experimental Rómulo Gallegos'
-        )
-
-        body = '''<table class="horario"> <thead>{thead}</thead> <tbody>{tbody}</tbody> </table>'''
-        thead = '<th>Sección</th>'
-        tbody = ''
-        for materia in materias_ordenadas_por_nombre:
-            thead += '<th>%s</th>' % materia.nombre
+<center><h3>Resúmen de Horarios Semanales<br>{semestre}° Semestre</h3></center>"""
 
 
-        semestres_secciones_materias_dict = {(sec.materia.semestre, sec.numero, sec.materia.pk): sec for sec in secciones}
-        body = pages_header + body   
-        for semestre in semestres:
-            for num_seccion in numeros_secciones:
-                tbody += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
-                for materia in materias_ordenadas_por_nombre:
-                    seccion_de_materia = semestres_secciones_materias_dict.get((semestre, num_seccion, materia.pk), False)
-                    if seccion_de_materia:
-                        tbody += '<td>%s</td>' % seccion_de_materia.representacion_texto_encuentros()
+
+        es_primera_pagina_reporte = True
+        for semestre in semestres_ordenados:
+            if not es_primera_pagina_reporte:
+                html += '<div class="nueva-pagina"></div>'
+            es_primera_pagina_reporte = False
+            html += pages_header.format(
+                base_dir=settings.BASE_DIR,
+                semestre=semestre,
+                lapso='2019-2',
+                area='Área de Ingeniería de Sistémas',
+                institucion='Universidad Nacional Experimental Rómulo Gallegos'
+             )
+            html += '<table class="horario"> <thead><th>Sección</th>'
+            secciones_de_semestre = secciones_agrupadas_por_semestre[semestre]
+            # secciones_de_semestre_agrupado_por_num_seccion_ord_por_nom_mat = group_by(secciones_de_semestre, key=lambda x: x.numero, sort_by=lambda x: x.materia.nombre)
+            secciones_de_semestre_agrupado_por_num_seccion = group_by(secciones_de_semestre, key=lambda x: x.numero)
+            secciones_de_semestre_ord_por_num_seccion = sorted(secciones_de_semestre_agrupado_por_num_seccion.keys())
+
+
+            # secciones_agrupadas_por_materia_ord_por_num_seccion = group_by(secciones_de_semestre, key=lambda x: x.materia.pk, sort_by=lambda x: x.numero)
+            materias_semestre_ordenadas = Materia.objects.filter(semestre=semestre, pensum__carrera=proyecto.pensum.carrera).order_by('nombre')
+            
+            secciones_agrupadas_por_materia_y_num_seccion = group_by(secciones_de_semestre, key=lambda x: (x.materia.pk, x.numero))
+
+            for materia in materias_semestre_ordenadas:
+                html += '<th>%s</th>' % materia.nombre
+            html += '</thead><tbody>'
+
+            for num_seccion in secciones_de_semestre_ord_por_num_seccion:
+                html += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
+                for materia in materias_semestre_ordenadas:
+                    seccion_objetivo = secciones_agrupadas_por_materia_y_num_seccion.get((materia.pk, num_seccion), None)
+                    if not seccion_objetivo:
+                        html += '<td></td>'
                     else:
-                        tbody += '<td></td>'
-                tbody += '</tr>'
+                        html += '<td>%s</td>' % seccion_objetivo[0].representacion_texto_encuentros()
+                html += '</tr>'
 
-        body = body.format(thead=thead, tbody=tbody)
-        css = '''table.horario td, th{
-    border:  1px solid black !important;
-    outline: 1px solid black !important;
-    width:.auto !important;
-    height:.4cm !important;
-    min-height: 10px !important;
-    padding: 3px;
-    margin:1px;
-    background: #ffffff !important;
-  }
-
-  table.header {
-    width: 100%;
-  }
-}'''        
-        html = html.format(body=body, css=css)
+            html += '</tbody></table>'
+        html += '</body> </html>'
         return html
 
 
@@ -438,7 +468,7 @@ class ReporteSemestresView(TemplateView):
             'margin-left':'2cm',
             'margin-right':'2cm',
         }        
-        html_reporte = self.generar_html_reporte()
+        html_reporte = self.generar_html_reporte2()
         pdfkit.from_string(html_reporte, 'reporte.pdf', options=options)
         with open('reporte.pdf', 'rb') as fil:
             response = HttpResponse(fil.read(), content_type='application/pdf')

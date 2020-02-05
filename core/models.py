@@ -150,7 +150,7 @@ class Seccion(models.Model):
 				dia=enc_dia.dia.get_dia_display(),
 				ubicacion=enc_dia.encuentro.aula.ubicacion.nombre,
 				aula=enc_dia.encuentro.aula.nombre,
-				bloque=enc_dia.encuentro.bloque.representar_inicio_fin(),
+				bloque=enc_dia.encuentro.representar_inicio_fin(),
 				cupo=enc_dia.encuentro.seccion.cupo,
 			)
 			texto += tex_tmp
@@ -283,6 +283,12 @@ class Encuentro(models.Model):
 	activo = models.BooleanField(default=True)
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
+
+	def representar_inicio_fin(self):
+		hora_salida = to_timedelta(self.bloque.hora_inicio) + (to_timedelta(self.bloque.esquema_bloque.duracion) * self.numero_bloques)
+		hora_inicio = ':'.join([str(x).zfill(2) for x in str(self.bloque.hora_inicio).split(':')[:2]])
+		hora_salida = ':'.join([str(x).zfill(2) for x in str(hora_salida).split(':')[:2]])
+		return '%s - %s' % (hora_inicio, hora_salida)	
 
 	def __str__(self):
 		return str(self.bloque)	
