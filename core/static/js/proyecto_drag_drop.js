@@ -293,7 +293,7 @@ function llenar_encuentros(aul, callback){
 				// @TODO: Hacer validaciones de numero de bloques de encuentro aqui
 				var numero_bloques = data_aulas_encuentros[aul][i].numero_bloques;
 				bloque_objetivo.attr('rowspan', numero_bloques);
-				for (var ind_blo = indice_bloques_horas + 1; ind_blo < esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
+				for (var ind_blo = indice_bloques_horas + 1; ind_blo <= esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
 					// var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
 					var bloque_eliminar = $('.tabla-encuentros tr:nth-child(' + ind_blo + ') td[data-dia=' + indice_bloques_dias + ']');
 					// console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
