@@ -324,7 +324,7 @@ function renderizar_tabla(callback){
 	for (var i = 0; i < bloques_horas.length; i++) {
 		var fila = $('<tr>');
 		// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
-		fila.append($('<td>').attr('valign', 'center').attr('align', 'center').text(i + 1));
+		fila.append($('<td>').attr('valign', 'center').attr('align', 'center').append($('<strong>').text(i + 1)));
 		fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));		
 		for (var j = 0; j < esquemas_dias.length; j++) {
 			fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
@@ -375,7 +375,7 @@ $(document).ready(function(){
 				for (var i = 0; i < bloques_horas.length; i++) {
 					var fila = $('<tr>');
 					// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
-					fila.append($('<td>').attr('valign', 'center').attr('align', 'center').text(i + 1));
+					fila.append($('<td>').attr('valign', 'center').attr('align', 'center').append($('<strong>').text(i + 1)));
 					fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));
 					for (var j = 0; j < esquemas_dias.length; j++) {
 						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));

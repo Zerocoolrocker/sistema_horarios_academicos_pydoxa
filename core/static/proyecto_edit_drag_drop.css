@@ -99,12 +99,12 @@
 .tabla-encuentros th:nth-child(1) {
 /*	background-color: white;
 	box-shadow: 0px 0px 0px white;*/
-	width: 6% !important;
+	width: 2% !important;
 
 }
 .tabla-encuentros td:nth-child(1), .tabla-encuentros td:nth-child(2) {
 /*	background-olor: white;
 	box-shadow: 0px 0px 0px white;*/
-	width: 3% !important;
+	width: 1% !important;
 
 }
