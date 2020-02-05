@@ -507,6 +507,13 @@ $('#modalError .cancelar').click(function(e){
 	ocultar_modal_error();
 });
 
+// $('.generar_reporte').on('change', function(e){
+// 	if($(this).val() === "1"){
+// 		var win = window.open('/reporte/semestres/' + proyecto + '/', '_blank');
+// 		win.focus();		
+// 	}
+// });
+
 
 // ###############################
 
