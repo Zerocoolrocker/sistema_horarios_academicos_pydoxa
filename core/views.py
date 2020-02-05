@@ -440,7 +440,25 @@ table.horario td, th{
                 html += '<th>%s</th>' % materia.nombre
             html += '</thead><tbody>'
 
+            cont_secciones = 0
             for num_seccion in secciones_de_semestre_ord_por_num_seccion:
+                if cont_secciones > 5:
+                    html += '</tbody></table>'
+                    html += '<div class="nueva-pagina"></div>'
+                    html += pages_header.format(
+                        base_dir=settings.BASE_DIR,
+                        semestre=semestre,
+                        lapso=proyecto.lapso_academico,
+                        area='Área de Ingeniería de Sistemas',
+                        institucion=proyecto.carrera.institucion
+                     )
+                    html += '<table class="horario"> <thead><th>Sección</th>'
+                    for materia in materias_semestre_ordenadas:
+                        html += '<th>%s</th>' % materia.nombre
+                    html += '</thead><tbody>'
+                    cont_secciones = 1
+                else:
+                    cont_secciones += 1
                 html += '<tr><td><center><strong>%s</strong></center></td>' % num_seccion
                 for materia in materias_semestre_ordenadas:
                     seccion_objetivo = secciones_agrupadas_por_materia_y_num_seccion.get((materia.pk, num_seccion), None)

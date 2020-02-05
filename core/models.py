@@ -37,9 +37,16 @@ class Aula(models.Model):
 	def __str__(self):
 		return self.nombre	
 
+class Institucion(models.Model):
+	nombre = models.CharField(max_length=150)
+
+	def __str__(self):
+		return self.nombre	
+
 class Carrera(models.Model):
 	nombre = models.CharField(max_length=60)
 	codigo = models.CharField(max_length=5)
+	institucion = models.ForeignKey('Institucion', blank=True, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.nombre	
@@ -60,7 +67,7 @@ class Proyecto(models.Model):
 
 	pensum = models.ForeignKey('Pensum', on_delete=models.CASCADE)
 
-	# lapso_academico = models.CharField(max_length=10)
+	lapso_academico = models.CharField(max_length=10)
 	fecha = models.DateField(auto_now_add=True)
 	# fecha_memo = models.DateField(blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)
