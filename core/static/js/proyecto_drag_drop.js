@@ -316,14 +316,16 @@ function renderizar_tabla(callback){
 	tabla_recien_creada = true
 	var thead = $('<thead>');
 	var tbody = $('<tbody>');
-	thead.append('<th>');
+	thead.append($('<th>').attr('class', 'text-center').attr('colspan', '2').text('Horas'));
 	for (var i = 0; i < esquemas_dias.length; i++) {
 		thead.append($('<th>').text(esquemas_dias[i]).attr('class', 'text-center'));
 	};
 	var tmp_turno = turnos_bloques_horas[0];
 	for (var i = 0; i < bloques_horas.length; i++) {
 		var fila = $('<tr>');
-		fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+		// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+		fila.append($('<td>').attr('valign', 'center').attr('align', 'center').text(i + 1));
+		fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));		
 		for (var j = 0; j < esquemas_dias.length; j++) {
 			fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
 		};
@@ -365,14 +367,16 @@ $(document).ready(function(){
 					turnos_bloques_horas.push(data_bloques[i].turno);
 					esquemas_bloques.push(data_bloques[i].hora_inicio);
 				};
-				thead.append('<th>');
+				thead.append($('<th>').attr('class', 'text-center').attr('colspan', '2').text('Horas'));
 				for (var i = 0; i < esquemas_dias.length; i++) {
 					thead.append($('<th>').text(esquemas_dias[i]).attr('class', 'text-center'));
 				};
 				var tmp_turno = turnos_bloques_horas[0];
 				for (var i = 0; i < bloques_horas.length; i++) {
 					var fila = $('<tr>');
-					fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+					// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
+					fila.append($('<td>').attr('valign', 'center').attr('align', 'center').text(i + 1));
+					fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));
 					for (var j = 0; j < esquemas_dias.length; j++) {
 						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
 					};
