@@ -26,7 +26,6 @@ class ProyectoEditDragDropView(TemplateView):
             return super(ProyectoEditDragDropView, self).get(*args, **kwargs)
         return HttpResponse(status=404)
             
-
     def get_context_data(self, *args, **kwargs):
         data = super(ProyectoEditDragDropView, self).get_context_data(*args, **kwargs)
         data['secciones'] = Seccion.objects.filter(proyecto=self.proyecto)
@@ -307,7 +306,7 @@ class BloquesAPIListView(View):
         # @TODO: validar que el usuario logueado tenga permiso a acceder a los datos
         filtros = {}
         if 'carrera' in request.GET:
-            objetos = Bloque.objects.filter(esquema_bloque__carrera=request.GET['carrera']).all()
+            objetos = Bloque.objects.filter(esquema_bloque__carrera=request.GET['carrera']).order_by('hora_inicio').all()
             datos = [
                 {
                     "pk": x.pk,
