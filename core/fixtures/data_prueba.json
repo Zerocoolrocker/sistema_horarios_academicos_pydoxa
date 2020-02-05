@@ -67,6 +67,7 @@
     "model": "core.materia",
     "pk": 1,
     "fields": {
+        "semestre": 1,
         "codigo": "COD",
         "nombre": "Gerencia de proyectos",
         "pensum": 1
@@ -76,6 +77,7 @@
     "model": "core.materia",
     "pk": 2,
     "fields": {
+        "semestre": 1,
         "codigo": "COD2",
         "nombre": "Programaci\u00f3n I",
         "pensum": 1
@@ -85,6 +87,7 @@
     "model": "core.materia",
     "pk": 3,
     "fields": {
+        "semestre": 1,
         "codigo": "COD3",
         "nombre": "Programacion II",
         "pensum": 1
@@ -94,6 +97,7 @@
     "model": "core.materia",
     "pk": 4,
     "fields": {
+        "semestre": 1,
         "codigo": "COD4",
         "nombre": "Programacion III",
         "pensum": 1
@@ -103,6 +107,7 @@
     "model": "core.materia",
     "pk": 5,
     "fields": {
+        "semestre": 1,
         "codigo": "COD5",
         "nombre": "Algoritmo",
         "pensum": 1
