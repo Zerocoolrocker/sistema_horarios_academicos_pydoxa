@@ -404,7 +404,7 @@ $(document).ready(function(){
 				}
 			});
 		});
-		if(data_aulas_encuentros['aulas_en_orden'].length){
+		if(data_aulas_encuentros['aulas_en_orden'] !== undefined && data_aulas_encuentros['aulas_en_orden'].length){
 			$('.aula-actual').text(aula);
 			llenar_encuentros(aula);
 		}
