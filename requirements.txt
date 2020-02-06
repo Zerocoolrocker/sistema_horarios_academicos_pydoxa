@@ -6,4 +6,4 @@ django-adminlte2==0.4.1
 psycopg2
 gunicorn
 pdfkit==0.6.1
-wkhtmltopdf-pack-ng==0.12.3.0
+django-extensions==2.2.6
