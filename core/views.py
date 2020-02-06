@@ -599,3 +599,13 @@ class ReporteAulaActualView(View):
             # return HttpResponse(html)
             return response  
         return HttpResponseBadRequest()
+
+class EncuentroDeleteView(View):
+    model = Encuentro
+
+    def get(self, *args, **kwargs):
+        if 'pk' in kwargs and self.model.objects.filter(pk=kwargs['pk']).exists():
+            self.object = self.model.objects.get(pk=kwargs['pk'])
+            self.object.delete()
+        return HttpResponse()
+

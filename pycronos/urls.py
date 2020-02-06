@@ -25,6 +25,7 @@ urlpatterns = [
     path('proyecto/<int:pk>/', login_required(ProyectoEditView.as_view()), name='editar_proyecto'),
     path('seccion/', login_required(SeccionCreateView.as_view()), name='crear_seccion'),
     path('encuentro/', login_required(EncuentroCreateView.as_view()), name='crear_encuentro'),
+    path('encuentro/<int:pk>/delete/', login_required(EncuentroDeleteView.as_view()), name='encuentro_delete'),
     path('seccion-encuentros/', login_required(SeccionEncuentrosListView.as_view()), name='seccion_encuentros_list'),
     # path('seccion/<int:pk>/delete/', login_required(ConfirmacionEliminacionSeccionView.as_view()), name='eliminar_seccion'),
     path('seccion/<int:pk>/delete/', login_required(SeccionDeleteView.as_view()), name='eliminar_seccion'),
