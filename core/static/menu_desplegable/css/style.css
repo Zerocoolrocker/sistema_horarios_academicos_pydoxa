@@ -35,10 +35,10 @@
   color: #2980B9;
 }
 
-.dropdown a {
+.boton-exportar .dropdown a {
   text-decoration: none;
 }
-.dropdown [data-toggle="dropdown"] {
+.boton-exportar .dropdown [data-toggle="dropdown"] {
   position: relative;
   display: block;
   color: white;
@@ -49,10 +49,10 @@
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
   padding: 10px;
 }
-.dropdown [data-toggle="dropdown"]:hover {
+.boton-exportar .dropdown [data-toggle="dropdown"]:hover {
   background: #2c89c6;
 }
-.dropdown .icon-arrow {
+.boton-exportar .dropdown .icon-arrow {
   position: absolute;
   display: block;
   font-size: 0.7em;
@@ -60,7 +60,7 @@
   top: 14px;
   right: 10px;
 }
-.dropdown .icon-arrow.open {
+.boton-exportar .dropdown .icon-arrow.open {
   -moz-transform: rotate(-180deg);
   -ms-transform: rotate(-180deg);
   -webkit-transform: rotate(-180deg);
@@ -70,7 +70,7 @@
   -webkit-transition: -webkit-transform 0.6s;
   transition: transform 0.6s;
 }
-.dropdown .icon-arrow.close {
+.boton-exportar .dropdown .icon-arrow.close {
   -moz-transform: rotate(0deg);
   -ms-transform: rotate(0deg);
   -webkit-transform: rotate(0deg);
@@ -80,20 +80,20 @@
   -webkit-transition: -webkit-transform 0.6s;
   transition: transform 0.6s;
 }
-.dropdown .icon-arrow:before {
+.boton-exportar .dropdown .icon-arrow:before {
   content: '\25BC';
 }
-.dropdown .dropdown-menu {
+.boton-exportar .dropdown .dropdown-menu {
   max-height: 0;
   overflow: hidden;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.dropdown .dropdown-menu li {
+.boton-exportar .dropdown .dropdown-menu li {
   padding: 0;
 }
-.dropdown .dropdown-menu li a {
+.boton-exportar .dropdown .dropdown-menu li a {
   display: block;
   /*color: #6e6e6e;*/
   /*color: rgb(21, 20, 20);*/
@@ -107,17 +107,17 @@
   /*text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);*/
   padding: 10px 10px;
 }
-.dropdown .dropdown-menu li a:hover {
+.boton-exportar .dropdown .dropdown-menu li a:hover {
   /*box-shadow: 0px 2px 10px 1px orange;*/
   background: #f6f6f6;
 }
-.dropdown .show, .dropdown .hide {
+.boton-exportar .dropdown .show, .dropdown .hide {
   -moz-transform-origin: 50% 0%;
   -ms-transform-origin: 50% 0%;
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
 }
-.dropdown .show {
+.boton-exportar .dropdown .show {
   display: block;
   max-height: 9999px;
   -moz-transform: scaleY(1);
@@ -134,7 +134,7 @@
   box-shadow: 0px 0px 10px 1px #00c0ef;
 }
 
-.dropdown .hide {
+.boton-exportar .dropdown .hide {
   max-height: 0;
   -moz-transform: scaleY(0);
   -ms-transform: scaleY(0);
