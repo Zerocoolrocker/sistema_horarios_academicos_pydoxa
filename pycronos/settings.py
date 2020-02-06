@@ -83,8 +83,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pycronos.wsgi.application'
 
-LOGIN_URL = '/admin/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
