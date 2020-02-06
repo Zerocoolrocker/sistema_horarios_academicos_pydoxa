@@ -369,7 +369,7 @@ class ReporteSemestresView(TemplateView):
 table.horario td, th{
     border:  1px solid black !important;
     outline: 1px solid black !important;
-    width:.auto !important;
+    width: auto !important;
     height:.4cm !important;
     min-height: 10px !important;
     padding: 3px;
@@ -386,6 +386,15 @@ table.horario td, th{
         page-break-before: always;
       }
     }
+
+    .horario th:nth-child(1) {
+        width: 1% !important;
+
+    }
+    .horario td:nth-child(1) {
+        width: 1% !important;
+
+    }    
 
 
 </style>
