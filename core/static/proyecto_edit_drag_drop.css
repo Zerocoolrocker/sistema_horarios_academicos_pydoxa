@@ -108,3 +108,9 @@
 	width: 1% !important;
 
 }
+
+.swal-text {
+	font-weight: normal !important;
+	font-weight: bold !important;
+	text-align: center !important;	
+}

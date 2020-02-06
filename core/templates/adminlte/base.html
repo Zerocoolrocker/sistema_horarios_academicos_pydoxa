@@ -4,6 +4,8 @@
 {% block javascript %}
     {{ block.super }}
     <script type="text/javascript" src='{% static "js/main.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/sweetalert/docs/assets/sweetalert/sweetalert.min.js" %}'></script>
+
 {% endblock %}
 
 {% block content %}
@@ -18,14 +20,14 @@
         <h4 class="modal-title" id="myModalLabel">Crear proyecto</h4>
       </div>
       <form method='POST' action='/proyecto/'>
-      	  {% csrf_token %}
-	      <div class="modal-body">
-	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-	        <button type="submit" class="btn btn-primary">Guardar</button>
-	      </div>
+          {% csrf_token %}
+        <div class="modal-body">
+            <input class="input" placeholder="Nombre del proyecto" name='nombre'>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
       </form>
     </div>
   </div>
@@ -36,8 +38,8 @@
 {% endblock %}
 
 {% block stylesheets %}
-	{{ block.super }}
-	<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 
 {% endblock %}
 

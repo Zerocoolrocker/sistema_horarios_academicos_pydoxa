@@ -13,17 +13,59 @@ var drag_start_list = [];
 var drag_source_element_real;
 
 function mostrar_modal_error(mensaje){
-	$('#modalError .mensaje').text(mensaje);
-	$('#modalError').removeClass('fade').addClass('show');
+	swal(mensaje, {
+	  buttons: {
+		  confirm: {
+		    text: "OK",
+		    value: true,
+		    visible: true,
+		    className: "",
+		    closeModal: true
+		  }
+	  },
+	  icon: "error",
+	});
+
+
+
+
 }
 
 function ocultar_modal_error(){
 	$('#modalError').removeClass('show').addClass('fade');
 }
 
-function mostrar_modal_confirmacion(){
-	$('#modalConfirmacionAlerta .mensaje').text('Ya existe otro encuentro en ese bloque horario en la misma aula. Realmente desea compartir el aula en el mismo momento?');
-	$('#modalConfirmacionAlerta').removeClass('fade').addClass('show');
+
+function mostrar_modal_confirmacion2(){
+	// swal(
+	// 	'Error en url',
+	// 	{
+	//        icon: "success",
+	//     }
+	// );
+
+	swal('Ya existe otro encuentro en ese bloque horario en la misma aula. ¿Realmente desea compartir el aula en el mismo momento?', {
+	  // buttons: ["Cancelar", "Aceptar"],
+	  buttons: {
+		  cancel: {
+		    text: "Cancelar",
+		    value: null,
+		    visible: true,
+		    closeModal: true,
+		  },
+		  confirm: {
+		    text: "OK",
+		    value: true,
+		    visible: true,
+		    className: "aceptar-choque-encuentros",
+		    closeModal: true
+		  }
+
+
+	  },
+	  icon: "warning",
+	});
+
 }
 
 function ocultar_modal_confirmacion(){
@@ -140,7 +182,7 @@ function handleDrop(e) {
 	  	// @TODO: (mostrar advertencia o no permitir, dependiendo de configuracion)
 	  	if($(this).find('.dnd-encuentro').length){
 	  		contenedor_drop = this;
-	  		mostrar_modal_confirmacion();
+	  		mostrar_modal_confirmacion2();
 	  	} else {
 	  		acciones_drop_permitido(e);
 	  	}
@@ -502,11 +544,11 @@ $('#creacionEdicionencuentroModal .submit-modal').click(function(e){
 	});
 });
 
-$('#modalConfirmacionAlerta .aceptar').click(function(e){
+$('body').on('click', '.aceptar-choque-encuentros', function(){
 	console.log('acepto modal de confirmacion de alerta');
-	ocultar_modal_confirmacion();
 	acciones_drop_permitido();
 });
+
 
 $('#modalConfirmacionAlerta .cancelar').click(function(e){
 	ocultar_modal_confirmacion();
