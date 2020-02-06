@@ -174,6 +174,7 @@ function isEmpty(obj) {
 function asignar_handlers_drag_and_drop(){
 	var cols = document.querySelectorAll('.dnd-encuentro');
 	var cols2 = document.querySelectorAll('.tabla-encuentros td');
+	cols2 = $(cols2).not('td:nth-child(1), td:nth-child(2)');
 	var cols3 = document.querySelectorAll('#resultados_busqueda');
 
 	var elements = Array.prototype.slice.call(cols);
