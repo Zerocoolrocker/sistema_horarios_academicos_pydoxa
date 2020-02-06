@@ -35,8 +35,11 @@ $(window).click(function(){
 		var arrow = $('.dropdown .icon-arrow')[0];
 		menu.classList.remove('show');
 		menu.classList.add('hide');
-		arrow.classList.remove('open');
-		arrow.classList.add('close');
+		if(arrow){
+			arrow.classList.remove('open');
+			arrow.classList.add('close');
+		}
+
 	}
 });
 
