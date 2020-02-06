@@ -4,6 +4,17 @@
 	<b style="font-size: 1.3em">pyDoxa</b>
 {% endblock %}
 
+{% block user_header %}
+<li class="user-header">
+    <img src="/static/img/figura_usuario.png" class="img-circle" alt="User Image">
+    <p>
+        {% firstof request.user.get_short_name request.user.get_username %}
+        <!-- <small>Member since {{ request.user.date_joined }}</small> -->
+    </p>
+</li>
+{% endblock %}
+
+
 {% block menu_footer %}
 <li class="user-footer">
     <div class="pull-left">
