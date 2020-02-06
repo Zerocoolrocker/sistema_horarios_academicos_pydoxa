@@ -297,6 +297,10 @@ class Encuentro(models.Model):
 		hora_salida = ':'.join([str(x).zfill(2) for x in str(hora_salida).split(':')[:2]])
 		return '%s - %s' % (hora_inicio, hora_salida)	
 
+	@property
+	def hora_salida(self):
+		return to_timedelta(self.bloque.hora_inicio) + (to_timedelta(self.bloque.esquema_bloque.duracion) * self.numero_bloques)
+
 	def __str__(self):
 		return str(self.bloque)	
 
@@ -450,7 +454,7 @@ class Bloque(models.Model):
 		hora_salida = to_timedelta(self.hora_inicio) + to_timedelta(self.esquema_bloque.duracion)
 		hora_inicio = ':'.join([str(x).zfill(2) for x in str(self.hora_inicio).split(':')[:2]])
 		hora_salida = ':'.join([str(x).zfill(2) for x in str(hora_salida).split(':')[:2]])
-		return '%s - %s' % (hora_inicio, hora_salida)
+		return '%s - %s' % (hora_inicio, hora_salida)		
 
 	def __str__(self):
 		return self.representar_inicio_fin()

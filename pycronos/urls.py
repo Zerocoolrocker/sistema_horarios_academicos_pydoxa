@@ -39,4 +39,5 @@ urlpatterns = [
     path('api/encuentros/update/', EncuentrosAPIUpdateView.as_view(), name='api_encuentros_update'),
     path('reporte/semestres/<int:proyecto_id>/', ReporteSemestresView.as_view(), name='reporte_por_semestres'),
     path('reporte/aula/<int:proyecto_id>/<int:aula_id>/', ReporteAulaActualView.as_view(), name='reporte_aula_actual'),
+    path('dump/proyecto/<int:pk>/csv/', login_required(DumpProyectoCSVView.as_view()), name='dump_proyecto'),
 ]

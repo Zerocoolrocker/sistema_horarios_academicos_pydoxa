@@ -49,13 +49,14 @@
 	</div>
 
 
-    <div class="container pull-right">
+    <div class="container pull-right boton-exportar">
 	  <ul>
 	    <li class="dropdown">
-	      <a href="#" data-toggle="dropdown">Generar Reporte <i class="icon-arrow"></i></a>
+	      <a href="#" data-toggle="dropdown">Exportar <i class="icon-arrow"></i></a>
 	      <ul class="dropdown-menu">
-	        <li><a href="#" id="reporte_aula">Horario de esta aula</a></li>
-	        <li><a href="/reporte/semestres/{{ proyecto }}/">Horario por semestres</a></li>
+	        <li><a href="#" id="reporte_aula">[PDF] Horario de esta aula</a></li>
+	        <li><a href="/reporte/semestres/{{ proyecto }}/">[PDF] Horario por semestres</a></li>
+	        <li><a href="/dump/proyecto/{{ proyecto }}/csv/">[CSV] Dump del proyecto</a></li>
 	      </ul>
 	    </li>
 	  </ul>

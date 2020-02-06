@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import datetime
 import json
 import os
@@ -617,4 +619,28 @@ class EncuentroDeleteView(View):
             self.object = self.model.objects.get(pk=kwargs['pk'])
             self.object.delete()
         return HttpResponse()
+
+class DumpProyectoCSVView(View):
+
+    def get(self, *args, **kwargs):
+        proyecto = Proyecto.objects.get(pk=kwargs.pop('pk'))
+        csv_text = 'asignatura;carrera;seccion;codigo;dia;horaInicio;horaCulminación;aula;cupos;profesor\n'
+        encuentros_dias = EncuentrosDias.objects.filter(encuentro__seccion__proyecto=proyecto)
+        for enc_dia in encuentros_dias:
+            #Deporte;601;1;DP0001;Viernes;10:10;11:40;Dep;25;
+            csv_text += ';'.join([
+                enc_dia.encuentro.seccion.materia.nombre,
+                enc_dia.encuentro.seccion.materia.pensum.carrera.nombre,
+                str(enc_dia.encuentro.seccion.numero),
+                enc_dia.dia.get_dia_display(),
+                enc_dia.encuentro.bloque.hora_inicio.strftime('%H:%M'),
+                str(enc_dia.encuentro.hora_salida)[:5],
+                str(enc_dia.encuentro.seccion.cupo),
+                enc_dia.encuentro.seccion.docente.nombre_apellido,
+            ])
+            csv_text += '\n'
+        filename = 'pyDoxa Horario %s generado %s' % (proyecto.nombre, datetime.datetime.now())
+        response = HttpResponse(csv_text, content_type='application/csv')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        return response
 
