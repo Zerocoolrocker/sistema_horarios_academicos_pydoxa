@@ -119,3 +119,10 @@
 .boton-exportar {
 	margin-right: 50px !important;
 }
+
+#busqueda_encuentro, #limpiar_resultados_encuentro{
+	margin-left: 10px;
+}
+#busqueda_encuentro, #limpiar_resultados_encuentro{
+	margin-left: 9px;
+}

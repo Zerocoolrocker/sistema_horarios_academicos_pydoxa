@@ -578,6 +578,10 @@ $('.eliminar-encuentro').click(function(){
 
 });
 
+$('#limpiar_resultados_busqueda').click(function(){
+	$('#resultados_busqueda .dnd-encuentro').remove();
+});
+
 
 // $('.generar_reporte').on('change', function(e){
 // 	if($(this).val() === "1"){
