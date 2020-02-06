@@ -1,6 +1,7 @@
 .dnd-encuentro {
 	background-color: #F0F0F0;
 	padding: 5px 5px;
+	margin-bottom: 7px;
 	border-radius: 10px;
 	box-shadow: 3px 3px 5px gray;
 }
