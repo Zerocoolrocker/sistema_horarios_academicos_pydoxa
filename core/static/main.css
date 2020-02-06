@@ -73,3 +73,8 @@ a#vista_drag_drop:hover {
 .modal .mensaje {
 	text-align: center;
 }
+
+.bold {
+	font-weight: normal;
+	font-weight: bold;
+}

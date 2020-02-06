@@ -310,9 +310,9 @@ function llenar_encuentros(aul, callback){
 }
 
 function renderizar_tabla(callback){
-	var tabla = $('.tabla-encuentros');
-	tabla = $('<div>').attr('class', 'box-body').append('<table>').attr('class', 'table table-bordered tabla-encuentros').append('<tbody>');
-	tabla.append($('<div>').attr('class', 'box-footer'));
+	// var tabla = $('.tabla-encuentros');
+	tabla = $('<table>').attr('class', 'table table-bordered tabla-encuentros');
+	// tabla.append($('<div>').attr('class', 'box-footer'));
 	tabla_recien_creada = true
 	var thead = $('<thead>');
 	var tbody = $('<tbody>');
@@ -324,8 +324,8 @@ function renderizar_tabla(callback){
 	for (var i = 0; i < bloques_horas.length; i++) {
 		var fila = $('<tr>');
 		// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
-		fila.append($('<td>').attr('valign', 'center').attr('align', 'center').append($('<strong>').text(i + 1)));
-		fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));		
+		fila.append($('<td>').attr('valign', 'center').attr('align', 'center').attr('class', 'bold').text(i + 1));
+		fila.append($('<td>').attr('class', 'bold').html(bloques_horas[i].replace(' - ', '<br>')));	
 		for (var j = 0; j < esquemas_dias.length; j++) {
 			fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
 		};
@@ -350,8 +350,8 @@ $(document).ready(function(){
 	obtener_datos_encuentros(function(){
 		var tabla = $('.tabla-encuentros');
 		if(!tabla.length){
-			tabla = $('<div>').attr('class', 'box-body').append('<table>').attr('class', 'table table-bordered tabla-encuentros').append('<tbody>');
-			tabla.append($('<div>').attr('class', 'box-footer'));
+			tabla = $('<table>').attr('class', 'table table-bordered tabla-encuentros');
+
 			tabla_recien_creada = true
 		}
 		var thead = $('<thead>');
@@ -375,8 +375,9 @@ $(document).ready(function(){
 				for (var i = 0; i < bloques_horas.length; i++) {
 					var fila = $('<tr>');
 					// fila.append($('<td>').append($('<strong>').text(bloques_horas[i])));
-					fila.append($('<td>').attr('valign', 'center').attr('align', 'center').append($('<strong>').text(i + 1)));
-					fila.append($('<td>').append($('<strong>').html(bloques_horas[i].replace(' - ', '<br>'))));
+					// fila.append($('<td>').attr('valign', 'center').attr('align', 'center').append($('<strong>').text(i + 1)));
+					fila.append($('<td>').attr('valign', 'center').attr('align', 'center').attr('class', 'bold').text(i + 1));
+					fila.append($('<td>').attr('class', 'bold').html(bloques_horas[i].replace(' - ', '<br>')));
 					for (var j = 0; j < esquemas_dias.length; j++) {
 						fila.append($('<td>').attr('data-hora', i).attr('data-dia', j));
 					};
@@ -389,8 +390,11 @@ $(document).ready(function(){
 				// console.log(tabla);
 				tabla.append(thead);
 				tabla.append(tbody);
+				// tabla.append($('<div>').attr('class', 'box-footer'));
+
 				if(tabla_recien_creada){
 					tabla_recien_creada = false;
+					// var contenedor_tabla = $('<div>').attr('class', 'box-body').append(tabla)
 					$('div.tabla-encuentros-wrapper').html(tabla).ready(
 						llenar_encuentros(aula)
 					).ready(
@@ -509,6 +513,13 @@ $('#modalConfirmacionAlerta .cancelar').click(function(e){
 
 $('#modalError .cancelar').click(function(e){
 	ocultar_modal_error();
+});
+
+$('#reporte_aula').click(function(e){
+	var url_vista = '/reporte/aula/' + proyecto + '/' + aula + '/';
+	$.post(url_vista, {html_tabla: $('.tabla-encuentros')[0].outerHTML}).done(function(){
+		document.location = url_vista;
+	});
 });
 
 // $('.generar_reporte').on('change', function(e){

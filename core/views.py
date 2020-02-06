@@ -449,7 +449,7 @@ table.horario td, th{
                         semestre=semestre,
                         lapso=proyecto.lapso_academico,
                         area='Área de Ingeniería de Sistemas',
-                        institucion=proyecto.carrera.institucion
+                        institucion=proyecto.pensum.carrera.institucion
                      )
                     html += '<table class="horario"> <thead><th>Sección</th>'
                     for materia in materias_semestre_ordenadas:
@@ -493,3 +493,109 @@ table.horario td, th{
         os.remove('reporte.pdf')
         # return HttpResponse(html_reporte)
         return response    
+
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class ReporteAulaActualView(View):
+    def post(self, request, *args, **kwargs):
+        html_tabla = request.POST['html_tabla']
+        request.session['html_tabla'] = html_tabla
+        return HttpResponse()
+
+    def get(self, request, *args, **kwargs):
+        # response = HttpResponse(fil.read(), content_type='application/pdf')
+        if request.session.get('html_tabla'):
+            # response = HttpResponse(request.session['html_tabla'])
+
+            html = """<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <style>
+
+    table.tabla-encuentros td, th{
+        border:  1px solid grey !important;
+        outline: 1px solid grey !important;
+        width:.auto !important;
+        height:.4cm !important;
+        min-height: 10px !important;
+        padding: 3px;
+        margin: 0px;
+        background: #ffffff !important;
+      }
+
+    table.tabla-encuentros td, th {
+        width: 11%;
+    }
+
+    .tabla-encuentros th:nth-child(1) {
+        width: 2% !important;
+
+    }
+    .tabla-encuentros td:nth-child(1), .tabla-encuentros td:nth-child(2) {
+        width: 1% !important;
+
+    }
+
+
+    table.header {
+    width: 100%;
+    }
+
+    @media print {
+      .nueva-pagina {
+        page-break-before: always;
+      }
+    }
+
+
+  </style>
+</head>
+<body>"""
+            pages_header = """<table class="header">
+    <tr>
+        <td><img style="width:200px;height:90px;display:inline-block;" src="{base_dir}/core/static/img/logo_ais.jpg"></td>
+        <td>
+<strong>{institucion}</strong><br>
+<strong>{area}</strong><br>
+<strong>Programa: Ingeniería en Informática</strong><br>
+<strong>Lapso Académico: {lapso}</strong><br>
+<strong>Comisión de Horarios Académicos</strong><br>
+        </td>
+
+    </tr>
+
+</table>
+<hr>
+<strong>Aula: {aula} ({tipo_aula})</strong> Area de Ingenieria de Sistemas / Area de Ingenieria de Sistemas"""
+
+            options = {
+                'page-size':'Letter',
+                'orientation': 'Portrait',
+                'encoding':'utf-8', 
+                'margin-top':'3cm',
+                'margin-bottom':'2cm',
+                'margin-left':'1cm',
+                'margin-right':'1cm',
+            }   
+            # html = html.format(body=request.session['html_tabla'])
+            proyecto = Proyecto.objects.get(pk=kwargs.pop('proyecto_id'))
+            aula = Aula.objects.get(pk=kwargs.pop('aula_id'))
+            html += pages_header.format(
+                base_dir=settings.BASE_DIR,
+                lapso=proyecto.lapso_academico,
+                area='Área de Ingeniería de Sistemas',
+                institucion=proyecto.pensum.carrera.institucion,
+                aula=aula.nombre,
+                tipo_aula=aula.tipo_aula,
+            )
+            html += request.session['html_tabla'] + '</body></html>'
+            pdfkit.from_string(html, 'reporte.pdf', options=options)
+            with open('reporte.pdf', 'rb') as fil:
+                response = HttpResponse(fil.read(), content_type='application/pdf')
+                response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+            os.remove('reporte.pdf')
+            # return HttpResponse(html)
+            return response  
+        return HttpResponseBadRequest()

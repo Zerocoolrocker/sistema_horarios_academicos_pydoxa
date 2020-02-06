@@ -50,11 +50,11 @@
     border-top: 2px solid rgba(86, 86, 86, 0.82);
 }
 
-.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td, .table-bordered > thead > tr > td {
+/*.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td, .table-bordered > thead > tr > td {
 	height: 50px !important;
 	min-height: 50px !important;
 }
-
+*/
 .dnd-encuentro .icono-editar {
 	/*margin-left: 5px !important;*/
 	/*padding-top: 40px !important;*/
