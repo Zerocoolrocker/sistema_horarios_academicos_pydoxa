@@ -3,3 +3,15 @@
 {% block logo_text %}
 	<b style="font-size: 1.3em">pyDoxa</b>
 {% endblock %}
+
+{% block menu_footer %}
+<li class="user-footer">
+    <div class="pull-left">
+        <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"
+           class="btn btn-default btn-flat">Cambiar contraseña</a>
+    </div>
+    <div class="pull-right">
+        <a href="/admin/logout/" class="btn btn-default btn-flat">Cerrar sesión</a>
+    </div>
+</li>
+{% endblock %}
