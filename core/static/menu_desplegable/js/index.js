@@ -24,6 +24,17 @@ dropdownArray.forEach(function(el){
 	};
 })
 
+
+$(window).click(function(){
+	var menu = $('.dropdown .show')[0];
+	var arrow = $('.dropdown .icon-arrow')[0];
+	menu.classList.remove('show');
+	menu.classList.add('hide');
+	arrow.classList.remove('open');
+	arrow.classList.add('close');
+});
+
+
 Element.prototype.hasClass = function(className) {
     return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
 };
