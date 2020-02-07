@@ -92,3 +92,15 @@ a#vista_drag_drop:hover {
 .deletelink {
 	height: auto !important;
 }
+
+
+#myModal select {
+	border-radius: 10px;
+	padding: 5px;
+	background-color: white;
+}
+
+#myModal input {
+	border-radius: 10px;
+	padding: 5px;
+}

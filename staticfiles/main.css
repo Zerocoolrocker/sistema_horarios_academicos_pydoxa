@@ -55,3 +55,7 @@ a.proyectos .agregar-proyecto-button-lock {
 /*.agregar-proyecto-button:hover {
 	background-color: red !important;
 }*/
+
+#myModal {
+	border-radius: 30px !important;
+}

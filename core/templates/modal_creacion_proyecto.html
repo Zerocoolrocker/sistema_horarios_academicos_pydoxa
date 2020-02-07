@@ -9,7 +9,7 @@
       <form method='POST' action='/proyecto/'>
       	  {% csrf_token %}
 	      <div class="modal-body">
-	        	<input class="input" placeholder="Nombre del proyecto" name='nombre' required><br><br>
+	        	<input class="input creacion-proyecto-nombre" placeholder="Nombre del proyecto" name='nombre' required><br><br>
 	        	<select name='lapso_academico' required>
 	        		<option value="">Lapso académico</option>
 	        		{% for lapso in lapsos %}
@@ -30,7 +30,7 @@
 
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 	        <button type="submit" class="btn btn-primary">Guardar</button>
 	      </div>
       </form>

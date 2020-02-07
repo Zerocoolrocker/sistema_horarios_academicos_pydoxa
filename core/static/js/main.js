@@ -1,6 +1,20 @@
+function waitElementVisible(selector, callback){
+    setTimeout(function(){
+        if($(selector).is(':visible')){
+            callback();
+        } else {
+            waitElementVisible(selector, callback);
+        }
+    }, 100);     
+}
+
 $('.crear-proyecto-button').click(function(e){
-	e.preventDefault();
+    e.preventDefault();
+	e.stopPropagation();
 	$('#myModal').modal({show: true});
+    setTimeout(function(){
+        $('.creacion-proyecto-nombre').focus();
+    }, 600);  
 	return false;
 });
 
