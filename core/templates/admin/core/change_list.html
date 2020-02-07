@@ -44,11 +44,7 @@
           {% block object-tools-items %}
 
           {% if cl.get_model == 'Proyecto' %}
-              <li>
-                <a href="#" class="addlink" data-toggle="modal" data-target="#myModal">
-                  Añadir proyecto
-                </a>
-              </li>  
+
           {% else %}
             {% change_list_object_tools %}
           {% endif %}
