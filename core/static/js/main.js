@@ -39,3 +39,13 @@ $(document).on('submit', '.ajax-form',function(e){
     }
     });
 });
+
+var sidebar_open = true;    
+$('.sidebar-toggle').click(function(){
+    sidebar_open = !sidebar_open;
+    if(sidebar_open){
+        $('.crear-proyecto-button').show();
+    } else {
+        $('.crear-proyecto-button').hide();
+    }
+});
