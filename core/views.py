@@ -20,7 +20,7 @@ class DashboardRedirectView(TemplateView):
     template_name = 'dashboard.html'
 
     def get(self, *args, pk=None, **kwargs):
-        return HttpResponseRedirect('admin/core/proyecto/')
+        return HttpResponseRedirect('/admin/core/proyecto/')
 
     def get_context_data(self, *args, **kwargs):
         data = super(DashboardView, self).get_context_data(*args, **kwargs)
