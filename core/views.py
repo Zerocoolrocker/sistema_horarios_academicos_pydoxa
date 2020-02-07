@@ -19,6 +19,16 @@ from .models import *
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super(DashboardView, self).get_context_data(*args, **kwargs)
+        data['lapsos'] =  LapsoAcademico.objects.all()
+        if self.request.user.is_superuser:
+            data['pensums'] =  Pensum.objects.all()
+        else:
+            data['pensums'] =  Pensum.objects.filter(carrera__pk__in=carreras_pks)
+            carreras_pks = AsistentesCarrera.objects.filter(asistente=self.request.user).values_list('carrera__pk', flat=True)
+        return data      
+
 class ProyectoEditDragDropView(TemplateView):
     template_name = 'proyecto_edit_drag_drop.html'
 
@@ -85,7 +95,7 @@ class ProyectoCreateView(CreateView):
     fields = '__all__'
 
     def get_success_url(self, *args, **kwargs):
-        return '/proyecto/%s/' % self.object.pk
+        return '/proyecto/%s/' % self.object.pk  
 
 class SeccionCreateView(CreateView):
     template_name = 'proyecto_edit.html'

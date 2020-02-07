@@ -474,37 +474,39 @@ $('#busqueda_encuentro').click(function(){
 	var seccion = $('#busqueda_seccion').val();
 	if(materia && seccion){
 		$('#resultados_busqueda').html('');
-		for (var i = data_aulas_encuentros['aulas_en_orden'].length - 1; i >= 0; i--) {
-			if(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre.toLowerCase().indexOf(materia) != -1){
-				if(data_aulas_encuentros['aulas_en_orden'][i].seccion.numero == Number(seccion)){
-					
-					var nuevo_encuentro  = $('<div>');
-					nuevo_encuentro.attr('class', 'dnd-encuentro resultado-busqueda');
-					nuevo_encuentro.attr('draggable', 'true');
-					var titulo_encuentro  = $('<div>');
-					titulo_encuentro.attr('class', 'titulo');
-					// titulo_encuentro.append($('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'))
-					titulo_encuentro.append($('<strong>').text(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre));
-					titulo_encuentro.append($('<i>').attr('class', 'fa fa-pencil-square-o icono-editar pull-right').attr('aria-hidden', 'true'));
-					nuevo_encuentro.append(titulo_encuentro);
-					var texto = $('<p>');
-					texto.text('Sección: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.numero)
-					texto.append($('<br>'))
-					texto.append($('<strong>').append(data_aulas_encuentros['aulas_en_orden'][i].seccion.docente_nombre_apellido))
-					texto.append($('<br>'))
-					texto.append('Cupo: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.cupo)
-					nuevo_encuentro.append(texto);
-					nuevo_encuentro.attr('data-aula', data_aulas_encuentros['aulas_en_orden'][i].aula.nombre);
-					// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
-					nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros['aulas_en_orden'][i].encuentro_dia_pk);
-					nuevo_encuentro.attr('rowspan', data_aulas_encuentros['aulas_en_orden'][i].numero_bloques);
-					// console.log('se agrega res busqueda');
+		if(data_aulas_encuentros['aulas_en_orden']){
+			for (var i = data_aulas_encuentros['aulas_en_orden'].length - 1; i >= 0; i--) {
+				if(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre.toLowerCase().indexOf(materia) != -1){
+					if(data_aulas_encuentros['aulas_en_orden'][i].seccion.numero == Number(seccion)){
+						
+						var nuevo_encuentro  = $('<div>');
+						nuevo_encuentro.attr('class', 'dnd-encuentro resultado-busqueda');
+						nuevo_encuentro.attr('draggable', 'true');
+						var titulo_encuentro  = $('<div>');
+						titulo_encuentro.attr('class', 'titulo');
+						// titulo_encuentro.append($('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'))
+						titulo_encuentro.append($('<strong>').text(data_aulas_encuentros['aulas_en_orden'][i].seccion.materia.nombre));
+						titulo_encuentro.append($('<i>').attr('class', 'fa fa-pencil-square-o icono-editar pull-right').attr('aria-hidden', 'true'));
+						nuevo_encuentro.append(titulo_encuentro);
+						var texto = $('<p>');
+						texto.text('Sección: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.numero)
+						texto.append($('<br>'))
+						texto.append($('<strong>').append(data_aulas_encuentros['aulas_en_orden'][i].seccion.docente_nombre_apellido))
+						texto.append($('<br>'))
+						texto.append('Cupo: ' + data_aulas_encuentros['aulas_en_orden'][i].seccion.cupo)
+						nuevo_encuentro.append(texto);
+						nuevo_encuentro.attr('data-aula', data_aulas_encuentros['aulas_en_orden'][i].aula.nombre);
+						// nuevo_encuentro.attr('data-encuentro-dia-pk', data[i].encuentro_dia_pk)
+						nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros['aulas_en_orden'][i].encuentro_dia_pk);
+						nuevo_encuentro.attr('rowspan', data_aulas_encuentros['aulas_en_orden'][i].numero_bloques);
+						// console.log('se agrega res busqueda');
 
-					$('#resultados_busqueda').append(nuevo_encuentro);
-					asignar_handlers_drag_and_drop();
+						$('#resultados_busqueda').append(nuevo_encuentro);
+						asignar_handlers_drag_and_drop();
+					}
 				}
-			}
-		};
+			};
+		}
 	}
 });
 

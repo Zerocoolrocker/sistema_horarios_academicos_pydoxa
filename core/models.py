@@ -60,6 +60,20 @@ class Pensum(models.Model):
 	def __str__(self):
 		return "%s - %s - %s" % (self.nombre, self.carrera, self.fecha)	
 
+class AsistentesCarrera(models.Model):
+	asistente = models.ForeignKey(User, on_delete=models.CASCADE)
+	carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return "%s %s(%s)" % (self.asistente.first_name, self.asistente.last_name, self.carrera)		
+
+class LapsoAcademico(models.Model):
+	lapso = models.CharField(max_length=30)
+	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.lapso
+
 class Proyecto(models.Model):
 	nombre = models.CharField(max_length=60)
 
@@ -67,7 +81,7 @@ class Proyecto(models.Model):
 
 	pensum = models.ForeignKey('Pensum', on_delete=models.CASCADE)
 
-	lapso_academico = models.CharField(max_length=10)
+	lapso_academico = models.ForeignKey(LapsoAcademico, on_delete=models.CASCADE)
 	fecha = models.DateField(auto_now_add=True)
 	# fecha_memo = models.DateField(blank=True, null=True)
 	observaciones = models.TextField(blank=True, null=True)

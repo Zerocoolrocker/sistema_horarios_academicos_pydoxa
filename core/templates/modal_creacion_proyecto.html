@@ -9,12 +9,28 @@
       <form method='POST' action='/proyecto/'>
       	  {% csrf_token %}
 	      <div class="modal-body">
-	        	<input class="input" placeholder="Nombre del proyecto" name='nombre'><br><br>
-	        	<select placeholder="Pensum" name='pensum' value='{{ pk_pensum_mas_reciente }}'>
-	        		{% for pensum in pensums %}
-	        			<option value="{{ pensum.pk }}">{{ pensum.nombre }}</option>
-	        		{% endfor %}
-	        	</select>
+	        	<input class="input" placeholder="Nombre del proyecto" name='nombre' required><br><br>
+	        	
+
+
+		        	<select name='lapso_academico' required>
+		        		<option value="">Lapso académico</option>
+		        		{% for lapso in lapsos %}
+		        			<option value="{{ lapso.pk }}">{{ lapso.lapso }}</option>
+		        		{% endfor %}
+		        	</select>
+		        	<select placeholder="Pensum" name='pensum' required>
+		        		<option value="">Pensum</option>
+		        		{% for pensum in pensums %}
+		        			<option value="{{ pensum.pk }}">{{ pensum.nombre }}</option>
+		        		{% endfor %}
+		        	</select>
+	        	{% if not pensums %}
+	        		<br>
+                  	<span class='text-danger'> El administrador debe asignarte a alguna carrera para poder seleccionar un pensum. </span>
+		        {% endif %}
+
+
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
