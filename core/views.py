@@ -398,6 +398,11 @@ table.horario td, th{
     background: #ffffff !important;
   }
 
+  table.horario td {
+    height: 100px !important;
+
+  }
+
   table.header {
     width: 100%;
   }
