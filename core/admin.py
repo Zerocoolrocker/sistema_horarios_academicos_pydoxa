@@ -41,9 +41,12 @@ class ProyectoChangeList(ChangeList):
         return self.model.__name__
 
 class ProyectoModelAdmin(admin.ModelAdmin):
+    search_fields = ('nombre',)
+    list_display = ('nombre', 'pensum', 'lapso_academico', 'creado', 'update',)
+    list_filter = ('pensum',)
+
     def get_changelist(self, request, **kwargs):
         return ProyectoChangeList
-
 
 
 admin.site.register(LogEntry, LogEntryAdmin)
