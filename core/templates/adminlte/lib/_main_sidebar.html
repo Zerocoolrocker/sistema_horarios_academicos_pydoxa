@@ -4,7 +4,6 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        {% block user_panel %}
         <div class="user-panel">
             <div class="pull-left image">
                 <img src="/static/img/figura_usuario.png" class="img-circle" alt="User Image">
@@ -13,17 +12,11 @@
                 <p>{% firstof request.user.get_full_name request.user.username %}</p>
             </div>
         </div>
-        {% endblock %}
 
-        {% block form %}{% endblock %}
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        {% block nav_links_ul %}
         <ul class="sidebar-menu">
-            {% block nav_links_outer %}
-            <li class="header">{% block nav_heading %}MAIN NAVIGATION{% endblock %}</li>
 
-            {% block nav_links %}
                 <li>
                     <a href="/admin/core/proyecto" class='proyectos'>
                         <i class="fa fa-dashboard"></i> <span>Proyectos</span>
@@ -61,10 +54,7 @@
                         <i class="fa fa-user"></i> <span>Reportes</span>
                     </a>
                 </li>
-            {% endblock nav_links %}
-            {% endblock nav_links_outer %}
         </ul>
-        {% endblock nav_links_ul %}
     </section>
     <!-- /.sidebar -->
 </aside>

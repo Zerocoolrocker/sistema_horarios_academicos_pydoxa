@@ -84,3 +84,7 @@ a#vista_drag_drop:hover {
 	font-weight: normal;
 	font-weight: bold;
 }
+
+.cambiar-password {
+	margin-bottom: 10px !important;
+}

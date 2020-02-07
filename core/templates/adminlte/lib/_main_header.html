@@ -47,13 +47,9 @@
                                 <!-- Menu Footer-->
                                 {% block menu_footer %}
                                     <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"
-                                               class="btn btn-info">Cambiar contraseña</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="/admin/logout/" class="btn btn-danger">Cerrar sesión</a>
-                                        </div>
+                                        <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"
+                                           class="btn btn-info cambiar-password">Cambiar contraseña</a>
+                                        <a href="/admin/logout/" class="btn btn-danger">Cerrar sesión</a>
                                     </li>
                                 {% endblock %}
 

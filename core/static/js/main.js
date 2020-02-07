@@ -4,6 +4,12 @@ $('.crear-proyecto-button').click(function(e){
 	return false;
 });
 
+$(document).ready(function(){
+    if(!$('#myModal').length){
+        $('.crear-proyecto-button').hide();
+    }
+})
+
 
 $(document).on('submit', '.ajax-form',function(e){
     $.ajax({
