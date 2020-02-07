@@ -568,7 +568,7 @@ $('#reporte_aula').click(function(e){
 });
 
 $('.eliminar-encuentro').click(function(){
-	$.get('/encuentro/' + data_encuentro_modal_actual.pk + '/delete/').done(function(){
+	$.get('/encuentro/' + data_encuentro_modal_actual.encuentro_dia_pk + '/delete/').done(function(){
 		delete data_encuentros[data_encuentro_modal_actual.pk];
 		for (var i = data_aulas_encuentros[data_encuentro_modal_actual.aula.nombre].length - 1; i >= 0; i--) {
 			if(data_aulas_encuentros[data_encuentro_modal_actual.aula.nombre][i].pk == data_encuentro_modal_actual.pk){

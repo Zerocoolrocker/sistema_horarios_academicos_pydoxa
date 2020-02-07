@@ -631,7 +631,7 @@ class ReporteAulaActualView(View):
         return HttpResponseBadRequest()
 
 class EncuentroDeleteView(View):
-    model = Encuentro
+    model = EncuentrosDias
 
     def get(self, *args, **kwargs):
         if 'pk' in kwargs and self.model.objects.filter(pk=kwargs['pk']).exists():
