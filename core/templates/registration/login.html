@@ -8,6 +8,20 @@
     <!-- plugins:css-->
     <link rel="stylesheet" href="/static/plugins/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/static/plugins/sharedCss/style.css">
+    <style type="text/css">
+
+@font-face {
+  font-family: "PaintScratch";
+  src: url("/static/fonts/PaintScratch.ttf") format('truetype');
+}
+
+.titulo-app {
+  font-family: "PaintScratch" !important;
+  font-size: 50px;
+}
+
+
+    </style>
     <!-- endinject -->
   </head>
   <body>
@@ -17,6 +31,9 @@
           <div class="row w-100">
             <div class="col-lg-4 mx-auto">
               <div class="auto-form-wrapper">
+                <center><span class="titulo-app">pyDoxa</span></center>
+                <br>
+
                 <form action="/login/" method="POST">
 
                 {% if form.errors %}

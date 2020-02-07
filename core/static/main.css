@@ -111,3 +111,13 @@ a#vista_drag_drop:hover {
 	font-weight: normal;
 	font-weight: bold;	
 }
+
+@font-face {
+  font-family: "PaintScratch";
+  src: url("/static/fonts/PaintScratch.ttf") format('truetype');
+}
+
+.titulo-app {
+  font-family: "PaintScratch" !important;
+  font-size: 30px;
+}
