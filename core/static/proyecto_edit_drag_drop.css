@@ -15,8 +15,23 @@
 .dnd-encuentro .titulo {
 	background-color: #357ca5;
 	border-radius: 3px;
-	padding: 2px 5px;
+	padding: 10px 5px;
+	font-weight: normal !important;
+	font-weight: bold !important;	
+/*	padding-right: 15px;
+	padding-top: 3px;
+	padding-left: 3px;
+	padding-bottom: 3px;*/
 	color: white;
+
+}
+
+small {
+	font-size: 13px;
+}
+
+.dnd-encuentro .titulo strong {
+	width: 50px;
 }
 
 .tabla-encuentros td {

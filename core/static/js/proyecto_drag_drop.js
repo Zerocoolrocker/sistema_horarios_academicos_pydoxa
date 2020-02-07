@@ -238,7 +238,7 @@ function asignar_handlers_drag_and_drop(){
 	$('.dnd-encuentro .icono-editar').click(function(){
 		$('#creacionEdicionencuentroModal')[0].classList.remove('fade');
 		$('#creacionEdicionencuentroModal')[0].classList.add('show');
-		data_encuentro_modal_actual = data_encuentros[this.parentElement.parentElement.getAttribute('data-encuentro-dia-pk')]
+		data_encuentro_modal_actual = data_encuentros[this.parentElement.parentElement.parentElement.getAttribute('data-encuentro-dia-pk')]
 		$('#creacionEdicionencuentroModal [name=docente] option[value=' + data_encuentro_modal_actual.seccion.docente_pk + ']').attr('selected', true);
 		$('#creacionEdicionencuentroModal [name=aula] option[value=' + data_encuentro_modal_actual.aula.pk + ']').attr('selected', true);
 		$('#creacionEdicionencuentroModal [name=tipo] option[value=' + data_encuentro_modal_actual.tipo + ']').attr('selected', true);
@@ -319,15 +319,18 @@ function llenar_encuentros(aul, callback){
 				nuevo_encuentro.attr('draggable', 'true');
 				var titulo_encuentro  = $('<div>');
 				titulo_encuentro.attr('class', 'titulo');
-				titulo_encuentro.append($('<strong>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
-				titulo_encuentro.append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true')));
+				titulo_encuentro.append($('<small>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre).append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true'))));
+				// titulo_encuentro.append($(('<p>').append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true')))));
+				// titulo_encuentro.append($('<p>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre).append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true'))));
+				
+				// titulo_encuentro.append($('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true')));
 				nuevo_encuentro.append(titulo_encuentro);
 				var texto = $('<p>');
-				texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero)
+				texto.text('Sección: ' + data_aulas_encuentros[aul][i].seccion.numero);
 				texto.append($('<br>'))
-				texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente_nombre_apellido))
-				texto.append($('<br>'))
-				texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo)
+				texto.append($('<strong>').append(data_aulas_encuentros[aul][i].seccion.docente_nombre_apellido));
+				texto.append($('<br>'));
+				texto.append('Cupo: ' + data_aulas_encuentros[aul][i].seccion.cupo);
 				nuevo_encuentro.append(texto);
 				nuevo_encuentro.attr('data-encuentro-dia-pk', data_aulas_encuentros[aul][i].encuentro_dia_pk);
 				// console.log('nuevo_encuentro', nuevo_encuentro[0]);
