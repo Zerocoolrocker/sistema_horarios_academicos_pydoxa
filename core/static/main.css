@@ -88,3 +88,7 @@ a#vista_drag_drop:hover {
 .cambiar-password {
 	margin-bottom: 10px !important;
 }
+
+.deletelink {
+	height: auto !important;
+}
