@@ -30,13 +30,21 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/core/carrera">
-                        <i class="fa fa-bank"></i> <span>Carreras</span>
+                    <a href="/admin/core/materia">
+                        <i class="fa fa-book"></i> <span>Materias</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/core/materia">
-                        <i class="fa fa-book"></i> <span>Materias</span>
+                    <a href="/admin/core/seccion">
+                        <i class="fa fa-file"></i> <span>Secciones</span>
+                    </a>
+                </li>
+
+            {% if request.user.is_superuser %}
+
+                <li>
+                    <a href="/admin/core/carrera">
+                        <i class="fa fa-bank"></i> <span>Carreras</span>
                     </a>
                 </li>
                 <li>
@@ -49,11 +57,13 @@
                         <i class="fa fa-building"></i> <span>Aulas</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-file"></i> <span>Reportes</span>
-                    </a>
-                </li>
+
+
+
+            {% endif %}
+
+
+
         </ul>
     </section>
     <!-- /.sidebar -->
