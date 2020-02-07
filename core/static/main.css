@@ -104,3 +104,10 @@ a#vista_drag_drop:hover {
 	border-radius: 10px;
 	padding: 5px;
 }
+
+.alert-success {
+	background-color:  #01db77 !important;
+	font-size: 16px !important;
+	font-weight: normal;
+	font-weight: bold;	
+}

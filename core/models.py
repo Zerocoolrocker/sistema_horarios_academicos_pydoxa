@@ -387,7 +387,7 @@ class EsquemaBloque(models.Model):
 	actualizado = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return "(%s)%s" % (self.carrera, self.duracion)
+		return "%s: %s" % (self.carrera, self.duracion)
 
 class RestriccionesBloques(models.Model):
 	carrera = models.ForeignKey('Carrera', on_delete=models.CASCADE)

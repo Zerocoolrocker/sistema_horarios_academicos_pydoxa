@@ -1044,15 +1044,143 @@
     }
 },
 {
+    "model": "auth.permission",
+    "pk": 117,
+    "fields": {
+        "name": "Can add asistentes carreras",
+        "content_type": 30,
+        "codename": "add_asistentescarreras"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 118,
+    "fields": {
+        "name": "Can change asistentes carreras",
+        "content_type": 30,
+        "codename": "change_asistentescarreras"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 119,
+    "fields": {
+        "name": "Can delete asistentes carreras",
+        "content_type": 30,
+        "codename": "delete_asistentescarreras"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 120,
+    "fields": {
+        "name": "Can view asistentes carreras",
+        "content_type": 30,
+        "codename": "view_asistentescarreras"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 121,
+    "fields": {
+        "name": "Can add asistentes carrera",
+        "content_type": 30,
+        "codename": "add_asistentescarrera"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 122,
+    "fields": {
+        "name": "Can change asistentes carrera",
+        "content_type": 30,
+        "codename": "change_asistentescarrera"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 123,
+    "fields": {
+        "name": "Can delete asistentes carrera",
+        "content_type": 30,
+        "codename": "delete_asistentescarrera"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 124,
+    "fields": {
+        "name": "Can view asistentes carrera",
+        "content_type": 30,
+        "codename": "view_asistentescarrera"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 125,
+    "fields": {
+        "name": "Can add lapso academico",
+        "content_type": 31,
+        "codename": "add_lapsoacademico"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 126,
+    "fields": {
+        "name": "Can change lapso academico",
+        "content_type": 31,
+        "codename": "change_lapsoacademico"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 127,
+    "fields": {
+        "name": "Can delete lapso academico",
+        "content_type": 31,
+        "codename": "delete_lapsoacademico"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 128,
+    "fields": {
+        "name": "Can view lapso academico",
+        "content_type": 31,
+        "codename": "view_lapsoacademico"
+    }
+},
+{
     "model": "auth.group",
     "pk": 1,
     "fields": {
         "name": "Asistentes",
         "permissions": [
+            5,
+            6,
+            7,
+            8,
+            53,
+            54,
+            55,
+            56,
+            61,
+            62,
+            63,
+            64,
+            109,
+            110,
+            111,
+            112,
             33,
             34,
             35,
-            36
+            36,
+            81,
+            82,
+            83,
+            84
         ]
     }
 }
