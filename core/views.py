@@ -25,8 +25,8 @@ class DashboardView(TemplateView):
         if self.request.user.is_superuser:
             data['pensums'] =  Pensum.objects.all()
         else:
-            data['pensums'] =  Pensum.objects.filter(carrera__pk__in=carreras_pks)
             carreras_pks = AsistentesCarrera.objects.filter(asistente=self.request.user).values_list('carrera__pk', flat=True)
+            data['pensums'] =  Pensum.objects.filter(carrera__pk__in=carreras_pks)
         return data      
 
 class ProyectoEditDragDropView(TemplateView):
@@ -53,8 +53,8 @@ class ProyectoEditDragDropView(TemplateView):
         if self.request.user.is_superuser:
             data['pensums'] =  Pensum.objects.all()
         else:
-            data['pensums'] =  Pensum.objects.filter(carrera__pk__in=carreras_pks)
             carreras_pks = AsistentesCarrera.objects.filter(asistente=self.request.user).values_list('carrera__pk', flat=True)
+            data['pensums'] =  Pensum.objects.filter(carrera__pk__in=carreras_pks)
         return data
 
 
