@@ -141,3 +141,9 @@ small {
 #busqueda_encuentro, #limpiar_resultados_encuentro{
 	margin-left: 9px;
 }
+
+.identificador-aula {
+    left: 0;
+    position: absolute;
+    margin-left: 20px;	
+}
