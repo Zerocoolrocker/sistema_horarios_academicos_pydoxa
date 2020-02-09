@@ -16,7 +16,6 @@
 	background-color: #357ca5;
 	border-radius: 3px;
 	padding: 3px 5px 1px 5px;
-	font-weight: normal !important;
 	font-weight: bold !important;	
 /*	padding-right: 15px;
 	padding-top: 3px;
@@ -126,7 +125,6 @@ small {
 }
 
 .swal-text {
-	font-weight: normal !important;
 	font-weight: bold !important;
 	text-align: center !important;	
 }
@@ -146,4 +144,5 @@ small {
     left: 0;
     position: absolute;
     margin-left: 20px;	
+    font-size: 20px !important;
 }

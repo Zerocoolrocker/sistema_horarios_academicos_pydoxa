@@ -51,6 +51,7 @@ class ProyectoEditDragDropView(TemplateView):
             ('vi', 'Virtual'),
         )        
         data['proyecto'] = self.proyecto.pk
+        data['nombre_proyecto'] = self.proyecto.nombre
         data['carrera'] = self.proyecto.pensum.carrera.pk
         data['lapsos'] =  LapsoAcademico.objects.all()
         if self.request.user.is_superuser:
