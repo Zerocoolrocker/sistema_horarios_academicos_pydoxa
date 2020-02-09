@@ -5,12 +5,7 @@ from django.contrib.admin.views.main import ChangeList
 
 import core.models
 
-for modelo in dir(core.models):
-    if getattr(core.models, modelo).__class__.__name__ == 'ModelBase' and getattr(core.models, modelo).__name__ not in ['User', 'Proyecto']:
-        try:
-            admin.site.register(getattr(core.models, modelo))
-        except:
-            pass
+
 
 class LogEntryAdmin(admin.ModelAdmin):
     readonly_fields = ('content_type',
@@ -48,6 +43,36 @@ class ProyectoModelAdmin(admin.ModelAdmin):
     def get_changelist(self, request, **kwargs):
         return ProyectoChangeList
 
+class DocenteModelAdmin(admin.ModelAdmin):
+    search_fields = ('nombre', 'cedula')
+    list_display = ('nombres', 'apellidos', 'cedula', 'email')
+
+class AulaModelAdmin(admin.ModelAdmin):
+    search_fields = ('nombre', 'numero', 'carrera', 'ubicacion')
+    list_display = ('nombre', 'tipo_aula', 'numero', 'ubicacion', 'carrera',)
+
+class MateriaModelAdmin(admin.ModelAdmin):
+    search_fields = ('codigo', 'nombre')
+    list_display = ('codigo', 'nombre', 'pensum', 'semestre',)
+
+class SeccionModelAdmin(admin.ModelAdmin):
+    search_fields = ('numero', 'materia')
+    list_display = ('docente', 'numero', 'materia', 'proyecto',)
+    list_filter = ('proyecto',)
+
+
 
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(core.models.Proyecto, ProyectoModelAdmin)
+admin.site.register(core.models.Docente, DocenteModelAdmin)
+admin.site.register(core.models.Aula, AulaModelAdmin)
+admin.site.register(core.models.Materia, MateriaModelAdmin)
+admin.site.register(core.models.Seccion, SeccionModelAdmin)
+
+
+for modelo in dir(core.models):
+    if getattr(core.models, modelo).__class__.__name__ == 'ModelBase' and getattr(core.models, modelo).__name__ not in ['User']:
+        try:
+            admin.site.register(getattr(core.models, modelo))
+        except:
+            pass
