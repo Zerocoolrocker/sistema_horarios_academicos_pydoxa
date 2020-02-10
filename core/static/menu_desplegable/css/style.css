@@ -99,7 +99,7 @@
   /*color: rgb(21, 20, 20);*/
   color: #0909b9;
   /*background: #EEE;*/
-  background: rgb(48, 3, 3, 0.36);
+  background: rgba(48, 3, 3, 0.1);
   -moz-box-shadow: 0 1px 0 white inset, 0 -1px 0 #d4d4d4 inset;
   -webkit-box-shadow: 0 1px 0 white inset, 0 -1px 0 #d4d4d4 inset;
   box-shadow: 0 1px 0 white inset, 0 -1px 0 #d4d4d4 inset;
