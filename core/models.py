@@ -316,7 +316,7 @@ class Encuentro(models.Model):
 		return to_timedelta(self.bloque.hora_inicio) + (to_timedelta(self.bloque.esquema_bloque.duracion) * self.numero_bloques)
 
 	def __str__(self):
-		return str(self.bloque)	
+		return "%s - %s - %s" % (str(self.bloque), self.seccion, self.seccion.proyecto)
 
 class EncuentrosDias(models.Model):
 	encuentro = models.ForeignKey('Encuentro', on_delete=models.CASCADE)

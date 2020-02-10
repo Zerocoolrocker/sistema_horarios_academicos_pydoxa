@@ -112,6 +112,10 @@ a#vista_drag_drop:hover {
 	font-weight: bold;	
 }
 
+.alert-dismissible {
+	width: 90%;
+}
+
 @font-face {
   font-family: "PaintScratch";
   src: url("/static/fonts/PaintScratch.ttf") format('truetype');

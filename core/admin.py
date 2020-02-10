@@ -60,6 +60,16 @@ class SeccionModelAdmin(admin.ModelAdmin):
     list_display = ('docente', 'numero', 'materia', 'proyecto',)
     list_filter = ('proyecto',)
 
+class CarreraModelAdmin(admin.ModelAdmin):
+    search_fields = ('numero', 'materia')
+    list_display = ('docente', 'numero', 'materia', 'proyecto',)
+    list_filter = ('proyecto',)
+    list_filter = ('proyecto',)
+
+class EncuentroModelAdmin(admin.ModelAdmin):
+    search_fields = ('seccion__materia__nombre', 'aula__nombre')
+    list_display = ('bloque', 'aula', 'seccion', 'tipo', 'activo',)
+    list_filter = ('seccion__materia', 'tipo', 'seccion__proyecto')
 
 
 admin.site.register(LogEntry, LogEntryAdmin)
@@ -68,6 +78,7 @@ admin.site.register(core.models.Docente, DocenteModelAdmin)
 admin.site.register(core.models.Aula, AulaModelAdmin)
 admin.site.register(core.models.Materia, MateriaModelAdmin)
 admin.site.register(core.models.Seccion, SeccionModelAdmin)
+admin.site.register(core.models.Encuentro, EncuentroModelAdmin)
 
 
 for modelo in dir(core.models):
