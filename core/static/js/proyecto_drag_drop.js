@@ -342,7 +342,7 @@ function llenar_encuentros(aul, callback){
 				titulo_encuentro.attr('class', 'titulo');
 				var icono_editar_encuentro = $('<a>').attr('href', '#').attr('class', 'icono-editar').append($('<i>').attr('class', 'fa fa-pencil-square-o pull-right').attr('aria-hidden', 'true'));
 				titulo_encuentro.append(icono_editar_encuentro);
-				titulo_encuentro.append('<br>');
+				// titulo_encuentro.append('<br>');
 				var nombre_materia = $('<small>');
 				nombre_materia.append($('<p>').text(data_aulas_encuentros[aul][i].seccion.materia.nombre));
 				titulo_encuentro.append(nombre_materia);

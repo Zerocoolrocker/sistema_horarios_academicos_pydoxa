@@ -377,8 +377,6 @@ def group_by(object_list, key=None, sort_by=None):
 class ReporteSemestresView(TemplateView):
     template_name = 'reporte_por_semestres.html'
 
-
-
     def generar_html_reporte2(self):
         proyecto = Proyecto.objects.get(id=self.kwargs.get('proyecto_id'))
         secciones = Seccion.objects.filter(proyecto=proyecto).all()
