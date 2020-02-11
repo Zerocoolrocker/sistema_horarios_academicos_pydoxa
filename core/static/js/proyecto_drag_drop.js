@@ -567,7 +567,7 @@ $('#creacionEdicionencuentroModal .submit-modal').click(function(e){
 	var aula_edicion_encuentro = $('#creacionEdicionencuentroModal [name=aula]').val();
 	var nombre_aula_edicion = data_aulas[aula_edicion_encuentro].nombre;
 	var docente = $('#creacionEdicionencuentroModal [name=docente]').val();
-	var docente_nombre = $('#creacionEdicionencuentroModal [name=docente]').text();
+	var docente_nombre = $('#creacionEdicionencuentroModal [name=docente] option:selected').text();
 	var tipo = $('#creacionEdicionencuentroModal [name=tipo]').val();
 	var cupo = $('#creacionEdicionencuentroModal [name=cupo]').val();
 	$.post('/api/encuentros/update/', {
@@ -580,12 +580,15 @@ $('#creacionEdicionencuentroModal .submit-modal').click(function(e){
 		$('#creacionEdicionencuentroModal')[0].classList.remove('show');	
 		$('#creacionEdicionencuentroModal')[0].classList.add('fade');
 		data_encuentro_modal_actual.aula = data_aulas[aula_edicion_encuentro];
-		data_encuentro_modal_actual.seccion.docente.nombres = docente_nombre;
-		data_encuentro_modal_actual.seccion.docente.pk = docente;
+		data_encuentro_modal_actual.seccion.docente = docente_nombre;
+		data_encuentro_modal_actual.seccion.docente_nombre_apellido = docente;
 		data_encuentro_modal_actual.tipo = tipo;
 		data_encuentro_modal_actual.seccion.cupo = cupo;
 		for (var i = 0; i < data_aulas_encuentros[anterior_aula.nombre].length; i++) {
 			if(data_aulas_encuentros[anterior_aula.nombre][i].encuentro_dia_pk == data_encuentro_modal_actual.encuentro_dia_pk){
+				data_aulas_encuentros[anterior_aula.nombre][i].seccion.docente_pk = docente;
+				data_aulas_encuentros[anterior_aula.nombre][i].seccion.docente = docente_nombre;
+				data_aulas_encuentros[anterior_aula.nombre][i].seccion.docente_nombre_apellido = docente_nombre;
 				data_aulas_encuentros[nombre_aula_edicion] = (data_aulas_encuentros[nombre_aula_edicion] || []).concat(data_aulas_encuentros[anterior_aula.nombre][i]);
 				data_aulas_encuentros[anterior_aula.nombre].splice(i, 1);
 				break;
