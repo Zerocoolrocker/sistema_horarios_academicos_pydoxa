@@ -71,6 +71,11 @@ class EncuentroModelAdmin(admin.ModelAdmin):
     list_display = ('bloque', 'aula', 'seccion', 'tipo', 'activo',)
     list_filter = ('seccion__materia', 'tipo', 'seccion__proyecto')
 
+class EncuentrosDiasModelAdmin(admin.ModelAdmin):
+    search_fields = ('encuentro__seccion__materia__nombre', 'encuentro__aula__nombre')
+    list_display = ('encuentro', 'dia')
+    list_filter = ('dia', 'encuentro__seccion__materia', 'encuentro__seccion__proyecto')
+
 
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(core.models.Proyecto, ProyectoModelAdmin)
@@ -79,6 +84,7 @@ admin.site.register(core.models.Aula, AulaModelAdmin)
 admin.site.register(core.models.Materia, MateriaModelAdmin)
 admin.site.register(core.models.Seccion, SeccionModelAdmin)
 admin.site.register(core.models.Encuentro, EncuentroModelAdmin)
+admin.site.register(core.models.EncuentrosDias, EncuentrosDiasModelAdmin)
 
 
 for modelo in dir(core.models):
