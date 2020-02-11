@@ -126,6 +126,27 @@ function acciones_drop_permitido(e){
     encuentro_data.bloque.hora_inicio = esquemas_bloques[$(this_element).data('hora')];
     encuentro_data.dia = esquemas_dias[$(this_element).data('dia')];
     encuentro_data.dia_pk = pks_dias[$(this_element).data('dia')];
+
+    var se_cambio_de_aula = false;
+    if(encuentro_data.aula != aula){
+    	se_cambio_de_aula = true;
+    } 
+    var aula_anterior = encuentro_data.aula;
+    encuentro_data.aula = data_aulas[aula];
+
+    if(se_cambio_de_aula){
+	    for (var ind_enc = 0; ind_enc < data_aulas_encuentros[aula_anterior.pk].length; ind_enc++) {
+	     	if(data_aulas_encuentros[aula_anterior.pk][ind_enc].encuentro_dia_pk == encuentro_data.encuentro_dia_pk){
+	     		var tmp_data = data_aulas_encuentros[aula] || [];
+	     		tmp_data.push(encuentro_data);
+	     		data_aulas_encuentros[aula] = tmp_data;
+	     		data_aulas_encuentros[aula_anterior.pk].splice(ind_enc, 1);
+	     		break;
+	     	}
+	     } 
+    }
+
+
   	var jquery_dse = $(drag_source_element_real);
   	// if(jquery_dse.attr('class') && jquery_dse.attr('class').indexOf('resultado-busqueda') !=-1 && jquery_dse.data('aula') == aula){
 	// console.log('se limpia la tabla');
@@ -140,7 +161,8 @@ function acciones_drop_permitido(e){
 		// 	});
 		// }
 	}
-	limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);	
+	//limpiar_encuentros_tabla(limpiar_y_llenar_tabla_con_validacion);	
+	limpiar_encuentros_tabla();
 }
 
 
