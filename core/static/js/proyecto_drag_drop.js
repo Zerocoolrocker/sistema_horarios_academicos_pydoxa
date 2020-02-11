@@ -260,7 +260,7 @@ function asignar_handlers_drag_and_drop(){
 	$('.dnd-encuentro .icono-editar').click(function(){
 		$('#creacionEdicionencuentroModal')[0].classList.remove('fade');
 		$('#creacionEdicionencuentroModal')[0].classList.add('show');
-		var data_encuentro_modal_actual = data_encuentros[this.parentElement.parentElement.getAttribute('data-encuentro-dia-pk')]
+		data_encuentro_modal_actual = data_encuentros[this.parentElement.parentElement.getAttribute('data-encuentro-dia-pk')]
 		$('#creacionEdicionencuentroModal [name=docente] option[value=' + data_encuentro_modal_actual.seccion.docente_pk + ']').attr('selected', true);
 		$('#creacionEdicionencuentroModal [name=aula] option[value=' + data_encuentro_modal_actual.aula.pk + ']').attr('selected', true);
 		$('#creacionEdicionencuentroModal [name=tipo] option[value=' + data_encuentro_modal_actual.tipo + ']').attr('selected', true);
@@ -590,7 +590,7 @@ $('#creacionEdicionencuentroModal .submit-modal').click(function(e){
 			}
 		};
 		renderizar_tabla();
-		$('#busqueda_encuentro').click();
+		// $('#busqueda_encuentro').click();
 		
 	});
 });
