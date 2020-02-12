@@ -211,7 +211,9 @@ function handleDrop(e) {
 		  		var columna = fila.find('[data-dia=' + dia_objetivo + ']')
 		  		var numero_bloques_abarca_columna = columna.attr('rowspan') || 1;
 		  		cn_bloques += numero_bloques_abarca_columna;
-	  			if(columna.find('.dnd-encuentro').length){
+		  		var encuentro = $(drag_source_element).data('encuentro-dia-pk');
+		  		
+	  			if(columna.find('.dnd-encuentro').not('[data-encuentro-dia-pk=' + encuentro + ']').length){
 	  				absorbe_otros_encuentros = true;
 	  				contenedor_drop = this;
 			  		mostrar_modal_confirmacion2('Ya existen otros encuentros en los bloques horarios de destino. ¿Realmente desea compartir el aula en el mismo momento?');
