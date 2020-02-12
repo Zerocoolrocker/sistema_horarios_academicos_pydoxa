@@ -36,15 +36,16 @@ function ocultar_modal_error(){
 }
 
 
-function mostrar_modal_confirmacion2(){
+function mostrar_modal_confirmacion2(mensaje){
 	// swal(
 	// 	'Error en url',
 	// 	{
 	//        icon: "success",
 	//     }
 	// );
-
-	swal('Ya existe otro encuentro en ese bloque horario en la misma aula. ¿Realmente desea compartir el aula en el mismo momento?', {
+	var mensaje_por_defecto = 'Ya existe otro encuentro en ese bloque horario en la misma aula. ¿Realmente desea compartir el aula en el mismo momento?';
+	mensaje = mensaje || mensaje_por_defecto;
+	swal(mensaje, {
 	  // buttons: ["Cancelar", "Aceptar"],
 	  buttons: {
 		  cancel: {
@@ -195,18 +196,31 @@ function handleDrop(e) {
   	}
 
   	if(turno_disponible){
-	  	// @TODO: hacer validacion parecida a la de abajo, pero que se muestre el modal de advertencia si
-	  	// el encuentro ocupa mas de un bloque y alguno de los bloques que desea ocupar esta ocupado por
-	  	// otro encuentro
-
-
-
 	  	// @TODO: (mostrar advertencia o no permitir, dependiendo de configuracion)
 	  	if($(this).find('.dnd-encuentro').length){
 	  		contenedor_drop = this;
 	  		mostrar_modal_confirmacion2();
 	  	} else {
-	  		acciones_drop_permitido(e);
+	  		// valida que alguno de los bloques que se va a absorber no posea encuentros
+		  	var cn_bloques = 0;
+		  	var n_bloques_abarcados = $(this).attr('rowspan') || 1;
+		  	var dia_objetivo = $(this).data('dia');
+		  	var absorbe_otros_encuentros = false;
+		  	while(cn_bloques < n_bloques_abarcados){
+		  		var fila = $(this.parentElement).next('tr');
+		  		var columna = fila.find('[data-dia=' + dia_objetivo + ']')
+		  		var numero_bloques_abarca_columna = columna.attr('rowspan') || 1;
+		  		cn_bloques += numero_bloques_abarca_columna;
+	  			if(columna.find('.dnd-encuentro').length){
+	  				absorbe_otros_encuentros = true;
+	  				contenedor_drop = this;
+			  		mostrar_modal_confirmacion2('Ya existen otros encuentros en los bloques horarios de destino. ¿Realmente desea compartir el aula en el mismo momento?');
+	  			}
+		  	}
+		  	if(!absorbe_otros_encuentros){
+	  			acciones_drop_permitido(e);
+		  	}
+
 	  	}
   	} else {
   		mostrar_modal_error('No hay suficientes bloques disponibles en el turno para este encuentro.')
