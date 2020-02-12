@@ -366,7 +366,11 @@ function llenar_encuentros(aul, callback){
 				for (var ind_blo = indice_bloques_horas + 1; ind_blo <= esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
 					// var selector_bloque_eliminar = '.tabla-encuentros tr:nth-child(' + ind_blo + ') td:nth-child(' + indice_bloques_dias + ')'
 					var bloque_eliminar = $('.tabla-encuentros tr:nth-child(' + ind_blo + ') td[data-dia=' + indice_bloques_dias + ']');
-					// console.log('se va a eliminar:', bloque_eliminar[0], 'en llenado de encuentros');
+					
+					//caso cuando uno de los bloques hijos que va a abarcar el encuentro posee ya encuentros
+					if(bloque_eliminar.find('.dnd-encuentro').length){
+						bloque_objetivo.append(bloque_eliminar.html());
+					}
 					bloque_eliminar.remove();
 				};
 			// })
