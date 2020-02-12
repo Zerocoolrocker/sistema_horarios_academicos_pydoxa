@@ -333,7 +333,7 @@ function llenar_encuentros(aul, callback){
 			bloque_objetivo = $(selector_bloque_objetivo);
 			if(!bloque_objetivo.length){
 				selector_bloque_objetivo = '.tabla-encuentros tr td[data-dia=' + indice_bloques_dias + ']';
-				bloque_objetivo = $(".tabla-encuentros tr td[data-dia=2]").slice(0, indice_bloques_horas - 1).last();
+				bloque_objetivo = $(".tabla-encuentros tr td[data-dia=" + indice_bloques_dias + "]").slice(0, indice_bloques_horas - 1).last();
 			}
 			// console.log('bloque_objetivo', bloque_objetivo[0]);
 				
@@ -360,7 +360,6 @@ function llenar_encuentros(aul, callback){
 				// console.log('nuevo_encuentro', nuevo_encuentro[0]);
 				bloque_objetivo.append(nuevo_encuentro);
 
-				// @TODO: Hacer validaciones de numero de bloques de encuentro aqui
 				var numero_bloques = data_aulas_encuentros[aul][i].numero_bloques;
 				bloque_objetivo.attr('rowspan', numero_bloques);
 				for (var ind_blo = indice_bloques_horas + 1; ind_blo <= esquemas_bloques.length && ind_blo < indice_bloques_horas + numero_bloques; ind_blo++) {
@@ -373,6 +372,7 @@ function llenar_encuentros(aul, callback){
 					}
 					bloque_eliminar.remove();
 				};
+
 			// })
 		}
 		if(callback){
