@@ -196,8 +196,9 @@ function handleDrop(e) {
   	}
 
   	if(turno_disponible){
-	  	// @TODO: (mostrar advertencia o no permitir, dependiendo de configuracion)
-	  	if($(this).find('.dnd-encuentro').length){
+		 var encuentro = $(drag_source_element).data('encuentro-dia-pk');
+	  	if($(this).find('.dnd-encuentro').not('[data-encuentro-dia-pk=' + encuentro + ']').length){
+	  		// @TODO: (mostrar advertencia o no permitir, dependiendo de configuracion)
 	  		contenedor_drop = this;
 	  		mostrar_modal_confirmacion2();
 	  	} else {
@@ -211,7 +212,6 @@ function handleDrop(e) {
 		  		var columna = fila.find('[data-dia=' + dia_objetivo + ']')
 		  		var numero_bloques_abarca_columna = columna.attr('rowspan') || 1;
 		  		cn_bloques += numero_bloques_abarca_columna;
-		  		var encuentro = $(drag_source_element).data('encuentro-dia-pk');
 		  		
 	  			if(columna.find('.dnd-encuentro').not('[data-encuentro-dia-pk=' + encuentro + ']').length){
 	  				absorbe_otros_encuentros = true;
