@@ -255,7 +255,7 @@ function asignar_handlers_drag_and_drop(){
 	var cols = document.querySelectorAll('.dnd-encuentro');
 	var cols2 = document.querySelectorAll('.tabla-encuentros td');
 	cols2 = $(cols2).not('td:nth-child(1), td:nth-child(2)');
-	var cols3 = document.querySelectorAll('#resultados_busqueda');
+	var cols3 = document.querySelectorAll('#resultados_busqueda .dnd-encuentro');
 
 	var elements = Array.prototype.slice.call(cols);
 	var elements2 = Array.prototype.slice.call(cols2);
